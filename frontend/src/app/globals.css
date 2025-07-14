@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme {
+ --color-spectro: #c6bda6; 
+ --color-divider: #1f1f26;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  /* --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono); */
+  --font-lagu: "Lagu-Sans", "sans-serif";
+  --font-lagusemi: "Lagu-sans-semibold", "sans-serif";
+  --font-charName: 2.625rem; 
+}
+
+@font-face {
+  font-family: 'Lagu-sans';
+  src: url('/fonts/LaguSans/Lagu Sans Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lagu-sans-semibold';
+  src: url('/fonts/LaguSans/Lagu Sans Semibold.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
