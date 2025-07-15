@@ -17,7 +17,7 @@
   --font-mono: var(--font-geist-mono); */
   --font-lagu: "Lagu-Sans", "sans-serif";
   --font-lagusemi: "Lagu-sans-semibold", "sans-serif";
-  --font-charName: 2.625rem; 
+  --text-charName: 2.625rem; 
 }
 
 @font-face {
