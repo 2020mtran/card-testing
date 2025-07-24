@@ -115,7 +115,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <div className="flex flex-row ml-5 gap-7">
+            <div className="flex flex-row ml-5 gap-6">
               <div className="flex flex-col items-center justify-center">
                 <div className="w-9 h-9 flex justify-center items-center bg-white rounded-full border-3 border-black/30">
                   <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_Rate.webp" alt="Crit Rate" className="invert w-7 h-7"></img>
@@ -207,56 +207,249 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="flex flex-row ml-10">
-              <div className="flex flex-col gap-1 bg-black/30 p-2">
-                <div className="flex flex-row">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Capitaneus_Icon.webp" alt="Echo 1" className="w-15 h-15"></img>
-                  <div className="flex flex-col items-end">
-                    <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Eternal_Radiance.webp" alt="Echo 1 Set" className="w-5 h-5"></img>
-                    <p className="text-sm">Spectro DMG</p>
-                    <div className="flex flex-row gap-0.5">
-                      <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Spectro_DMG_Bonus.webp" alt="Echo 1 Main Stat Icon" className="w-5 h-5"></img>
-                      <p className="text-sm">30%</p>
-                    </div>
+          
+          <div className="flex flex-row ml-8 gap-1">
+            <div className="flex flex-col gap-1 bg-black/30 p-2">
+              <div className="flex flex-row gap-1">
+                <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Capitaneus_Icon.webp" alt="Echo 1" className="w-15 h-15"></img>
+                <div className="flex flex-col items-end">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Eternal_Radiance.webp" alt="Echo 1 Set" className="w-5 h-5"></img>
+                  <p className="text-sm">Spectro DMG</p>
+                  <div className="flex flex-row gap-0.5">
+                    <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Spectro_DMG_Bonus.webp" alt="Echo 1 Main Stat Icon" className="w-5 h-5"></img>
+                    <p className="text-sm">30%</p>
                   </div>
                 </div>
-                <div className="flex flex-row justify-between">
-                  <div className="flex flex-row">
-                    <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_DMG.webp" alt="Echo 1 Substat Icon" className="w-5 h-5"></img>
-                    <p className="text-sm">Crit DMG</p>
-                  </div>
-                  <p className="text-sm">13.8%</p>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-0.5">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_DMG.webp" alt="Echo 1 Substat Icon" className="w-5 h-5"></img>
+                  <p className="text-sm">Crit DMG</p>
                 </div>
-                <div className="flex flex-row justify-between">
-                  <div className="flex flex-row">
-                    <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Basic_Atk_DMG.png" alt="Echo 1 Substat Icon" className="w-5 h-5"></img>
-                    <p className="text-sm">Basic Atk</p>
-                  </div>
-                  <p className="text-sm">8.6%</p>
+                <p className="text-sm">13.8%</p>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-0.5">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Basic_Atk_DMG.png" alt="Echo 1 Substat Icon" className="w-5 h-5"></img>
+                  <p className="text-sm">Basic Atk</p>
                 </div>
-                <div className="flex flex-row justify-between">
-                  <div className="flex flex-row">
-                    <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_Rate.webp" alt="Echo 1 Substat Icon" className="w-5 h-5"></img>
-                    <p className="text-sm">Crit Rate</p>
-                  </div>
-                  <p className="text-sm">7.5%</p>
+                <p className="text-sm">8.6%</p>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-0.5">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_Rate.webp" alt="Echo 1 Substat Icon" className="w-5 h-5"></img>
+                  <p className="text-sm">Crit Rate</p>
                 </div>
-                <div className="flex flex-row justify-between">
-                  <div className="flex flex-row">
-                    <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Defense.webp" alt="Echo 1 Substat Icon" className="w-5 h-5"></img>
-                    <p className="text-sm">DEF</p>
-                  </div>
-                  <p className="text-sm">60</p>
+                <p className="text-sm">7.5%</p>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-0.5">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Defense.webp" alt="Echo 1 Substat Icon" className="w-5 h-5"></img>
+                  <p className="text-sm">DEF</p>
                 </div>
-                <div className="flex flex-row justify-between">
-                  <div className="flex flex-row">
-                    <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp" alt="Echo 1 Substat Icon" className="w-5 h-5"></img>
-                    <p className="text-sm">ATK</p>
-                  </div>
-                  <p className="text-sm">8.6%</p>
+                <p className="text-sm">60</p>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-0.5">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp" alt="Echo 1 Substat Icon" className="w-5 h-5"></img>
+                  <p className="text-sm">ATK</p>
                 </div>
-              </div>            
+                <p className="text-sm">8.6%</p>
+              </div>
             </div>
+            <div className="flex flex-col gap-1 bg-black/30 p-2">
+              <div className="flex flex-row gap-1">
+                <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Nightmare-Mourning-Aix.webp" alt="Echo 2" className="w-15 h-15"></img>
+                <div className="flex flex-col items-end w-[88.75px]">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Eternal_Radiance.webp" alt="Echo 2 Set" className="w-5 h-5"></img>
+                  <p className="text-sm">Crit DMG</p>
+                  <div className="flex flex-row gap-0.5">
+                    <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_DMG.webp" alt="Echo 2 Main Stat Icon" className="w-5 h-5"></img>
+                    <p className="text-sm">44%</p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-0.5">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_Rate.webp" alt="Echo 2 Substat Icon" className="w-5 h-5"></img>
+                  <p className="text-sm">Crit Rate</p>
+                </div>
+                <p className="text-sm">8.7%</p>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-0.5">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Health.webp" alt="Echo 2 Substat Icon" className="w-5 h-5"></img>
+                  <p className="text-sm">HP</p>
+                </div>
+                <p className="text-sm">540</p>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-0.5">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp" alt="Echo 2 Substat Icon" className="w-5 h-5"></img>
+                  <p className="text-sm">ATK</p>
+                </div>
+                <p className="text-sm">8.6%</p>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-0.5">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_DMG.webp" alt="Echo 2 Substat Icon" className="w-5 h-5"></img>
+                  <p className="text-sm">Crit DMG%</p>
+                </div>
+                <p className="text-sm">25%</p>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-0.5">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Heavy_Atk_DMG.png" alt="Echo 2 Substat Icon" className="w-5 h-5"></img>
+                  <p className="text-sm">Heavy ATK</p>
+                </div>
+                <p className="text-sm">8.6%</p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-1 bg-black/30 p-2">
+              <div className="flex flex-row gap-1">
+                <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Vitreum_Dancer_Icon.webp" alt="Echo 3" className="w-15 h-15"></img>
+                <div className="flex flex-col items-end">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Eternal_Radiance.webp" alt="Echo 3 Set" className="w-5 h-5"></img>
+                  <p className="text-sm">Spectro DMG</p>
+                  <div className="flex flex-row gap-0.5">
+                    <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Spectro_DMG_Bonus.webp" alt="Echo 3 Main Stat Icon" className="w-5 h-5"></img>
+                    <p className="text-sm">30%</p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-0.5">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_DMG.webp" alt="Echo 3 Substat Icon" className="w-5 h-5"></img>
+                  <p className="text-sm">Crit DMG</p>
+                </div>
+                <p className="text-sm">18.6%</p>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-0.5">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Health.webp" alt="Echo 3 Substat Icon" className="w-5 h-5"></img>
+                  <p className="text-sm">HP</p>
+                </div>
+                <p className="text-sm">470</p>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-0.5">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_Rate.webp" alt="Echo 3 Substat Icon" className="w-5 h-5"></img>
+                  <p className="text-sm">Crit Rate</p>
+                </div>
+                <p className="text-sm">8.1%</p>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-0.5">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Defense.webp" alt="Echo 3 Substat Icon" className="w-5 h-5"></img>
+                  <p className="text-sm">DEF</p>
+                </div>
+                <p className="text-sm">50</p>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-0.5">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Heavy_Atk_DMG.png" alt="Echo 3 Substat Icon" className="w-5 h-5"></img>
+                  <p className="text-sm">Heavy ATK</p>
+                </div>
+                <p className="text-sm">9.4%</p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-1 bg-black/30 p-2">
+              <div className="flex flex-row gap-1">
+                <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Aero-Prism.webp" alt="Echo 4" className="w-15 h-15"></img>
+                <div className="flex flex-col items-end w-[88.75px]">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Eternal_Radiance.webp" alt="Echo 4 Set" className="w-5 h-5"></img>
+                  <p className="text-sm">ATK</p>
+                  <div className="flex flex-row gap-0.5">
+                    <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp" alt="Echo 4 Main Stat Icon" className="w-5 h-5"></img>
+                    <p className="text-sm">18%</p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-0.5">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Energy_Regen.webp" alt="Echo 4 Substat Icon" className="w-5 h-5"></img>
+                  <p className="text-sm">Energy</p>
+                </div>
+                <p className="text-sm">10.8%</p>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-0.5">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_DMG.webp" alt="Echo 4 Substat Icon" className="w-5 h-5"></img>
+                  <p className="text-sm">Crit DMG</p>
+                </div>
+                <p className="text-sm">16.2%</p>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-0.5">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp" alt="Echo 4 Substat Icon" className="w-5 h-5"></img>
+                  <p className="text-sm">Atk</p>
+                </div>
+                <p className="text-sm">40</p>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-0.5">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_Rate.webp" alt="Echo 4 Substat Icon" className="w-5 h-5"></img>
+                  <p className="text-sm">Crit Rate</p>
+                </div>
+                <p className="text-sm">6.9%</p>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-0.5">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Basic_Atk_DMG.png" alt="Echo 4 Substat Icon" className="w-5 h-5"></img>
+                  <p className="text-sm">Basic Atk</p>
+                </div>
+                <p className="text-sm">8.6%</p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-1 bg-black/30 p-2">
+              <div className="flex flex-row gap-1">
+                <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Fae_Ignis_Icon.webp" alt="Echo 5" className="w-15 h-15"></img>
+                <div className="flex flex-col items-end w-[88.75px]">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Eternal_Radiance.webp" alt="Echo 5 Set" className="w-5 h-5"></img>
+                  <p className="text-sm">ATK</p>
+                  <div className="flex flex-row gap-0.5">
+                    <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp" alt="Echo 5 Main Stat Icon" className="w-5 h-5"></img>
+                    <p className="text-sm">18%</p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-0.5">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_DMG.webp" alt="Echo 5 Substat Icon" className="w-5 h-5"></img>
+                  <p className="text-sm">Crit DMG</p>
+                </div>
+                <p className="text-sm">12.6%</p>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-0.5">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Energy_Regen.webp" alt="Echo 5 Substat Icon" className="w-5 h-5"></img>
+                  <p className="text-sm">Energy</p>
+                </div>
+                <p className="text-sm">9.2%</p>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-0.5">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Health.webp" alt="Echo 5 Substat Icon" className="w-5 h-5"></img>
+                  <p className="text-sm">HP</p>
+                </div>
+                <p className="text-sm">510</p>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-0.5">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Defense.webp" alt="Echo 5 Substat Icon" className="w-5 h-5"></img>
+                  <p className="text-sm">DEF</p>
+                </div>
+                <p className="text-sm">60</p>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-0.5">
+                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp" alt="Echo 5 Substat Icon" className="w-5 h-5"></img>
+                  <p className="text-sm">ATK</p>
+                </div>
+                <p className="text-sm">8.6%</p>
+              </div>
+            </div>
+          </div>
         </div>
         <div className="absolute top-[-35px] bottom-[-50px] left-[21.5%] w-[65px]">
           <div className="flex flex-col items-center gap-3 h-[150%] bg-divider transform rotate-6 origin-center">
