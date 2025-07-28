@@ -119,7 +119,7 @@ async def extract_text(file: UploadFile = File(...)):
         "echo5FifthSubstat": lines[85],
         "echo5FifthSubstatNum": lines[86],
 
-        "stats": []
+        # "stats": []
     }
 
     data['level'] = data['level'].replace('O', '0')

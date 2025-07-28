@@ -1,4 +1,7 @@
+'use client';
+
 import Image from "next/image";
+import { useState } from 'react';
 
 export default function Home() {
   const leftStats = [
@@ -22,8 +25,56 @@ export default function Home() {
   const leftLen = leftStats.length;
   const rightLen = rightStats.length;
 
+  const [file, setFile] = useState<File | null>(null);
+  const [ocrData, setOcrData] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleUpload = async () => {
+    if (!file) return;
+    const formData = new FormData();
+    formData.append('file', file);
+    setLoading(true);
+
+    try {
+      const response = await fetch('http://127.0.0.1:8000/ocr', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('OCR request failed');
+      }
+
+      const data = await response.json();
+      setOcrData(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="flex justify-center items-center min-h-screen">
+    <div className="flex flex-col justify-center items-center min-h-screen">
+      <input
+        type="file"
+        accept="image/*"
+        onChange={(e) => setFile(e.target.files?.[0] || null)}
+        className="mb-2"
+      />
+      <button
+        onClick={handleUpload}
+        className="bg-blue-600 text-white px-4 py-2 rounded"
+        disabled={loading}
+      >
+        {loading ? 'Processing...' : 'Upload'}
+      </button>
+
+      {ocrData && (
+        // <pre className="mt-4 p-4 bg-gray-100 text-black rounded overflow-auto text-sm">
+        //   {JSON.stringify(ocrData, null, 2)}
+        // </pre>
+      // )}
       <div className="relative w-[1214px] h-[541px] rounded-xl overflow-hidden shadow-lg">
         <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center"></div>
         <div className="absolute inset-0 bg-spectro/35" />
@@ -37,11 +88,11 @@ export default function Home() {
           <div className="flex flex-row">
             <div className="flex flex-col">
               <div className="flex flex-row items-end gap-3 mt-6 ml-20">
-                <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-charName text-white leading-none">Zani</p>
-                <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-2xl text-white">• RedAstrals</p>
+                <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-charName text-white leading-none">{ocrData.character}</p>
+                <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-2xl text-white">• {ocrData.playerID}</p>
               </div>
               <div className="flex flex-row items-center gap-1.5">
-                <p className="font-lagu-semibold text-shadow-divider text-shadow-lg ml-20 text-2xl text-white">Lv. 90/90</p>
+                <p className="font-lagu-semibold text-shadow-divider text-shadow-lg ml-20 text-2xl text-white">Lv. {ocrData.level}/90</p>
                 <Image
                   src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Spectro.png"
                   alt="Spectro Symbol"
@@ -491,7 +542,7 @@ export default function Home() {
               className="w-[75%] h-auto"/>
           </div>
         </div>
-      </div>
+      </div>)}
     </div> // Card Container
   );
 }
