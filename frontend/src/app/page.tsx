@@ -14,8 +14,8 @@ export default function Home() {
   ]
 
   const rightStats = [
-    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Basic_Atk_DMG.png', label: 'Basic Atk', value: '0%' },
-    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Heavy_Atk_DMG.png', label: 'Heavy Atk', value: '17.2%' },
+    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Basic_Atk_DMG.png', label: 'Basic Atk', value: '17.2%' },
+    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Heavy_Atk_DMG.png', label: 'Heavy Atk', value: '30%' },
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Resonance_Skill_Bonus.png', label: 'Res. Skill', value: '0%' },
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Resonance_Liberation_Bonus.png', label: 'Res. Liberation', value: '0%' },
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Spectro_DMG_Bonus.webp', label: 'Spectro DMG', value: '82%' },
@@ -137,8 +137,8 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="flex flex-row ml-12 items-baseline">
-            <div className="flex flex-col gap-2">
+          <div className="flex flex-row ml-12 items-start">
+            <div className="flex flex-col -mt-1 gap-2">
               {leftStats.map(({ icon, label, value }, i) => (
                 <div
                   key={label}
@@ -152,7 +152,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col -mt-1 gap-2">
               {rightStats.map(({ icon, label, value }, i) => (
                 <div
                   key={label}
@@ -166,7 +166,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <div className="flex flex-row ml-5 gap-6">
+            <div className="flex flex-row ml-5 gap-6 h-[200px]">
               <div className="flex flex-col items-center justify-center">
                 <div className="w-9 h-9 flex justify-center items-center bg-white rounded-full border-3 border-black/30">
                   <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_Rate.webp" alt="Crit Rate" className="invert w-7 h-7"></img>
