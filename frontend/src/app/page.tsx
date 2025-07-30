@@ -2,8 +2,13 @@
 
 import Image from "next/image";
 import { useState } from 'react';
+import { getCharacterInfo } from "./characterMap";
 
 export default function Home() {
+  const [file, setFile] = useState<File | null>(null);
+  const [ocrData, setOcrData] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  
   const leftStats = [
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Health.webp', label: 'HP', value: '16855' },
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp', label: 'ATK', value: '2292' },
@@ -25,9 +30,12 @@ export default function Home() {
   const leftLen = leftStats.length;
   const rightLen = rightStats.length;
 
-  const [file, setFile] = useState<File | null>(null);
-  const [ocrData, setOcrData] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
+  const typeToBgClass: Record<string, string> = {
+  Spectro: "bg-spectro/35",
+  Aero: "bg-aero/35",
+  Havoc: "bg-havoc/35",
+  // etc...
+};
 
   const handleUpload = async () => {
     if (!file) return;
@@ -54,6 +62,8 @@ export default function Home() {
     }
   };
 
+  const character = getCharacterInfo(ocrData?.character || "");
+
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
       <input
@@ -70,19 +80,19 @@ export default function Home() {
         {loading ? 'Processing...' : 'Upload'}
       </button>
 
-      {ocrData && (
+      {ocrData && character && (
         // <pre className="mt-4 p-4 bg-gray-100 text-black rounded overflow-auto text-sm">
         //   {JSON.stringify(ocrData, null, 2)}
         // </pre>
       // )}
       <div className="relative w-[1214px] h-[541px] rounded-xl overflow-hidden shadow-lg">
         <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center"></div>
-        <div className="absolute inset-0 bg-spectro/35" />
+        <div className={`absolute inset-0 ${typeToBgClass[character.type] || "bg-gray-500/35"}`} />
           <Image 
-            src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Zani.png"
-            alt="Zani"
+            src={character.imageUrl}
+            alt={ocrData.character}
             layout="fill"
-            className="absolute ml-7 mt-15 scale-125 object-contain object-left"
+            className="absolute -ml-3 mt-15 scale-125 object-contain object-left"
           />
         <div className="flex flex-col absolute h-full bg-divider/80 origin-center left-[25.5%] w-500 gap-3">
           <div className="flex flex-row">
@@ -94,8 +104,8 @@ export default function Home() {
               <div className="flex flex-row items-center gap-1.5">
                 <p className="font-lagu-semibold text-shadow-divider text-shadow-lg ml-20 text-2xl text-white">Lv. {ocrData.level}/90</p>
                 <Image
-                  src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Spectro.png"
-                  alt="Spectro Symbol"
+                  src={character.typeIcon}
+                  alt={character.type}
                   width={35}
                   height={35}
                   className="h-auto"
@@ -105,7 +115,7 @@ export default function Home() {
             <div className="flex flex-row mt-6">
               <Image
                 src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Blazing-Justice.webp"
-                alt="Blazing Justice"
+                alt={ocrData.weaponName}
                 width={70}
                 height={70}
                 className="h-[75px] w-auto"
@@ -113,7 +123,7 @@ export default function Home() {
               <div className="flex flex-col gap-1">
                 <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-xl text-white leading-none">Blazing Justice</p>
                 <div className="flex flex-row gap-3.5">
-                  <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-lg text-white leading-none">Lv. 90/90</p>
+                  <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-lg text-white leading-none">Lv. {ocrData.weaponLvl}/90</p>
                   <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-lg text-white leading-none">R1</p>
                 </div>
                 <div className="flex flex-row items-center">
@@ -505,38 +515,38 @@ export default function Home() {
         <div className="absolute top-[-35px] bottom-[-50px] left-[21.5%] w-[65px]">
           <div className="flex flex-col items-center gap-3 h-[150%] bg-divider transform rotate-6 origin-center">
             <Image 
-              src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Zani-RC-1.webp" 
+              src={character.rc1}
               alt="RC 1"
               width={50}
               height={50}
               className="w-[75%] h-auto mt-31"/>
               <Image 
-              src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Zani-RC-2.webp" 
-              alt="RC 1"
+              src={character.rc2}
+              alt="RC 2"
               width={50}
               height={50}
               className="w-[75%] h-auto"/>
               <Image 
-              src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Zani-RC-3.webp" 
-              alt="RC 1"
+              src={character.rc3} 
+              alt="RC 3"
               width={50}
               height={50}
               className="w-[75%] h-auto"/>
               <Image 
-              src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Zani-RC-4.webp" 
-              alt="RC 1"
+              src={character.rc4}
+              alt="RC 4"
               width={50}
               height={50}
               className="w-[75%] h-auto"/>
               <Image 
-              src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Zani-RC-5.webp" 
-              alt="RC 1"
+              src={character.rc5}
+              alt="RC 5"
               width={50}
               height={50}
               className="w-[75%] h-auto"/>
               <Image 
-              src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Zani-RC-6.webp" 
-              alt="RC 1"
+              src={character.rc6}
+              alt="RC 6"
               width={50}
               height={50}
               className="w-[75%] h-auto"/>
