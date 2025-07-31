@@ -142,6 +142,7 @@ async def extract_text(file: UploadFile = File(...)):
     "echo3FirstSubstatNum",
     "echo4FirstSubstatNum",
     "echo5FirstSubstatNum",
+    "echo1SecondSubstatNum",
     "echo2SecondSubstatNum",
     "echo3SecondSubstatNum",
     "echo4SecondSubstatNum",

@@ -3,11 +3,14 @@
 import Image from "next/image";
 import { useState } from 'react';
 import { getCharacterInfo } from "./characterMap";
+import { getWeaponInfo } from "./weaponMap";
 
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
   const [ocrData, setOcrData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const character = getCharacterInfo(ocrData?.character || "");
+  const weapon = getWeaponInfo(ocrData?.weaponName || "");
   
   const leftStats = [
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Health.webp', label: 'HP', value: '16855' },
@@ -23,7 +26,7 @@ export default function Home() {
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Heavy_Atk_DMG.png', label: 'Heavy Atk', value: '30%' },
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Resonance_Skill_Bonus.png', label: 'Res. Skill', value: '0%' },
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Resonance_Liberation_Bonus.png', label: 'Res. Liberation', value: '0%' },
-    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Spectro_DMG_Bonus.webp', label: 'Spectro DMG', value: '82%' },
+    { icon: `${character && character.typeIcon}`, label: `${character && character.type} DMG`, value: '82%' },
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Healing_Bonus.png', label: 'Healing Bonus', value: '0%' },
   ]
 
@@ -62,8 +65,6 @@ export default function Home() {
     }
   };
 
-  const character = getCharacterInfo(ocrData?.character || "");
-
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
       <input
@@ -80,7 +81,7 @@ export default function Home() {
         {loading ? 'Processing...' : 'Upload'}
       </button>
 
-      {ocrData && character && (
+      {ocrData && character && weapon && (
         // <pre className="mt-4 p-4 bg-gray-100 text-black rounded overflow-auto text-sm">
         //   {JSON.stringify(ocrData, null, 2)}
         // </pre>
@@ -95,7 +96,7 @@ export default function Home() {
             className="absolute -ml-3 mt-15 scale-125 object-contain object-left"
           />
         <div className="flex flex-col absolute h-full bg-divider/80 origin-center left-[25.5%] w-500 gap-3">
-          <div className="flex flex-row">
+          <div className="flex flex-row gap-2">
             <div className="flex flex-col">
               <div className="flex flex-row items-end gap-3 mt-6 ml-20">
                 <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-charName text-white leading-none">{ocrData.character}</p>
@@ -112,16 +113,16 @@ export default function Home() {
                   />
               </div>
             </div>
-            <div className="flex flex-row mt-6">
+            <div className="flex flex-row mt-6 gap-1">
               <Image
-                src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Blazing-Justice.webp"
+                src={weapon.imageUrl}
                 alt={ocrData.weaponName}
                 width={70}
                 height={70}
                 className="h-[75px] w-auto"
               />
               <div className="flex flex-col gap-1">
-                <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-xl text-white leading-none">Blazing Justice</p>
+                <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-xl text-white leading-none">{weapon.name}</p>
                 <div className="flex flex-row gap-3.5">
                   <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-lg text-white leading-none">Lv. {ocrData.weaponLvl}/90</p>
                   <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-lg text-white leading-none">R1</p>
@@ -134,15 +135,15 @@ export default function Home() {
                     height={25} 
                     className="h-auto"
                   />
-                  <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-lg text-white leading-none ml-1 mr-3">587</p>
+                  <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-lg text-white leading-none ml-1 mr-3">{weapon.baseStatNum}</p>
                   <Image 
-                    src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_DMG.webp" 
-                    alt="Crit DMG Icon" 
+                    src={weapon.subStatIcon}
+                    alt="Weapon Substat Icon"
                     width={25} 
                     height={25} 
                     className="h-auto"
                   />
-                  <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-lg text-white leading-none ml-1 mr-3">48.6%</p>
+                  <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-lg text-white leading-none ml-1 mr-3">{weapon.subStatNum}</p>
                 </div>
               </div>
             </div>
@@ -190,7 +191,7 @@ export default function Home() {
                   <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Zani_Basic_Atk.png" alt="Zani Basic Attack" className="-rotate-45 invert w-9 h-9"></img>
                 </div>
                 <p className="flex flex-col leading-tight text-center mt-3 text-xs">
-                  <span>Lv. 10</span>
+                  <span>Lv. {ocrData.basicAtkLvl && ocrData.basicAtkLvl.match(/\d+/)?.[0]}</span>
                   <span>Normal</span>
                 </p>
               </div>
@@ -207,7 +208,7 @@ export default function Home() {
                   <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Zani_Resonance_Skill.png" alt="Zani Skill" className="-rotate-45 invert w-9 h-9"></img>
                 </div>
                 <p className="flex flex-col leading-tight text-center mt-3 text-xs">
-                  <span>Lv. 10</span>
+                  <span>Lv. {ocrData.skillLvl && ocrData.skillLvl.match(/\d+/)?.[0]}</span>
                   <span>Skill</span>
                 </p>
               </div>
@@ -228,7 +229,7 @@ export default function Home() {
                   <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Zani_Forte_Circuit.png" alt="Zani Forte Circuit" className="-rotate-45 invert w-9 h-9"></img>
                 </div>
                 <p className="flex flex-col leading-tight text-center mt-3 text-xs">
-                  <span>Lv. 10</span>
+                  <span>Lv. {ocrData.forteCircuitLvl && ocrData.forteCircuitLvl.match(/\d+/)?.[0]}</span>
                   <span>Forte</span>
                 </p>
               </div>
@@ -245,7 +246,7 @@ export default function Home() {
                   <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Zani_Resonance_Liberation.png" alt="Zani Resonance Liberation" className="-rotate-45 invert w-9 h-9"></img>
                 </div>
                 <p className="flex flex-col leading-tight text-center mt-3 text-xs">
-                  <span>Lv. 10</span>
+                  <span>Lv. {ocrData.ultimateLvl && ocrData.ultimateLvl.match(/\d+/)?.[0]}</span>
                   <span>Liberation</span>
                 </p>
               </div>
@@ -262,7 +263,7 @@ export default function Home() {
                   <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Zani_Intro_Skill.png" alt="Zani Basic Attack" className="-rotate-45 invert w-9 h-9"></img>
                 </div>
                 <p className="flex flex-col leading-tight text-center mt-3 text-xs">
-                  <span>Lv. 10</span>
+                  <span>Lv. {ocrData.introSkillLvl && ocrData.introSkillLvl.match(/\d+/)?.[0]}</span>
                   <span>Intro</span>
                 </p>
               </div>
@@ -275,26 +276,26 @@ export default function Home() {
                 <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Capitaneus_Icon.webp" alt="Echo 1" className="w-15 h-15"></img>
                 <div className="flex flex-col items-end">
                   <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Eternal_Radiance.webp" alt="Echo 1 Set" className="w-5 h-5"></img>
-                  <p className="text-sm">Spectro DMG</p>
+                  <p className="text-sm">{ocrData.echo1MainStat}</p>
                   <div className="flex flex-row gap-0.5">
                     <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Spectro_DMG_Bonus.webp" alt="Echo 1 Main Stat Icon" className="w-5 h-5"></img>
-                    <p className="text-sm">30%</p>
+                    <p className="text-sm">{ocrData.echo1MainStatNum}</p>
                   </div>
                 </div>
               </div>
               <div className="flex flex-row justify-between">
                 <div className="flex flex-row gap-0.5">
                   <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_DMG.webp" alt="Echo 1 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">Crit DMG</p>
+                  <p className="text-sm">{ocrData.echo1FirstSubstat}</p>
                 </div>
-                <p className="text-sm">13.8%</p>
+                <p className="text-sm">{ocrData.echo1FirstSubstatNum}</p>
               </div>
               <div className="flex flex-row justify-between">
                 <div className="flex flex-row gap-0.5">
                   <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Basic_Atk_DMG.png" alt="Echo 1 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">Basic Atk</p>
+                  <p className="text-sm">{ocrData.echo1SecondSubstat}</p>
                 </div>
-                <p className="text-sm">8.6%</p>
+                <p className="text-sm">{ocrData.echo1SecondSubstatNum}</p>
               </div>
               <div className="flex flex-row justify-between">
                 <div className="flex flex-row gap-0.5">
