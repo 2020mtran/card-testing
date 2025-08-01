@@ -167,6 +167,42 @@ async def extract_text(file: UploadFile = File(...)):
     for field in percent_fields:
         data[field] = fix_percent_format(data[field])
 
+    stat_name_fields = [
+        "echo1MainStat",
+        "echo2MainStat",
+        "echo3MainStat",
+        "echo4MainStat",
+        "echo5MainStat",
+        "echo1FirstSubstat",
+        "echo2FirstSubstat",
+        "echo3FirstSubstat",
+        "echo4FirstSubstat",
+        "echo5FirstSubstat",
+        "echo1SecondSubstat",
+        "echo2SecondSubstat",
+        "echo3SecondSubstat",
+        "echo4SecondSubstat",
+        "echo5SecondSubstat",
+        "echo1ThirdSubstat",
+        "echo2ThirdSubstat",
+        "echo3ThirdSubstat",
+        "echo4ThirdSubstat",
+        "echo5ThirdSubstat",
+        "echo1FourthSubstat",
+        "echo2FourthSubstat",
+        "echo3FourthSubstat",
+        "echo4FourthSubstat",
+        "echo5FourthSubstat",
+        "echo1FifthSubstat",
+        "echo2FifthSubstat",
+        "echo3FifthSubstat",
+        "echo4FifthSubstat",
+        "echo5FifthSubstat",
+    ]
+
+    for field in stat_name_fields:
+        data[field] = fix_crit_format(data[field])
+
     data['echo3MainStatNum'] = data['echo3MainStatNum'].replace('O', '0')
     digits = re.findall(r'[0-9.%]+', data["echo3MainStatNum"])
     data["echo3MainStatNum"] = "".join(digits)
@@ -190,3 +226,13 @@ def fix_percent_format(value: str) -> str:
         # Convert to float and format with 1 decimal + add %
         return f"{float(value):.1f}%"
     return value
+
+def fix_crit_format(label: str) -> str:
+    return re.sub(r'(\w):', r'\1.', label)
+
+def simplify_stat_label(label: str) -> str:
+    replacements = {
+        "Resonance Skill DMG": "Res. Skill",
+        # Add more replacements if needed
+    }
+    return replacements.get(label, label)
