@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from 'react';
 import { getCharacterInfo } from "./characterMap";
 import { getWeaponInfo } from "./weaponMap";
+import { getStatIcon } from "./statMap";
 
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
@@ -34,11 +35,51 @@ export default function Home() {
   const rightLen = rightStats.length;
 
   const typeToBgClass: Record<string, string> = {
-  Spectro: "bg-spectro/35",
-  Aero: "bg-aero/35",
-  Havoc: "bg-havoc/35",
-  // etc...
-};
+    Spectro: "bg-spectro/35",
+    Aero: "bg-aero/35",
+    Havoc: "bg-havoc/35",
+    // etc...
+  };
+
+  const echo1Substats = ocrData ? [
+    { label: ocrData.echo1FirstSubstat, value: ocrData.echo1FirstSubstatNum },
+    { label: ocrData.echo1SecondSubstat, value: ocrData.echo1SecondSubstatNum },
+    { label: ocrData.echo1ThirdSubstat, value: ocrData.echo1ThirdSubstatNum },
+    { label: ocrData.echo1FourthSubstat, value: ocrData.echo1FourthSubstatNum },
+    { label: ocrData.echo1FifthSubstat, value: ocrData.echo1FifthSubstatNum },
+  ] : [];
+
+  const echo2Substats = ocrData ? [
+    { label: ocrData.echo2FirstSubstat, value: ocrData.echo2FirstSubstatNum },
+    { label: ocrData.echo2SecondSubstat, value: ocrData.echo2SecondSubstatNum },
+    { label: ocrData.echo2ThirdSubstat, value: ocrData.echo2ThirdSubstatNum },
+    { label: ocrData.echo2FourthSubstat, value: ocrData.echo2FourthSubstatNum },
+    { label: ocrData.echo2FifthSubstat, value: ocrData.echo2FifthSubstatNum },
+  ] : [];
+
+  const echo3Substats = ocrData ? [
+    { label: ocrData.echo3FirstSubstat, value: ocrData.echo3FirstSubstatNum },
+    { label: ocrData.echo3SecondSubstat, value: ocrData.echo3SecondSubstatNum },
+    { label: ocrData.echo3ThirdSubstat, value: ocrData.echo3ThirdSubstatNum },
+    { label: ocrData.echo3FourthSubstat, value: ocrData.echo3FourthSubstatNum },
+    { label: ocrData.echo3FifthSubstat, value: ocrData.echo3FifthSubstatNum },
+  ] : [];
+
+  const echo4Substats = ocrData ? [
+    { label: ocrData.echo4FirstSubstat, value: ocrData.echo4FirstSubstatNum },
+    { label: ocrData.echo4SecondSubstat, value: ocrData.echo4SecondSubstatNum },
+    { label: ocrData.echo4ThirdSubstat, value: ocrData.echo4ThirdSubstatNum },
+    { label: ocrData.echo4FourthSubstat, value: ocrData.echo4FourthSubstatNum },
+    { label: ocrData.echo4FifthSubstat, value: ocrData.echo4FifthSubstatNum },
+  ] : [];
+
+  const echo5Substats = ocrData ? [
+    { label: ocrData.echo5FirstSubstat, value: ocrData.echo5FirstSubstatNum },
+    { label: ocrData.echo5SecondSubstat, value: ocrData.echo5SecondSubstatNum },
+    { label: ocrData.echo5ThirdSubstat, value: ocrData.echo5ThirdSubstatNum },
+    { label: ocrData.echo5FourthSubstat, value: ocrData.echo5FourthSubstatNum },
+    { label: ocrData.echo5FifthSubstat, value: ocrData.echo5FifthSubstatNum },
+  ] : [];
 
   const handleUpload = async () => {
     if (!file) return;
@@ -280,45 +321,26 @@ export default function Home() {
                   <div className="flex flex-row gap-0.5">
                     <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Spectro_DMG_Bonus.webp" alt="Echo 1 Main Stat Icon" className="w-5 h-5"></img>
                     <p className="text-sm">{ocrData.echo1MainStatNum}</p>
+                  </div> 
+                </div>
+              </div>
+              {echo1Substats.map((substat, index) => {
+                const iconSrc = getStatIcon(substat.label);
+
+                return (
+                  <div key={index} className="flex flex-row justify-between">
+                    <div className="flex flex-row gap-0.5">
+                      {iconSrc && (
+                        <img src={iconSrc} alt="Substat Icon" className="w-5 h-5" />
+                      )}
+                      <p className="text-sm">{substat.label}</p>
+                    </div>
+                    <p className="text-sm">{substat.value}</p>
                   </div>
-                </div>
-              </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-0.5">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_DMG.webp" alt="Echo 1 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">{ocrData.echo1FirstSubstat}</p>
-                </div>
-                <p className="text-sm">{ocrData.echo1FirstSubstatNum}</p>
-              </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-0.5">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Basic_Atk_DMG.png" alt="Echo 1 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">{ocrData.echo1SecondSubstat}</p>
-                </div>
-                <p className="text-sm">{ocrData.echo1SecondSubstatNum}</p>
-              </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-0.5">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_Rate.webp" alt="Echo 1 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">{ocrData.echo1ThirdSubstat}</p>
-                </div>
-                <p className="text-sm">{ocrData.echo1ThirdSubstatNum}</p>
-              </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-0.5">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Defense.webp" alt="Echo 1 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">{ocrData.echo1FourthSubstat}</p>
-                </div>
-                <p className="text-sm">{ocrData.echo1FourthSubstatNum}</p>
-              </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-0.5">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp" alt="Echo 1 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">{ocrData.echo1FifthSubstat}</p>
-                </div>
-                <p className="text-sm">{ocrData.echo1FifthSubstatNum}</p>
-              </div>
+                )
+              })}
             </div>
+  
             <div className="flex flex-col gap-1 bg-black/30 p-2">
               <div className="flex flex-row gap-1">
                 <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Nightmare-Mourning-Aix.webp" alt="Echo 2" className="w-15 h-15"></img>
@@ -331,185 +353,105 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-0.5">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_Rate.webp" alt="Echo 2 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">{ocrData.echo2FirstSubstat}</p>
-                </div>
-                <p className="text-sm">{ocrData.echo2FirstSubstatNum}</p>
-              </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-0.5">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Health.webp" alt="Echo 2 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">{ocrData.echo2SecondSubstat}</p>
-                </div>
-                <p className="text-sm">{ocrData.echo2SecondSubstatNum}</p>
-              </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-0.5">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp" alt="Echo 2 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">{ocrData.echo2ThirdSubstat}</p>
-                </div>
-                <p className="text-sm">{ocrData.echo2ThirdSubstatNum}</p>
-              </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-0.5">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_DMG.webp" alt="Echo 2 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">Crit DMG%</p>
-                </div>
-                <p className="text-sm">25%</p>
-              </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-0.5">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Heavy_Atk_DMG.png" alt="Echo 2 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">Heavy ATK</p>
-                </div>
-                <p className="text-sm">8.6%</p>
-              </div>
+              {echo2Substats.map((substat, index) => {
+                const iconSrc = getStatIcon(substat.label);
+
+                return (
+                  <div key={index} className="flex flex-row justify-between">
+                    <div className="flex flex-row gap-0.5">
+                      {iconSrc && (
+                        <img src={iconSrc} alt="Substat Icon" className="w-5 h-5" />
+                      )}
+                      <p className="text-sm">{substat.label}</p>
+                    </div>
+                    <p className="text-sm">{substat.value}</p>
+                  </div>
+                )
+              })}
             </div>
             <div className="flex flex-col gap-1 bg-black/30 p-2">
               <div className="flex flex-row gap-1">
                 <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Vitreum_Dancer_Icon.webp" alt="Echo 3" className="w-15 h-15"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
                   <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Eternal_Radiance.webp" alt="Echo 3 Set" className="w-5 h-5"></img>
-                  <p className="text-sm">Spectro DMG</p>
+                  <p className="text-sm">{ocrData.echo3MainStat}</p>
                   <div className="flex flex-row gap-0.5">
                     <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Spectro_DMG_Bonus.webp" alt="Echo 3 Main Stat Icon" className="w-5 h-5"></img>
-                    <p className="text-sm">30%</p>
+                    <p className="text-sm">{ocrData.echo3MainStatNum}</p>
                   </div>
                 </div>
               </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-0.5">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_DMG.webp" alt="Echo 3 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">Crit DMG</p>
-                </div>
-                <p className="text-sm">18.6%</p>
-              </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-0.5">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Health.webp" alt="Echo 3 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">HP</p>
-                </div>
-                <p className="text-sm">470</p>
-              </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-0.5">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_Rate.webp" alt="Echo 3 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">Crit Rate</p>
-                </div>
-                <p className="text-sm">8.1%</p>
-              </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-0.5">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Defense.webp" alt="Echo 3 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">DEF</p>
-                </div>
-                <p className="text-sm">50</p>
-              </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-0.5">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Heavy_Atk_DMG.png" alt="Echo 3 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">Heavy ATK</p>
-                </div>
-                <p className="text-sm">9.4%</p>
-              </div>
+              {echo3Substats.map((substat, index) => {
+                const iconSrc = getStatIcon(substat.label);
+
+                return (
+                  <div key={index} className="flex flex-row justify-between">
+                    <div className="flex flex-row gap-0.5">
+                      {iconSrc && (
+                        <img src={iconSrc} alt="Substat Icon" className="w-5 h-5" />
+                      )}
+                      <p className="text-sm">{substat.label}</p>
+                    </div>
+                    <p className="text-sm">{substat.value}</p>
+                  </div>
+                )
+              })}
             </div>
             <div className="flex flex-col gap-1 bg-black/30 p-2">
               <div className="flex flex-row gap-1">
                 <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Aero-Prism.webp" alt="Echo 4" className="w-15 h-15"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
                   <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Eternal_Radiance.webp" alt="Echo 4 Set" className="w-5 h-5"></img>
-                  <p className="text-sm">ATK</p>
+                  <p className="text-sm">{ocrData.echo4MainStat}</p>
                   <div className="flex flex-row gap-0.5">
                     <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp" alt="Echo 4 Main Stat Icon" className="w-5 h-5"></img>
-                    <p className="text-sm">18%</p>
+                    <p className="text-sm">{ocrData.echo4MainStatNum}</p>
                   </div>
                 </div>
               </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-0.5">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Energy_Regen.webp" alt="Echo 4 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">Energy</p>
-                </div>
-                <p className="text-sm">10.8%</p>
-              </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-0.5">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_DMG.webp" alt="Echo 4 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">Crit DMG</p>
-                </div>
-                <p className="text-sm">16.2%</p>
-              </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-0.5">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp" alt="Echo 4 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">Atk</p>
-                </div>
-                <p className="text-sm">40</p>
-              </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-0.5">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_Rate.webp" alt="Echo 4 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">Crit Rate</p>
-                </div>
-                <p className="text-sm">6.9%</p>
-              </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-0.5">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Basic_Atk_DMG.png" alt="Echo 4 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">Basic Atk</p>
-                </div>
-                <p className="text-sm">8.6%</p>
-              </div>
+              {echo4Substats.map((substat, index) => {
+                const iconSrc = getStatIcon(substat.label);
+
+                return (
+                  <div key={index} className="flex flex-row justify-between">
+                    <div className="flex flex-row gap-0.5">
+                      {iconSrc && (
+                        <img src={iconSrc} alt="Substat Icon" className="w-5 h-5" />
+                      )}
+                      <p className="text-sm">{substat.label}</p>
+                    </div>
+                    <p className="text-sm">{substat.value}</p>
+                  </div>
+                )
+              })}
             </div>
             <div className="flex flex-col gap-1 bg-black/30 p-2">
               <div className="flex flex-row gap-1">
                 <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Fae_Ignis_Icon.webp" alt="Echo 5" className="w-15 h-15"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
                   <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Eternal_Radiance.webp" alt="Echo 5 Set" className="w-5 h-5"></img>
-                  <p className="text-sm">ATK</p>
+                  <p className="text-sm">{ocrData.echo5MainStat}</p>
                   <div className="flex flex-row gap-0.5">
                     <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp" alt="Echo 5 Main Stat Icon" className="w-5 h-5"></img>
-                    <p className="text-sm">18%</p>
+                    <p className="text-sm">{ocrData.echo5MainStatNum}</p>
                   </div>
                 </div>
               </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-0.5">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_DMG.webp" alt="Echo 5 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">Crit DMG</p>
-                </div>
-                <p className="text-sm">12.6%</p>
-              </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-0.5">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Energy_Regen.webp" alt="Echo 5 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">Energy</p>
-                </div>
-                <p className="text-sm">9.2%</p>
-              </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-0.5">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Health.webp" alt="Echo 5 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">HP</p>
-                </div>
-                <p className="text-sm">510</p>
-              </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-0.5">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Defense.webp" alt="Echo 5 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">DEF</p>
-                </div>
-                <p className="text-sm">60</p>
-              </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-0.5">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp" alt="Echo 5 Substat Icon" className="w-5 h-5"></img>
-                  <p className="text-sm">ATK</p>
-                </div>
-                <p className="text-sm">8.6%</p>
-              </div>
+              {echo5Substats.map((substat, index) => {
+                const iconSrc = getStatIcon(substat.label);
+
+                return (
+                  <div key={index} className="flex flex-row justify-between">
+                    <div className="flex flex-row gap-0.5">
+                      {iconSrc && (
+                        <img src={iconSrc} alt="Substat Icon" className="w-5 h-5" />
+                      )}
+                      <p className="text-sm">{substat.label}</p>
+                    </div>
+                    <p className="text-sm">{substat.value}</p>
+                  </div>
+                )
+              })}
             </div>
           </div>
         </div>

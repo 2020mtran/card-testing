@@ -202,6 +202,7 @@ async def extract_text(file: UploadFile = File(...)):
 
     for field in stat_name_fields:
         data[field] = fix_crit_format(data[field])
+        data[field] = simplify_stat_label(data[field])
 
     data['echo3MainStatNum'] = data['echo3MainStatNum'].replace('O', '0')
     digits = re.findall(r'[0-9.%]+', data["echo3MainStatNum"])
@@ -233,6 +234,9 @@ def fix_crit_format(label: str) -> str:
 def simplify_stat_label(label: str) -> str:
     replacements = {
         "Resonance Skill DMG": "Res. Skill",
+        "Regen": "Energy",
+        "Heavy Attack DMG Bonus": "Heavy Atk",
+        "Basic Attack DMG Bonus": "Basic Atk"
         # Add more replacements if needed
     }
     return replacements.get(label, label)
