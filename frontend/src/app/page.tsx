@@ -221,15 +221,15 @@ export default function Home() {
             <div className="flex flex-row ml-5 gap-6 h-[200px]">
               <div className="flex flex-col items-center justify-center">
                 <div className="w-9 h-9 flex justify-center items-center bg-white rounded-full border-3 border-black/30">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_Rate.webp" alt="Crit Rate" className="invert w-7 h-7"></img>
+                  <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-7 h-7"></img>
                 </div>
                 <div className="h-6 w-[3px] bg-white/20" />
                 <div className="w-9 h-9 flex justify-center items-center bg-white rounded-full border-3 border-black/30">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_Rate.webp" alt="Crit Rate" className="invert w-7 h-7"></img>
+                  <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-7 h-7"></img>
                 </div>                
                 <div className="h-6 w-[3px] bg-white/20 mb-2" />
                 <div className="w-11 h-11 rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Zani_Basic_Atk.png" alt="Zani Basic Attack" className="-rotate-45 invert w-9 h-9"></img>
+                  <img src={character.normal} alt="Normal Attack" className="-rotate-45 invert w-9 h-9"></img>
                 </div>
                 <p className="flex flex-col leading-tight text-center mt-3 text-xs">
                   <span>Lv. {ocrData.basicAtkLvl && ocrData.basicAtkLvl.match(/\d+/)?.[0]}</span>
@@ -238,15 +238,15 @@ export default function Home() {
               </div>
               <div className="flex flex-col items-center justify-center">
                 <div className="w-9 h-9 flex justify-center items-center bg-white rounded-full border-3 border-black/30">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp" alt="Atk" className="invert w-6 h-6"></img>
+                  <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-6 h-6"></img>
                 </div>
                 <div className="h-6 w-[3px] bg-white/20" />
                 <div className="w-9 h-9 flex justify-center items-center bg-white rounded-full border-3 border-black/30">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp" alt="Atk" className="invert w-6 h-6"></img>
+                  <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-6 h-6"></img>
                 </div>                
                 <div className="h-6 w-[3px] bg-white/20 mb-2" />
                 <div className="w-11 h-11 rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Zani_Resonance_Skill.png" alt="Zani Skill" className="-rotate-45 invert w-9 h-9"></img>
+                  <img src={character.skill} alt="Skill" className="-rotate-45 invert w-9 h-9"></img>
                 </div>
                 <p className="flex flex-col leading-tight text-center mt-3 text-xs">
                   <span>Lv. {ocrData.skillLvl && ocrData.skillLvl.match(/\d+/)?.[0]}</span>
@@ -256,18 +256,18 @@ export default function Home() {
               <div className="flex flex-col items-center justify-center">
                 <div className="w-11 h-11 border-3 border-black/30 bg-white flex items-center justify-center">
                   <div className="w-7 h-7 rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
-                    <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Zani_Passive_Skill2.png" alt="Zani Passive Skill" className="-rotate-45 invert w-6 h-6"></img>
+                    <img src={character.passive2} alt="Passive Skill 2" className="-rotate-45 invert w-6 h-6"></img>
                   </div>  
                 </div>
                 <div className="h-4 w-[3px] bg-white/20" />
                 <div className="w-11 h-11 border-3 border-black/30 bg-white flex items-center justify-center">
                   <div className="w-7 h-7 rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
-                    <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Zani_Passive_Skill1.png" alt="Zani Passive Skill" className="-rotate-45 invert w-6 h-6"></img>
+                    <img src={character.passive1} alt="Passive Skill 1" className="-rotate-45 invert w-6 h-6"></img>
                   </div>  
                 </div>
                 <div className="h-4 w-[3px] bg-white/20 mb-2" />
                 <div className="w-11 h-11 rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Zani_Forte_Circuit.png" alt="Zani Forte Circuit" className="-rotate-45 invert w-9 h-9"></img>
+                  <img src={character.forte} alt="Forte Circuit" className="-rotate-45 invert w-9 h-9"></img>
                 </div>
                 <p className="flex flex-col leading-tight text-center mt-3 text-xs">
                   <span>Lv. {ocrData.forteCircuitLvl && ocrData.forteCircuitLvl.match(/\d+/)?.[0]}</span>
@@ -276,15 +276,15 @@ export default function Home() {
               </div>
               <div className="flex flex-col items-center justify-center w-[44px]">
                 <div className="w-9 h-9 flex justify-center items-center bg-white rounded-full border-3 border-black/30">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp" alt="Atk" className="invert w-6 h-6"></img>
+                  <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-6 h-6"></img>
                 </div>
                 <div className="h-6 w-[3px] bg-white/20" />
                 <div className="w-9 h-9 flex justify-center items-center bg-white rounded-full border-3 border-black/30">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp" alt="Atk" className="invert w-6 h-6"></img>
+                  <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-6 h-6"></img>
                 </div>                
                 <div className="h-6 w-[3px] bg-white/20 mb-2" />
                 <div className="w-11 h-11 rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Zani_Resonance_Liberation.png" alt="Zani Resonance Liberation" className="-rotate-45 invert w-9 h-9"></img>
+                  <img src={character.liberation} alt="Resonance Liberation" className="-rotate-45 invert w-9 h-9"></img>
                 </div>
                 <p className="flex flex-col leading-tight text-center mt-3 text-xs">
                   <span>Lv. {ocrData.ultimateLvl && ocrData.ultimateLvl.match(/\d+/)?.[0]}</span>
@@ -293,15 +293,15 @@ export default function Home() {
               </div>
               <div className="flex flex-col items-center justify-center">
                 <div className="w-9 h-9 flex justify-center items-center bg-white rounded-full border-3 border-black/30">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_Rate.webp" alt="Crit Rate" className="invert w-7 h-7"></img>
+                  <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-7 h-7"></img>
                 </div>
                 <div className="h-6 w-[3px] bg-white/20" />
                 <div className="w-9 h-9 flex justify-center items-center bg-white rounded-full border-3 border-black/30">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_Rate.webp" alt="Crit Rate" className="invert w-7 h-7"></img>
+                  <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-7 h-7"></img>
                 </div>                
                 <div className="h-6 w-[3px] bg-white/20 mb-2" />
                 <div className="w-11 h-11 rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Zani_Intro_Skill.png" alt="Zani Basic Attack" className="-rotate-45 invert w-9 h-9"></img>
+                  <img src={character.intro} alt="Intro Skill" className="-rotate-45 invert w-9 h-9"></img>
                 </div>
                 <p className="flex flex-col leading-tight text-center mt-3 text-xs">
                   <span>Lv. {ocrData.introSkillLvl && ocrData.introSkillLvl.match(/\d+/)?.[0]}</span>
@@ -319,7 +319,9 @@ export default function Home() {
                   <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Eternal_Radiance.webp" alt="Echo 1 Set" className="w-5 h-5"></img>
                   <p className="text-sm">{ocrData.echo1MainStat}</p>
                   <div className="flex flex-row gap-0.5">
-                    <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Spectro_DMG_Bonus.webp" alt="Echo 1 Main Stat Icon" className="w-5 h-5"></img>
+                    {getStatIcon(ocrData.echo1MainStat) && (
+                      <img src={getStatIcon(ocrData.echo1MainStat)!} alt="Echo 1 Main Stat Icon" className="w-5 h-5"></img> 
+                    )}
                     <p className="text-sm">{ocrData.echo1MainStatNum}</p>
                   </div> 
                 </div>
@@ -348,7 +350,9 @@ export default function Home() {
                   <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Eternal_Radiance.webp" alt="Echo 2 Set" className="w-5 h-5"></img>
                   <p className="text-sm">{ocrData.echo2MainStat}</p>
                   <div className="flex flex-row gap-0.5">
-                    <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_DMG.webp" alt="Echo 2 Main Stat Icon" className="w-5 h-5"></img>
+                    {getStatIcon(ocrData.echo2MainStat) && (
+                      <img src={getStatIcon(ocrData.echo2MainStat)!} alt="Echo 2 Main Stat Icon" className="w-5 h-5"></img> 
+                    )}
                     <p className="text-sm">{ocrData.echo2MainStatNum}</p>
                   </div>
                 </div>
@@ -376,7 +380,9 @@ export default function Home() {
                   <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Eternal_Radiance.webp" alt="Echo 3 Set" className="w-5 h-5"></img>
                   <p className="text-sm">{ocrData.echo3MainStat}</p>
                   <div className="flex flex-row gap-0.5">
-                    <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Spectro_DMG_Bonus.webp" alt="Echo 3 Main Stat Icon" className="w-5 h-5"></img>
+                    {getStatIcon(ocrData.echo3MainStat) && (
+                      <img src={getStatIcon(ocrData.echo3MainStat)!} alt="Echo 3 Main Stat Icon" className="w-5 h-5"></img> 
+                    )}
                     <p className="text-sm">{ocrData.echo3MainStatNum}</p>
                   </div>
                 </div>
@@ -404,7 +410,9 @@ export default function Home() {
                   <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Eternal_Radiance.webp" alt="Echo 4 Set" className="w-5 h-5"></img>
                   <p className="text-sm">{ocrData.echo4MainStat}</p>
                   <div className="flex flex-row gap-0.5">
-                    <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp" alt="Echo 4 Main Stat Icon" className="w-5 h-5"></img>
+                    {getStatIcon(ocrData.echo4MainStat) && (
+                      <img src={getStatIcon(ocrData.echo4MainStat)!} alt="Echo 4 Main Stat Icon" className="w-5 h-5"></img> 
+                    )}
                     <p className="text-sm">{ocrData.echo4MainStatNum}</p>
                   </div>
                 </div>
@@ -432,7 +440,9 @@ export default function Home() {
                   <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Eternal_Radiance.webp" alt="Echo 5 Set" className="w-5 h-5"></img>
                   <p className="text-sm">{ocrData.echo5MainStat}</p>
                   <div className="flex flex-row gap-0.5">
-                    <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp" alt="Echo 5 Main Stat Icon" className="w-5 h-5"></img>
+                    {getStatIcon(ocrData.echo5MainStat) && (
+                      <img src={getStatIcon(ocrData.echo5MainStat)!} alt="Echo 5 Main Stat Icon" className="w-5 h-5"></img> 
+                    )}
                     <p className="text-sm">{ocrData.echo5MainStatNum}</p>
                   </div>
                 </div>

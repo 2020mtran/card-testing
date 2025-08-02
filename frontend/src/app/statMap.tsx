@@ -9,7 +9,7 @@ export const statIconMap: Record<string, string> = {
   "Heavy Atk": "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Heavy_Atk_DMG.png",
   "Res. Skill": "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Resonance_Skill_Bonus.png",
   "Res. Lib.": "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Resonance_Liberation_Bonus.png",
-  "Spectro DMG": "",
+  "Spectro DMG": "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Spectro.png",
   "Aero DMG": "",
   "Healing Bonus": "",
   // Add more as needed
