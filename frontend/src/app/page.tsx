@@ -12,27 +12,6 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const character = getCharacterInfo(ocrData?.character || "");
   const weapon = getWeaponInfo(ocrData?.weaponName || "");
-  
-  const leftStats = [
-    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Health.webp', label: 'HP', value: '16855' },
-    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp', label: 'ATK', value: '2292' },
-    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Defense.webp', label: 'DEF', value: '1306' },
-    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Energy_Regen.webp', label: 'Energy Regen', value: '120%' },
-    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_Rate.webp', label: 'Crit. Rate', value: '44.2%' },
-    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_DMG.webp', label: 'Crit. DMG', value: '318.8%' },
-  ]
-
-  const rightStats = [
-    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Basic_Atk_DMG.png', label: 'Basic Atk', value: '17.2%' },
-    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Heavy_Atk_DMG.png', label: 'Heavy Atk', value: '30%' },
-    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Resonance_Skill_Bonus.png', label: 'Res. Skill', value: '0%' },
-    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Resonance_Liberation_Bonus.png', label: 'Res. Liberation', value: '0%' },
-    { icon: `${character && character.typeIcon}`, label: `${character && character.type} DMG`, value: '82%' },
-    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Healing_Bonus.png', label: 'Healing Bonus', value: '0%' },
-  ]
-
-  const leftLen = leftStats.length;
-  const rightLen = rightStats.length;
 
   const typeToBgClass: Record<string, string> = {
     Spectro: "bg-spectro/35",
@@ -105,6 +84,167 @@ export default function Home() {
       setLoading(false);
     }
   };
+
+  const STAT_TYPES = {
+    hp: ["hp"],
+    atk: ["atk"],
+    def: ["def"],
+    critRate: ["crit. rate"],
+    critDmg: ["crit. dmg"],
+    energy: ["energy"],
+    elemental: ["spectro dmg", "aero dmg"],
+    healing: ["healing bonus"]
+  }
+
+  const totalStats = {
+    flat: { hp: 0, atk: 0, def: 0 },
+    percent: { hp: 0, atk: 0, def: 0 },
+    total_hp: 0,
+    critRate: 5,
+    critDmg: 150,
+    energy: 100,
+    elemental: {"spectro": 0, "aero": 0},
+    healing: 0,
+    skill: { basic: 0, heavy: 0, skill: 0, liberation: 0,}
+  }
+
+  function normalizeLabel(label: string): string {
+    return label.toLowerCase().replace(/\./g, "").trim();
+  }
+
+  function isPercentage(value: string): boolean {
+    return value.includes("%");
+  }
+
+  // Function to handle total stats
+  // 0. go through each stat and figure out what category it belongs to by:
+  function applySubstat(label: string, value: string) {
+    const statLabel = normalizeLabel(label);
+    const numericValue = parseFloat(value.replace("%", ""));
+
+    if (STAT_TYPES.hp.includes(statLabel)) {
+      isPercentage(value) ? totalStats.percent.hp += numericValue : totalStats.flat.hp += numericValue;
+    }
+  }
+
+  function applyMainStat(label: string, value: string) {
+    const statLabel = normalizeLabel(label);
+    const numericValue = parseFloat(value.replace("%", ""));
+
+    if (STAT_TYPES.hp.includes(statLabel)) {
+      totalStats.percent.hp += numericValue
+      totalStats.flat.hp += 2280
+    }
+  }
+  // 1. If stat label is HP ->
+    // If stat value is a % -> add to total_hp_percent
+    // Else -> add to total_flat_hp
+  // 2. If stat label is ATK / DEF ->
+    // do same as above for respective stat
+  // 3. If stat label is Energy ->
+    // add to total_energy (starts at 100%)
+  // 4. if stat label is crit. rate ->
+    // add to total_crit_rate (starts at 5%?)
+  // 5. if stat label is crit. dmg ->
+    // add to total_crit_dmg (starts at 150%?)
+  // 6. if stat label is basic atk / heavy atk / res. skill / res. lib ->
+    // add to respective total
+  // 7. if stat label is healing bonus ->
+    // add to total_healing_bonus
+  // 8. else, it can only be the element of the character's damage
+    // add to character's element dmg total
+  const allSubStats = ocrData ? [
+    { label: ocrData.echo1FirstSubstat, value: ocrData.echo1FirstSubstatNum },
+    { label: ocrData.echo1SecondSubstat, value: ocrData.echo1SecondSubstatNum },
+    { label: ocrData.echo1ThirdSubstat, value: ocrData.echo1ThirdSubstatNum },
+    { label: ocrData.echo1FourthSubstat, value: ocrData.echo1FourthSubstatNum },
+    { label: ocrData.echo1FifthSubstat, value: ocrData.echo1FifthSubstatNum },
+    
+    { label: ocrData.echo2FirstSubstat, value: ocrData.echo2FirstSubstatNum },
+    { label: ocrData.echo2SecondSubstat, value: ocrData.echo2SecondSubstatNum },
+    { label: ocrData.echo2ThirdSubstat, value: ocrData.echo2ThirdSubstatNum },
+    { label: ocrData.echo2FourthSubstat, value: ocrData.echo2FourthSubstatNum },
+    { label: ocrData.echo2FifthSubstat, value: ocrData.echo2FifthSubstatNum },
+
+    { label: ocrData.echo3FirstSubstat, value: ocrData.echo3FirstSubstatNum },
+    { label: ocrData.echo3SecondSubstat, value: ocrData.echo3SecondSubstatNum },
+    { label: ocrData.echo3ThirdSubstat, value: ocrData.echo3ThirdSubstatNum },
+    { label: ocrData.echo3FourthSubstat, value: ocrData.echo3FourthSubstatNum },
+    { label: ocrData.echo3FifthSubstat, value: ocrData.echo3FifthSubstatNum },
+
+    { label: ocrData.echo4FirstSubstat, value: ocrData.echo4FirstSubstatNum },
+    { label: ocrData.echo4SecondSubstat, value: ocrData.echo4SecondSubstatNum },
+    { label: ocrData.echo4ThirdSubstat, value: ocrData.echo4ThirdSubstatNum },
+    { label: ocrData.echo4FourthSubstat, value: ocrData.echo4FourthSubstatNum },
+    { label: ocrData.echo4FifthSubstat, value: ocrData.echo4FifthSubstatNum },
+
+    { label: ocrData.echo5FirstSubstat, value: ocrData.echo5FirstSubstatNum },
+    { label: ocrData.echo5SecondSubstat, value: ocrData.echo5SecondSubstatNum },
+    { label: ocrData.echo5ThirdSubstat, value: ocrData.echo5ThirdSubstatNum },
+    { label: ocrData.echo5FourthSubstat, value: ocrData.echo5FourthSubstatNum },
+    { label: ocrData.echo5FifthSubstat, value: ocrData.echo5FifthSubstatNum },
+  ] : [] ;
+
+  const allMainStats = ocrData ? [
+    { label: ocrData.echo1MainStat, value: ocrData.echo1MainStatNum },
+    { label: ocrData.echo2MainStat, value: ocrData.echo2MainStatNum },
+    { label: ocrData.echo3MainStat, value: ocrData.echo3MainStatNum },
+    { label: ocrData.echo4MainStat, value: ocrData.echo4MainStatNum },
+    { label: ocrData.echo5MainStat, value: ocrData.echo5MainStatNum },
+  ] : [] ;
+
+  allSubStats.forEach(stat => {
+    if (stat.label && stat.value) {
+      applySubstat(stat.label, stat.value);
+    }
+  });
+
+  allMainStats.forEach(stat => {
+    if (stat.label && stat.value) {
+      applyMainStat(stat.label, stat.value);
+    }
+  });
+
+  function calculate_total_hp() {
+    if (character) {
+      console.log(character.base_hp_90)
+      console.log(1 + totalStats.percent.hp / 100)
+      console.log(totalStats.flat.hp)
+      let totalHP = character.base_hp_90 * (1 + totalStats.percent.hp / 100) + totalStats.flat.hp;
+      console.log(totalHP)
+      totalStats.total_hp = Math.round(totalHP)
+    }
+  }
+
+  if (weapon?.subStatIcon =="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Health.webp") {
+    totalStats.percent.hp += parseFloat(weapon.subStatNum) + 12
+  }
+
+  if (character?.talentStat1 == "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Health.webp" || character?.talentStat2 == "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Health.webp") {
+    totalStats.percent.hp += 12
+  }
+  calculate_total_hp();
+
+  const leftStats = [
+    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Health.webp', label: 'HP', value: totalStats.total_hp },
+    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp', label: 'ATK', value: '2292' },
+    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Defense.webp', label: 'DEF', value: '1306' },
+    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Energy_Regen.webp', label: 'Energy Regen', value: '120%' },
+    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_Rate.webp', label: 'Crit. Rate', value: '44.2%' },
+    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_DMG.webp', label: 'Crit. DMG', value: '318.8%' },
+  ]
+
+  const rightStats = [
+    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Basic_Atk_DMG.png', label: 'Basic Atk', value: '17.2%' },
+    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Heavy_Atk_DMG.png', label: 'Heavy Atk', value: '30%' },
+    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Resonance_Skill_Bonus.png', label: 'Res. Skill', value: '0%' },
+    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Resonance_Liberation_Bonus.png', label: 'Res. Liberation', value: '0%' },
+    { icon: `${character && character.typeIcon}`, label: `${character && character.type} DMG`, value: '82%' },
+    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Healing_Bonus.png', label: 'Healing Bonus', value: '0%' },
+  ]
+
+  const leftLen = leftStats.length;
+  const rightLen = rightStats.length;
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
