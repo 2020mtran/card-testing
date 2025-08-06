@@ -166,6 +166,7 @@ async def extract_text(file: UploadFile = File(...)):
 
     for field in percent_fields:
         data[field] = fix_percent_format(data[field])
+        data[field] = fix_percent_symbol(data[field])
 
     stat_name_fields = [
         "echo1MainStat",
@@ -228,6 +229,16 @@ def fix_percent_format(value: str) -> str:
         return f"{float(value):.1f}%"
     return value
 
+def fix_percent_symbol(value: str) -> str:
+    # Match a number ending with "0/" (e.g. "150/") and remove the trailing zero
+    if re.fullmatch(r'\d+0\/', value):
+        # Remove the last zero and replace slash with %
+        return value[:-2] + '%'
+    # If it's just digits with a slash (e.g. "15/"), just replace slash with %
+    elif re.fullmatch(r'\d+\/', value):
+        return value[:-1] + '%'
+    return value
+
 def fix_crit_format(label: str) -> str:
     return re.sub(r'(\w):', r'\1.', label)
 
@@ -235,8 +246,10 @@ def simplify_stat_label(label: str) -> str:
     replacements = {
         "Resonance Skill DMG": "Res. Skill",
         "Regen": "Energy",
+        "Energy Regen": "Energy",
         "Heavy Attack DMG Bonus": "Heavy Atk",
-        "Basic Attack DMG Bonus": "Basic Atk"
+        "Basic Attack DMG Bonus": "Basic Atk",
+        "Spectro DMG Bonus": "Spectro DMG"
         # Add more replacements if needed
     }
     return replacements.get(label, label)

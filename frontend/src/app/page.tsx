@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from 'react';
-import { getCharacterInfo } from "./characterMap";
+import { getCharacterInfo, CharacterInfo } from "./characterMap";
 import { getWeaponInfo } from "./weaponMap";
 import { getStatIcon } from "./statMap";
 
@@ -92,11 +92,29 @@ export default function Home() {
     critRate: ["crit rate"],
     critDmg: ["crit dmg"],
     energy: ["energy"],
+    basicAtk: ["basic atk"],
+    heavyAtk: ["heavy atk"],
+    resSkill: ["res skill"],
+    resLiberation: ["res liberation"],
     elemental: ["spectro dmg", "aero dmg"],
     healing: ["healing bonus"]
   }
 
-  const totalStats = {
+  type ElementType = "aero" | "spectro";
+
+  const totalStats: { 
+    flat: { hp: number; atk: number; def: number };
+    percent: { hp: number; atk: number; def: number };
+    total_hp: number;
+    total_atk: number;
+    total_def: number;
+    critRate: number;
+    critDmg: number;
+    energy: number;
+    healing: number;
+    elemental: Record<ElementType, number>;  // ← HERE
+    talent: { basic: number; heavy: number; skill: number; liberation: number };
+  } = {
     flat: { hp: 0, atk: 0, def: 0 },
     percent: { hp: 0, atk: 0, def: 0 },
     total_hp: 0,
@@ -105,9 +123,12 @@ export default function Home() {
     critRate: 5,
     critDmg: 150,
     energy: 100,
-    elemental: {"spectro": 0, "aero": 0},
+    elemental: {
+      aero: 0,
+      spectro: 0,
+    },
     healing: 0,
-    skill: { basic: 0, heavy: 0, skill: 0, liberation: 0,}
+    talent: { basic: 0, heavy: 0, skill: 0, liberation: 0, }
   }
 
   function normalizeLabel(label: string): string {
@@ -136,10 +157,18 @@ export default function Home() {
       totalStats.critRate += numericValue
     } else if (STAT_TYPES.critDmg.includes(statLabel)) {
       totalStats.critDmg += numericValue
+    } else if (STAT_TYPES.basicAtk.includes(statLabel)) {
+      totalStats.talent.basic += numericValue
+    } else if (STAT_TYPES.heavyAtk.includes(statLabel)) {
+      totalStats.talent.heavy += numericValue
+    } else if (STAT_TYPES.resSkill.includes(statLabel)) {
+      totalStats.talent.skill += numericValue
+    } else if (STAT_TYPES.resLiberation.includes(statLabel)) {
+      totalStats.talent.liberation += numericValue
     } 
   }
 
-  function applyMainStat(label: string, value: string) {
+  function applyMainStat(label: string, value: string, character: CharacterInfo) {
     const statLabel = normalizeLabel(label);
     const numericValue = parseFloat(value.replace("%", ""));
 
@@ -161,6 +190,13 @@ export default function Home() {
     } else if (STAT_TYPES.critDmg.includes(statLabel)) {
       totalStats.critDmg += numericValue
       totalStats.flat.atk += 150
+    } else if (STAT_TYPES.elemental.includes(statLabel)) {
+        const type = character.type.toLowerCase() as ElementType;
+
+        if (statLabel.toLowerCase().includes(type)) {
+          totalStats.elemental[type] += numericValue;
+        }
+      totalStats.flat.atk += 100
     }
   }
   // 1. If stat label is HP ->
@@ -227,8 +263,8 @@ export default function Home() {
   });
 
   allMainStats.forEach(stat => {
-    if (stat.label && stat.value) {
-      applyMainStat(stat.label, stat.value);
+    if (stat.label && stat.value && character) {
+      applyMainStat(stat.label, stat.value, character);
     }
   });
 
@@ -262,6 +298,14 @@ export default function Home() {
     }
   }
 
+  if (character?.talentStat1 == "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp" || character?.talentStat2 == "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp") {
+    totalStats.percent.atk += 12
+  }
+
+  if (weapon?.name == "Blazing Justice") {
+    totalStats.percent.atk += 12
+  }
+
   function calculate_total_def() {
     if (character) {
       let totalDEF = (character.base_def_90) * (1 + totalStats.percent.def / 100) + totalStats.flat.def
@@ -284,6 +328,8 @@ export default function Home() {
   calculate_total_atk();
   calculate_total_def();
 
+  totalStats.critRate = Math.round(totalStats.critRate)
+  totalStats.critDmg = Math.round(totalStats.critDmg)
 
   const leftStats = [
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Health.webp', label: 'HP', value: totalStats.total_hp },
@@ -294,12 +340,14 @@ export default function Home() {
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_DMG.webp', label: 'Crit. DMG', value: `${totalStats.critDmg}%` },
   ]
 
+  const type = character?.type.toLowerCase() as "aero" | "spectro";
+
   const rightStats = [
-    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Basic_Atk_DMG.png', label: 'Basic Atk', value: '17.2%' },
-    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Heavy_Atk_DMG.png', label: 'Heavy Atk', value: '30%' },
-    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Resonance_Skill_Bonus.png', label: 'Res. Skill', value: '0%' },
-    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Resonance_Liberation_Bonus.png', label: 'Liberation', value: '0%' },
-    { icon: `${character && character.typeIcon}`, label: `${character && character.type} DMG`, value: '82%' },
+    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Basic_Atk_DMG.png', label: 'Basic Atk', value: `${totalStats.talent.basic}%` },
+    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Heavy_Atk_DMG.png', label: 'Heavy Atk', value: `${totalStats.talent.heavy}%` },
+    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Resonance_Skill_Bonus.png', label: 'Res. Skill', value: `${totalStats.talent.skill}%` },
+    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Resonance_Liberation_Bonus.png', label: 'Liberation', value: `${totalStats.talent.liberation}%` },
+    { icon: `${character && character.typeIcon}`, label: `${character && character.type} DMG`, value: `${totalStats.elemental[type]}%` },
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Healing_Bonus.png', label: 'Healing Bonus', value: '0%' },
   ]
 
