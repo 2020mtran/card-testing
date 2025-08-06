@@ -130,6 +130,12 @@ export default function Home() {
       isPercentage(value) ? totalStats.percent.atk += numericValue : totalStats.flat.atk += numericValue;
     } else if (STAT_TYPES.def.includes(statLabel)) {
       isPercentage(value) ? totalStats.percent.def += numericValue : totalStats.flat.def += numericValue;
+    } else if (STAT_TYPES.energy.includes(statLabel)) {
+      isPercentage(value) ? totalStats.energy += numericValue : totalStats.energy += numericValue;
+    } else if (STAT_TYPES.critRate.includes(statLabel)) {
+      totalStats.critRate += numericValue
+    } else if (STAT_TYPES.critDmg.includes(statLabel)) {
+      totalStats.critDmg += numericValue
     } 
   }
 
@@ -146,9 +152,14 @@ export default function Home() {
     } else if (STAT_TYPES.def.includes(statLabel)) {
       totalStats.percent.def += numericValue
       totalStats.flat.hp += 2280
+    } else if (STAT_TYPES.energy.includes(statLabel)) {
+      totalStats.energy += numericValue
+      totalStats.flat.atk += 150
     } else if (STAT_TYPES.critRate.includes(statLabel)) {
+      totalStats.critRate += numericValue
       totalStats.flat.atk += 150
     } else if (STAT_TYPES.critDmg.includes(statLabel)) {
+      totalStats.critDmg += numericValue
       totalStats.flat.atk += 150
     }
   }
@@ -253,33 +264,41 @@ export default function Home() {
 
   function calculate_total_def() {
     if (character) {
-      // console.log(character.base_atk_90)
-      // console.log(1 + totalStats.percent.atk / 100)
-      // console.log(totalStats.flat.atk)
-      // console.log(weapon.baseStatNum)
       let totalDEF = (character.base_def_90) * (1 + totalStats.percent.def / 100) + totalStats.flat.def
       totalStats.total_def = Math.round(totalDEF)
     }
+  }
+
+  // function calculate_total_energy() {
+  //   if (character) {
+  //     let totalEnergy = 100 + totalStats.energy
+  //     totalStats.energy = Math.round(totalEnergy)
+  //   }
+  // }
+
+  if (character?.talentStat1 == "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_Rate.webp" || character?.talentStat2 == "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_Rate.webp") {
+    totalStats.critRate += 8
   }
 
   calculate_total_hp();
   calculate_total_atk();
   calculate_total_def();
 
+
   const leftStats = [
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Health.webp', label: 'HP', value: totalStats.total_hp },
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp', label: 'ATK', value: totalStats.total_atk },
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Defense.webp', label: 'DEF', value: totalStats.total_def },
-    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Energy_Regen.webp', label: 'Energy Regen', value: '120%' },
-    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_Rate.webp', label: 'Crit. Rate', value: '44.2%' },
-    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_DMG.webp', label: 'Crit. DMG', value: '318.8%' },
+    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Energy_Regen.webp', label: 'Energy Reg.', value: `${totalStats.energy}%` },
+    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_Rate.webp', label: 'Crit. Rate', value: `${totalStats.critRate}%` },
+    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_DMG.webp', label: 'Crit. DMG', value: `${totalStats.critDmg}%` },
   ]
 
   const rightStats = [
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Basic_Atk_DMG.png', label: 'Basic Atk', value: '17.2%' },
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Heavy_Atk_DMG.png', label: 'Heavy Atk', value: '30%' },
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Resonance_Skill_Bonus.png', label: 'Res. Skill', value: '0%' },
-    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Resonance_Liberation_Bonus.png', label: 'Res. Liberation', value: '0%' },
+    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Resonance_Liberation_Bonus.png', label: 'Liberation', value: '0%' },
     { icon: `${character && character.typeIcon}`, label: `${character && character.type} DMG`, value: '82%' },
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Healing_Bonus.png', label: 'Healing Bonus', value: '0%' },
   ]
