@@ -19,6 +19,8 @@ export type CharacterInfo = {
   passive1: string;
   passive2: string;
   base_hp_90: number;
+  base_atk_90: number;
+  base_def_90: number;
 };
 
 export const characterMap: Record<string, CharacterInfo> = {
@@ -43,6 +45,8 @@ export const characterMap: Record<string, CharacterInfo> = {
     passive1: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Cartethyia_Passive1.png",
     passive2: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Cartethyia_Passive2.png",
     base_hp_90: 14800,
+    base_atk_90: 312,
+    base_def_90: 611,
   },
   "Zani": {
     name: "Zani",
@@ -65,6 +69,8 @@ export const characterMap: Record<string, CharacterInfo> = {
     passive1: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Zani_Passive_Skill1.png",
     passive2: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Zani_Passive_Skill2.png",
     base_hp_90: 0,
+    base_atk_90: 313,
+    base_def_90: 611,
   },
   // add more
 };

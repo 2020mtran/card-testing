@@ -89,8 +89,8 @@ export default function Home() {
     hp: ["hp"],
     atk: ["atk"],
     def: ["def"],
-    critRate: ["crit. rate"],
-    critDmg: ["crit. dmg"],
+    critRate: ["crit rate"],
+    critDmg: ["crit dmg"],
     energy: ["energy"],
     elemental: ["spectro dmg", "aero dmg"],
     healing: ["healing bonus"]
@@ -100,6 +100,8 @@ export default function Home() {
     flat: { hp: 0, atk: 0, def: 0 },
     percent: { hp: 0, atk: 0, def: 0 },
     total_hp: 0,
+    total_atk: 0,
+    total_def: 0,
     critRate: 5,
     critDmg: 150,
     energy: 100,
@@ -124,7 +126,11 @@ export default function Home() {
 
     if (STAT_TYPES.hp.includes(statLabel)) {
       isPercentage(value) ? totalStats.percent.hp += numericValue : totalStats.flat.hp += numericValue;
-    }
+    } else if (STAT_TYPES.atk.includes(statLabel)) {
+      isPercentage(value) ? totalStats.percent.atk += numericValue : totalStats.flat.atk += numericValue;
+    } else if (STAT_TYPES.def.includes(statLabel)) {
+      isPercentage(value) ? totalStats.percent.def += numericValue : totalStats.flat.def += numericValue;
+    } 
   }
 
   function applyMainStat(label: string, value: string) {
@@ -134,6 +140,16 @@ export default function Home() {
     if (STAT_TYPES.hp.includes(statLabel)) {
       totalStats.percent.hp += numericValue
       totalStats.flat.hp += 2280
+    } else if (STAT_TYPES.atk.includes(statLabel)) {
+      totalStats.percent.atk += numericValue
+      totalStats.flat.hp += 2280
+    } else if (STAT_TYPES.def.includes(statLabel)) {
+      totalStats.percent.def += numericValue
+      totalStats.flat.hp += 2280
+    } else if (STAT_TYPES.critRate.includes(statLabel)) {
+      totalStats.flat.atk += 150
+    } else if (STAT_TYPES.critDmg.includes(statLabel)) {
+      totalStats.flat.atk += 150
     }
   }
   // 1. If stat label is HP ->
@@ -207,11 +223,11 @@ export default function Home() {
 
   function calculate_total_hp() {
     if (character) {
-      console.log(character.base_hp_90)
-      console.log(1 + totalStats.percent.hp / 100)
-      console.log(totalStats.flat.hp)
+      // console.log(character.base_hp_90)
+      // console.log(1 + totalStats.percent.hp / 100)
+      // console.log(totalStats.flat.hp)
       let totalHP = character.base_hp_90 * (1 + totalStats.percent.hp / 100) + totalStats.flat.hp;
-      console.log(totalHP)
+      // console.log(totalHP)
       totalStats.total_hp = Math.round(totalHP)
     }
   }
@@ -223,12 +239,37 @@ export default function Home() {
   if (character?.talentStat1 == "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Health.webp" || character?.talentStat2 == "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Health.webp") {
     totalStats.percent.hp += 12
   }
+
+  function calculate_total_atk() {
+    if (character && weapon) {
+      // console.log(character.base_atk_90)
+      // console.log(1 + totalStats.percent.atk / 100)
+      // console.log(totalStats.flat.atk)
+      // console.log(weapon.baseStatNum)
+      let totalATK = (character.base_atk_90 + parseFloat(weapon?.baseStatNum)) * (1 + totalStats.percent.atk / 100) + totalStats.flat.atk
+      totalStats.total_atk = Math.round(totalATK)
+    }
+  }
+
+  function calculate_total_def() {
+    if (character) {
+      // console.log(character.base_atk_90)
+      // console.log(1 + totalStats.percent.atk / 100)
+      // console.log(totalStats.flat.atk)
+      // console.log(weapon.baseStatNum)
+      let totalDEF = (character.base_def_90) * (1 + totalStats.percent.def / 100) + totalStats.flat.def
+      totalStats.total_def = Math.round(totalDEF)
+    }
+  }
+
   calculate_total_hp();
+  calculate_total_atk();
+  calculate_total_def();
 
   const leftStats = [
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Health.webp', label: 'HP', value: totalStats.total_hp },
-    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp', label: 'ATK', value: '2292' },
-    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Defense.webp', label: 'DEF', value: '1306' },
+    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp', label: 'ATK', value: totalStats.total_atk },
+    { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Defense.webp', label: 'DEF', value: totalStats.total_def },
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Energy_Regen.webp', label: 'Energy Regen', value: '120%' },
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_Rate.webp', label: 'Crit. Rate', value: '44.2%' },
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_DMG.webp', label: 'Crit. DMG', value: '318.8%' },
