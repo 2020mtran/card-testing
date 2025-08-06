@@ -304,6 +304,7 @@ export default function Home() {
 
   if (weapon?.name == "Blazing Justice") {
     totalStats.percent.atk += 12
+    totalStats.critDmg += 48.6
   }
 
   function calculate_total_def() {
@@ -328,8 +329,8 @@ export default function Home() {
   calculate_total_atk();
   calculate_total_def();
 
-  totalStats.critRate = Math.round(totalStats.critRate)
-  totalStats.critDmg = Math.round(totalStats.critDmg)
+  totalStats.critRate = Math.round(totalStats.critRate * 10) / 10
+  totalStats.critDmg = Math.round(totalStats.critDmg * 10) / 10
 
   const leftStats = [
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Health.webp', label: 'HP', value: totalStats.total_hp },
