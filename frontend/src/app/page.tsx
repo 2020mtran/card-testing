@@ -17,7 +17,6 @@ export default function Home() {
     Spectro: "bg-spectro/35",
     Aero: "bg-aero/35",
     Havoc: "bg-havoc/35",
-    // etc...
   };
 
   const echo1Substats = ocrData ? [
@@ -112,7 +111,7 @@ export default function Home() {
     critDmg: number;
     energy: number;
     healing: number;
-    elemental: Record<ElementType, number>;  // ← HERE
+    elemental: Record<ElementType, number>;
     talent: { basic: number; heavy: number; skill: number; liberation: number };
   } = {
     flat: { hp: 0, atk: 0, def: 0 },
@@ -139,8 +138,6 @@ export default function Home() {
     return value.includes("%");
   }
 
-  // Function to handle total stats
-  // 0. go through each stat and figure out what category it belongs to by:
   function applySubstat(label: string, value: string) {
     const statLabel = normalizeLabel(label);
     const numericValue = parseFloat(value.replace("%", ""));
@@ -199,23 +196,7 @@ export default function Home() {
       totalStats.flat.atk += 100
     }
   }
-  // 1. If stat label is HP ->
-    // If stat value is a % -> add to total_hp_percent
-    // Else -> add to total_flat_hp
-  // 2. If stat label is ATK / DEF ->
-    // do same as above for respective stat
-  // 3. If stat label is Energy ->
-    // add to total_energy (starts at 100%)
-  // 4. if stat label is crit. rate ->
-    // add to total_crit_rate (starts at 5%?)
-  // 5. if stat label is crit. dmg ->
-    // add to total_crit_dmg (starts at 150%?)
-  // 6. if stat label is basic atk / heavy atk / res. skill / res. lib ->
-    // add to respective total
-  // 7. if stat label is healing bonus ->
-    // add to total_healing_bonus
-  // 8. else, it can only be the element of the character's damage
-    // add to character's element dmg total
+
   const allSubStats = ocrData ? [
     { label: ocrData.echo1FirstSubstat, value: ocrData.echo1FirstSubstatNum },
     { label: ocrData.echo1SecondSubstat, value: ocrData.echo1SecondSubstatNum },
@@ -314,13 +295,6 @@ export default function Home() {
     }
   }
 
-  // function calculate_total_energy() {
-  //   if (character) {
-  //     let totalEnergy = 100 + totalStats.energy
-  //     totalStats.energy = Math.round(totalEnergy)
-  //   }
-  // }
-
   if (character?.talentStat1 == "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_Rate.webp" || character?.talentStat2 == "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_Rate.webp") {
     totalStats.critRate += 8
   }
@@ -372,10 +346,6 @@ export default function Home() {
       </button>
 
       {ocrData && character && weapon && (
-        // <pre className="mt-4 p-4 bg-gray-100 text-black rounded overflow-auto text-sm">
-        //   {JSON.stringify(ocrData, null, 2)}
-        // </pre>
-      // )}
       <div className="relative w-[1214px] h-[541px] rounded-xl overflow-hidden shadow-lg">
         <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center"></div>
         <div className={`absolute inset-0 ${typeToBgClass[character.type] || "bg-gray-500/35"}`} />
