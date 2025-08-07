@@ -5,6 +5,13 @@ import { useState } from 'react';
 import { getCharacterInfo, CharacterInfo } from "./characterMap";
 import { getWeaponInfo } from "./weaponMap";
 import { getStatIcon } from "./statMap";
+import { Field, Label, Radio, RadioGroup, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
+
+const options = [
+    {set: "Eternal Radiance", icon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Eternal_Radiance.webp"}, 
+    {set: "Windward Pilgrimage", icon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Windward_Pilgrimage.webp"},
+]
 
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
@@ -328,6 +335,7 @@ export default function Home() {
 
   const leftLen = leftStats.length;
   const rightLen = rightStats.length;
+  const [selected, setSelected] = useState(options[0]);
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
@@ -344,7 +352,21 @@ export default function Home() {
       >
         {loading ? 'Processing...' : 'Upload'}
       </button>
-
+      <RadioGroup value={selected} onChange={setSelected} aria-label="Server size">
+        <div className="flex flex-row gap-4">
+          {options.map((option) => (
+            <Field key={option.set} className="flex items-center gap-2">
+              <Radio            value={option}
+                className="group flex size-5 items-center justify-center rounded-full border bg-white data-checked:bg-blue-400"
+              >
+                <span className="invisible size-2 rounded-full bg-white group-data-checked:visible" />
+              </Radio>
+              <Label>{option.set}</Label>
+              <img src={option.icon} alt={option.set} className="w-5 h-5" />
+            </Field>
+          ))}
+        </div>
+    </RadioGroup>
       {ocrData && character && weapon && (
       <div className="relative w-[1214px] h-[541px] rounded-xl overflow-hidden shadow-lg">
         <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center"></div>
@@ -535,7 +557,7 @@ export default function Home() {
               <div className="flex flex-row gap-1">
                 <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Capitaneus_Icon.webp" alt="Echo 1" className="w-15 h-15"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Eternal_Radiance.webp" alt="Echo 1 Set" className="w-5 h-5"></img>
+                  <img src={selected.icon} alt="Echo 1 Set" className="w-5 h-5"></img>
                   <p className="text-sm">{ocrData.echo1MainStat}</p>
                   <div className="flex flex-row gap-0.5">
                     {getStatIcon(ocrData.echo1MainStat) && (
@@ -566,7 +588,7 @@ export default function Home() {
               <div className="flex flex-row gap-1">
                 <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Nightmare-Mourning-Aix.webp" alt="Echo 2" className="w-15 h-15"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Eternal_Radiance.webp" alt="Echo 2 Set" className="w-5 h-5"></img>
+                  <img src={selected.icon} alt="Echo 2 Set" className="w-5 h-5"></img>
                   <p className="text-sm">{ocrData.echo2MainStat}</p>
                   <div className="flex flex-row gap-0.5">
                     {getStatIcon(ocrData.echo2MainStat) && (
@@ -596,7 +618,7 @@ export default function Home() {
               <div className="flex flex-row gap-1">
                 <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Vitreum_Dancer_Icon.webp" alt="Echo 3" className="w-15 h-15"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Eternal_Radiance.webp" alt="Echo 3 Set" className="w-5 h-5"></img>
+                  <img src={selected.icon} alt="Echo 3 Set" className="w-5 h-5"></img>
                   <p className="text-sm">{ocrData.echo3MainStat}</p>
                   <div className="flex flex-row gap-0.5">
                     {getStatIcon(ocrData.echo3MainStat) && (
@@ -626,7 +648,7 @@ export default function Home() {
               <div className="flex flex-row gap-1">
                 <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Aero-Prism.webp" alt="Echo 4" className="w-15 h-15"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Eternal_Radiance.webp" alt="Echo 4 Set" className="w-5 h-5"></img>
+                  <img src={selected.icon} alt="Echo 4 Set" className="w-5 h-5"></img>
                   <p className="text-sm">{ocrData.echo4MainStat}</p>
                   <div className="flex flex-row gap-0.5">
                     {getStatIcon(ocrData.echo4MainStat) && (
@@ -656,7 +678,7 @@ export default function Home() {
               <div className="flex flex-row gap-1">
                 <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Fae_Ignis_Icon.webp" alt="Echo 5" className="w-15 h-15"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
-                  <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Eternal_Radiance.webp" alt="Echo 5 Set" className="w-5 h-5"></img>
+                  <img src={selected.icon} alt="Echo 5 Set" className="w-5 h-5"></img>
                   <p className="text-sm">{ocrData.echo5MainStat}</p>
                   <div className="flex flex-row gap-0.5">
                     {getStatIcon(ocrData.echo5MainStat) && (
