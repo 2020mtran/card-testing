@@ -5,8 +5,9 @@ import { useState } from 'react';
 import { getCharacterInfo, CharacterInfo } from "./characterMap";
 import { getWeaponInfo } from "./weaponMap";
 import { getStatIcon } from "./statMap";
-import { Field, Label, Radio, RadioGroup, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { Field, Label, Radio, RadioGroup, Menu, MenuButton, MenuItem, MenuItems, Checkbox } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { getEchoInfo, EchoInfo, echoMap } from "./echoMap";
 
 const options = [
     {set: "Eternal Radiance", icon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Eternal_Radiance.webp"}, 
@@ -19,6 +20,8 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const character = getCharacterInfo(ocrData?.character || "");
   const weapon = getWeaponInfo(ocrData?.weaponName || "");
+  const [selectedSet, setSelectedSet] = useState(options[0]);
+  const [selectedEchoes, setSelectedEchoes] = useState<EchoInfo[]>([]);
 
   const typeToBgClass: Record<string, string> = {
     Spectro: "bg-spectro/35",
@@ -335,7 +338,22 @@ export default function Home() {
 
   const leftLen = leftStats.length;
   const rightLen = rightStats.length;
-  const [selected, setSelected] = useState(options[0]);
+
+  const echoesForSelectedSet = selectedSet ? echoMap.filter(e => e.sets.includes(selectedSet.set)) : [];
+
+  function toggleEcho(echo: EchoInfo) {
+    setSelectedEchoes(prev => {
+      if (prev.some(e => e.name === echo.name)) {
+        // If already selected, remove it
+        return prev.filter(e => e.name !== echo.name);
+      } else if (prev.length < 5) {
+        // If not selected & less than 5, add it
+        return [...prev, echo];
+      }
+      // Otherwise do nothing (max 5 reached)
+      return prev;
+    });
+  }
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
@@ -352,7 +370,7 @@ export default function Home() {
       >
         {loading ? 'Processing...' : 'Upload'}
       </button>
-      <RadioGroup value={selected} onChange={setSelected} aria-label="Server size">
+      <RadioGroup value={selectedSet} onChange={setSelectedSet} aria-label="Server size">
         <div className="flex flex-row gap-4">
           {options.map((option) => (
             <Field key={option.set} className="flex items-center gap-2">
@@ -366,7 +384,36 @@ export default function Home() {
             </Field>
           ))}
         </div>
-    </RadioGroup>
+      </RadioGroup>
+      <div className="flex flex-wrap gap-4">
+      {echoesForSelectedSet.map(echo => {
+        const checked = selectedEchoes.some(e => e.name === echo.name);
+
+        return (
+          <Checkbox
+            key={echo.name}
+            checked={checked}
+            onChange={() => toggleEcho(echo)}
+            as="div"
+            className={`flex items-center cursor-pointer gap-2 rounded-md border p-2
+              ${checked ? 'bg-blue-500 text-white border-blue-500' : 'bg-white text-black border-gray-300'}`}
+          >
+            <div
+              className={`w-5 h-5 flex items-center justify-center rounded border
+                ${checked ? 'bg-white' : 'bg-transparent'}`}
+            >
+              {checked && (
+                <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                </svg>
+              )}
+            </div>
+            <img src={echo.icon} alt={echo.name} className="w-6 h-6" />
+            <span>{echo.name}</span>
+          </Checkbox>
+        );
+      })}
+    </div>
       {ocrData && character && weapon && (
       <div className="relative w-[1214px] h-[541px] rounded-xl overflow-hidden shadow-lg">
         <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center"></div>
@@ -557,7 +604,7 @@ export default function Home() {
               <div className="flex flex-row gap-1">
                 <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Capitaneus_Icon.webp" alt="Echo 1" className="w-15 h-15"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
-                  <img src={selected.icon} alt="Echo 1 Set" className="w-5 h-5"></img>
+                  <img src={selectedSet.icon} alt="Echo 1 Set" className="w-5 h-5"></img>
                   <p className="text-sm">{ocrData.echo1MainStat}</p>
                   <div className="flex flex-row gap-0.5">
                     {getStatIcon(ocrData.echo1MainStat) && (
@@ -588,7 +635,7 @@ export default function Home() {
               <div className="flex flex-row gap-1">
                 <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Nightmare-Mourning-Aix.webp" alt="Echo 2" className="w-15 h-15"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
-                  <img src={selected.icon} alt="Echo 2 Set" className="w-5 h-5"></img>
+                  <img src={selectedSet.icon} alt="Echo 2 Set" className="w-5 h-5"></img>
                   <p className="text-sm">{ocrData.echo2MainStat}</p>
                   <div className="flex flex-row gap-0.5">
                     {getStatIcon(ocrData.echo2MainStat) && (
@@ -618,7 +665,7 @@ export default function Home() {
               <div className="flex flex-row gap-1">
                 <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Vitreum_Dancer_Icon.webp" alt="Echo 3" className="w-15 h-15"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
-                  <img src={selected.icon} alt="Echo 3 Set" className="w-5 h-5"></img>
+                  <img src={selectedSet.icon} alt="Echo 3 Set" className="w-5 h-5"></img>
                   <p className="text-sm">{ocrData.echo3MainStat}</p>
                   <div className="flex flex-row gap-0.5">
                     {getStatIcon(ocrData.echo3MainStat) && (
@@ -648,7 +695,7 @@ export default function Home() {
               <div className="flex flex-row gap-1">
                 <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Aero-Prism.webp" alt="Echo 4" className="w-15 h-15"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
-                  <img src={selected.icon} alt="Echo 4 Set" className="w-5 h-5"></img>
+                  <img src={selectedSet.icon} alt="Echo 4 Set" className="w-5 h-5"></img>
                   <p className="text-sm">{ocrData.echo4MainStat}</p>
                   <div className="flex flex-row gap-0.5">
                     {getStatIcon(ocrData.echo4MainStat) && (
@@ -678,7 +725,7 @@ export default function Home() {
               <div className="flex flex-row gap-1">
                 <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Fae_Ignis_Icon.webp" alt="Echo 5" className="w-15 h-15"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
-                  <img src={selected.icon} alt="Echo 5 Set" className="w-5 h-5"></img>
+                  <img src={selectedSet.icon} alt="Echo 5 Set" className="w-5 h-5"></img>
                   <p className="text-sm">{ocrData.echo5MainStat}</p>
                   <div className="flex flex-row gap-0.5">
                     {getStatIcon(ocrData.echo5MainStat) && (
