@@ -5,8 +5,8 @@ import { useState } from 'react';
 import { getCharacterInfo, CharacterInfo } from "./characterMap";
 import { getWeaponInfo } from "./weaponMap";
 import { getStatIcon } from "./statMap";
-import { Field, Label, Radio, RadioGroup, Menu, MenuButton, MenuItem, MenuItems, Checkbox } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { Field, Label, Radio, RadioGroup, Menu, MenuButton, MenuItem, MenuItems, Checkbox, Listbox } from '@headlessui/react'
+import { ChevronDownIcon, ChevronUpDownIcon, CheckIcon } from '@heroicons/react/20/solid'
 import { getEchoInfo, EchoInfo, echoMap } from "./echoMap";
 
 const options = [
@@ -21,7 +21,8 @@ export default function Home() {
   const character = getCharacterInfo(ocrData?.character || "");
   const weapon = getWeaponInfo(ocrData?.weaponName || "");
   const [selectedSet, setSelectedSet] = useState(options[0]);
-  const [selectedEchoes, setSelectedEchoes] = useState<EchoInfo[]>([]);
+  // const [selectedEchoes, setSelectedEchoes] = useState<EchoInfo[]>([]);
+  const [selectedEchoes, setSelectedEchoes] = useState<(EchoInfo | null)[]>(Array(5).fill(null));
 
   const typeToBgClass: Record<string, string> = {
     Spectro: "bg-spectro/35",
@@ -341,19 +342,14 @@ export default function Home() {
 
   const echoesForSelectedSet = selectedSet ? echoMap.filter(e => e.sets.includes(selectedSet.set)) : [];
 
-  function toggleEcho(echo: EchoInfo) {
+  const handleEchoChange = (slotIndex: number, echoName: string) => {
+    const echo = echoesForSelectedSet.find(e => e.name === echoName) || null;
     setSelectedEchoes(prev => {
-      if (prev.some(e => e.name === echo.name)) {
-        // If already selected, remove it
-        return prev.filter(e => e.name !== echo.name);
-      } else if (prev.length < 5) {
-        // If not selected & less than 5, add it
-        return [...prev, echo];
-      }
-      // Otherwise do nothing (max 5 reached)
-      return prev;
+      const updated = [...prev];
+      updated[slotIndex] = echo;
+      return updated;
     });
-  }
+  };
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
@@ -385,34 +381,85 @@ export default function Home() {
           ))}
         </div>
       </RadioGroup>
-      <div className="flex flex-wrap gap-4">
-      {echoesForSelectedSet.map(echo => {
-        const checked = selectedEchoes.some(e => e.name === echo.name);
+      <div className="flex flex-col gap-1">
+      <h2 className="text-lg font-bold">
+        Select Echoes for {selectedSet.set}
+      </h2>
+      {selectedEchoes.map((selectedEcho, index) => (
+        <div key={index} className="flex flex-col items-center gap-2">
+          <label className="w-20 font-semibold">Slot {index + 1}:</label>
 
-        return (
-          <Checkbox
-            key={echo.name}
-            checked={checked}
-            onChange={() => toggleEcho(echo)}
-            as="div"
-            className={`flex items-center cursor-pointer gap-2 rounded-md border p-2
-              ${checked ? 'bg-blue-500 text-white border-blue-500' : 'bg-white text-black border-gray-300'}`}
+          <Listbox
+            value={selectedEcho?.name || ""}
+            onChange={(value) => handleEchoChange(index, value)}
           >
-            <div
-              className={`w-5 h-5 flex items-center justify-center rounded border
-                ${checked ? 'bg-white' : 'bg-transparent'}`}
-            >
-              {checked && (
-                <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                </svg>
-              )}
+            <div className="relative w-60">
+              <Listbox.Button className="relative w-full cursor-pointer rounded border bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm">
+                <span className="block truncate text-black">
+                  {selectedEcho?.name || "None"}
+                </span>
+                <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                  <ChevronUpDownIcon
+                    className="h-5 w-5 text-gray-400"
+                    aria-hidden="true"
+                  />
+                </span>
+              </Listbox.Button>
+
+              <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                <Listbox.Option
+                  key="none"
+                  value=""
+                  className={({ active }) =>
+                    `relative cursor-pointer select-none py-2 pl-10 pr-4 ${
+                      active ? "bg-indigo-100 text-indigo-900" : "text-gray-900"
+                    }`
+                  }
+                >
+                  None
+                </Listbox.Option>
+
+                {echoesForSelectedSet.map((echo) => (
+                  <Listbox.Option
+                    key={echo.name}
+                    value={echo.name}
+                    className={({ active, selected }) =>
+                      `relative cursor-pointer select-none py-2 pl-10 pr-4 ${
+                        active ? "bg-indigo-100 text-indigo-900" : "text-gray-900"
+                      }`
+                    }
+                  >
+                    {({ selected }) => (
+                      <>
+                        <span
+                          className={`block truncate ${
+                            selected ? "font-medium" : "font-normal"
+                          }`}
+                        >
+                          {echo.name}
+                        </span>
+                        {selected && (
+                          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-indigo-600">
+                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                          </span>
+                        )}
+                      </>
+                    )}
+                  </Listbox.Option>
+                ))}
+              </Listbox.Options>
             </div>
-            <img src={echo.icon} alt={echo.name} className="w-6 h-6" />
-            <span>{echo.name}</span>
-          </Checkbox>
-        );
-      })}
+          </Listbox>
+
+          {selectedEcho && selectedEcho.icon && (
+            <img
+              src={selectedEcho.icon}
+              alt={selectedEcho.name}
+              className="w-8 h-8"
+            />
+          )}
+        </div>
+      ))}
     </div>
       {ocrData && character && weapon && (
       <div className="relative w-[1214px] h-[541px] rounded-xl overflow-hidden shadow-lg">
@@ -602,7 +649,7 @@ export default function Home() {
           <div className="flex flex-row ml-8 gap-1">
             <div className="flex flex-col gap-1 bg-black/30 p-2">
               <div className="flex flex-row gap-1">
-                <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Capitaneus_Icon.webp" alt="Echo 1" className="w-15 h-15"></img>
+                <img src={selectedEchoes[0]?.icon} alt="Echo 1" className="w-15 h-15"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
                   <img src={selectedSet.icon} alt="Echo 1 Set" className="w-5 h-5"></img>
                   <p className="text-sm">{ocrData.echo1MainStat}</p>
@@ -633,7 +680,7 @@ export default function Home() {
   
             <div className="flex flex-col gap-1 bg-black/30 p-2">
               <div className="flex flex-row gap-1">
-                <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Nightmare-Mourning-Aix.webp" alt="Echo 2" className="w-15 h-15"></img>
+                <img src={selectedEchoes[1]?.icon} alt="Echo 2" className="w-15 h-15"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
                   <img src={selectedSet.icon} alt="Echo 2 Set" className="w-5 h-5"></img>
                   <p className="text-sm">{ocrData.echo2MainStat}</p>
@@ -663,7 +710,7 @@ export default function Home() {
             </div>
             <div className="flex flex-col gap-1 bg-black/30 p-2">
               <div className="flex flex-row gap-1">
-                <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Vitreum_Dancer_Icon.webp" alt="Echo 3" className="w-15 h-15"></img>
+                <img src={selectedEchoes[2]?.icon} alt="Echo 3" className="w-15 h-15"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
                   <img src={selectedSet.icon} alt="Echo 3 Set" className="w-5 h-5"></img>
                   <p className="text-sm">{ocrData.echo3MainStat}</p>
@@ -693,7 +740,7 @@ export default function Home() {
             </div>
             <div className="flex flex-col gap-1 bg-black/30 p-2">
               <div className="flex flex-row gap-1">
-                <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Aero-Prism.webp" alt="Echo 4" className="w-15 h-15"></img>
+                <img src={selectedEchoes[3]?.icon} alt="Echo 4" className="w-15 h-15"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
                   <img src={selectedSet.icon} alt="Echo 4 Set" className="w-5 h-5"></img>
                   <p className="text-sm">{ocrData.echo4MainStat}</p>
@@ -723,7 +770,7 @@ export default function Home() {
             </div>
             <div className="flex flex-col gap-1 bg-black/30 p-2">
               <div className="flex flex-row gap-1">
-                <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Fae_Ignis_Icon.webp" alt="Echo 5" className="w-15 h-15"></img>
+                <img src={selectedEchoes[4]?.icon} alt="Echo 5" className="w-15 h-15"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
                   <img src={selectedSet.icon} alt="Echo 5 Set" className="w-5 h-5"></img>
                   <p className="text-sm">{ocrData.echo5MainStat}</p>
