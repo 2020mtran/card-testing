@@ -14,6 +14,18 @@ const options = [
     {set: "Windward Pilgrimage", icon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Windward_Pilgrimage.webp"},
 ]
 
+type Echo = {
+  name: string;
+  image?: string;
+};
+
+type EchoDropdownProps = {
+  index: number;
+  selectedEcho: Echo | null;
+  echoes: Echo[];
+  handleEchoChange: (slotIndex: number, newEchoName: string) => void;
+};
+
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
   const [ocrData, setOcrData] = useState<any>(null);
@@ -351,6 +363,38 @@ export default function Home() {
     });
   };
 
+  function EchoDropdown({ index, selectedEcho, echoes, handleEchoChange }: EchoDropdownProps) {
+    return (
+      <Listbox
+        value={selectedEcho?.name || ""}
+        onChange={(value) => handleEchoChange(index, value)}
+      >
+        <div className="relative w-60">
+          <Listbox.Button className="relative w-full cursor-pointer rounded border bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm">
+            <span className="block truncate text-black">
+              {selectedEcho?.name || "None"}
+            </span>
+            <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+              <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+            </span>
+          </Listbox.Button>
+
+          <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+            <Listbox.Option key="none" value="">
+              None
+            </Listbox.Option>
+
+            {echoes.map((echo) => (
+              <Listbox.Option key={echo.name} value={echo.name}>
+                {echo.name}
+              </Listbox.Option>
+            ))}
+          </Listbox.Options>
+        </div>
+      </Listbox>
+    );
+  }
+
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
       <input
@@ -382,85 +426,19 @@ export default function Home() {
         </div>
       </RadioGroup>
       <div className="flex flex-col gap-1">
-      <h2 className="text-lg font-bold">
-        Select Echoes for {selectedSet.set}
-      </h2>
-      {selectedEchoes.map((selectedEcho, index) => (
-        <div key={index} className="flex flex-col items-center gap-2">
-          <label className="w-20 font-semibold">Slot {index + 1}:</label>
-
-          <Listbox
-            value={selectedEcho?.name || ""}
-            onChange={(value) => handleEchoChange(index, value)}
-          >
-            <div className="relative w-60">
-              <Listbox.Button className="relative w-full cursor-pointer rounded border bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm">
-                <span className="block truncate text-black">
-                  {selectedEcho?.name || "None"}
-                </span>
-                <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                  <ChevronUpDownIcon
-                    className="h-5 w-5 text-gray-400"
-                    aria-hidden="true"
-                  />
-                </span>
-              </Listbox.Button>
-
-              <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                <Listbox.Option
-                  key="none"
-                  value=""
-                  className={({ active }) =>
-                    `relative cursor-pointer select-none py-2 pl-10 pr-4 ${
-                      active ? "bg-indigo-100 text-indigo-900" : "text-gray-900"
-                    }`
-                  }
-                >
-                  None
-                </Listbox.Option>
-
-                {echoesForSelectedSet.map((echo) => (
-                  <Listbox.Option
-                    key={echo.name}
-                    value={echo.name}
-                    className={({ active, selected }) =>
-                      `relative cursor-pointer select-none py-2 pl-10 pr-4 ${
-                        active ? "bg-indigo-100 text-indigo-900" : "text-gray-900"
-                      }`
-                    }
-                  >
-                    {({ selected }) => (
-                      <>
-                        <span
-                          className={`block truncate ${
-                            selected ? "font-medium" : "font-normal"
-                          }`}
-                        >
-                          {echo.name}
-                        </span>
-                        {selected && (
-                          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-indigo-600">
-                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                          </span>
-                        )}
-                      </>
-                    )}
-                  </Listbox.Option>
-                ))}
-              </Listbox.Options>
-            </div>
-          </Listbox>
-
-          {selectedEcho && selectedEcho.icon && (
-            <img
-              src={selectedEcho.icon}
-              alt={selectedEcho.name}
-              className="w-8 h-8"
-            />
-          )}
-        </div>
-      ))}
-    </div>
+        <h2 className="text-lg font-bold">
+          Select Echoes for {selectedSet.set}
+        </h2>
+        {selectedEchoes.map((selectedEcho, index) => (
+          <EchoDropdown
+            key={index}
+            index={index}
+            selectedEcho={selectedEcho}
+            echoes={echoesForSelectedSet}
+            handleEchoChange={handleEchoChange}
+          />
+        ))}
+      </div>
       {ocrData && character && weapon && (
       <div className="relative w-[1214px] h-[541px] rounded-xl overflow-hidden shadow-lg">
         <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center"></div>
