@@ -395,6 +395,16 @@ export default function Home() {
     );
   }
 
+  const [ RC, setRC ] = useState<number>(0);
+  const resonanceChains = [
+    character?.rc1,
+    character?.rc2,
+    character?.rc3,
+    character?.rc4,
+    character?.rc5,
+    character?.rc6,
+  ]
+
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
       <input
@@ -439,6 +449,20 @@ export default function Home() {
           />
         ))}
       </div>
+      <div className="flex flex-col gap-2">
+      <label htmlFor="resonance" className="font-medium">
+        Resonance Chains: {String(RC)}
+      </label>
+      <input
+        id="resonance"
+        type="range"
+        min={0}
+        max={6}
+        value={String(RC)}
+        onChange={(e) => setRC(Number(e.target.value))}
+        className="w-full"
+      />
+    </div>
       {ocrData && character && weapon && (
       <div className="relative w-[1214px] h-[541px] rounded-xl overflow-hidden shadow-lg">
         <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center"></div>
@@ -780,42 +804,55 @@ export default function Home() {
         </div>
         <div className="absolute top-[-35px] bottom-[-50px] left-[21.5%] w-[65px]">
           <div className="flex flex-col items-center gap-3 h-[150%] bg-divider transform rotate-6 origin-center">
+            <div className="mt-31"/>
+            {resonanceChains.map((src, index) => {
+              return (
+                <Image
+                  key={index}  
+                  src={String(src)}
+                  alt={`Resonance Chain ${index + 1}`}
+                  width={50}
+                  height={50}
+                  className={`w-[75%] h-auto ${index < RC ? 'opacity-100' : 'opacity-40'}`}
+                />
+              )
+            })}
+            {/* <Image 
+            src={character.rc1}
+            alt="RC 1"
+            width={50}
+            height={50}
+            className="w-[75%] h-auto mt-31"/>
             <Image 
-              src={character.rc1}
-              alt="RC 1"
-              width={50}
-              height={50}
-              className="w-[75%] h-auto mt-31"/>
-              <Image 
-              src={character.rc2}
-              alt="RC 2"
-              width={50}
-              height={50}
-              className="w-[75%] h-auto"/>
-              <Image 
-              src={character.rc3} 
-              alt="RC 3"
-              width={50}
-              height={50}
-              className="w-[75%] h-auto"/>
-              <Image 
-              src={character.rc4}
-              alt="RC 4"
-              width={50}
-              height={50}
-              className="w-[75%] h-auto"/>
-              <Image 
-              src={character.rc5}
-              alt="RC 5"
-              width={50}
-              height={50}
-              className="w-[75%] h-auto"/>
-              <Image 
-              src={character.rc6}
-              alt="RC 6"
-              width={50}
-              height={50}
-              className="w-[75%] h-auto"/>
+            src={character.rc2}
+            alt="RC 2"
+            width={50}
+            height={50}
+            className="w-[75%] h-auto"/>
+            <Image 
+            src={character.rc3} 
+            alt="RC 3"
+            width={50}
+            height={50}
+            className="w-[75%] h-auto"/>
+            <Image 
+            src={character.rc4}
+            alt="RC 4"
+            width={50}
+            height={50}
+            className="w-[75%] h-auto"/>
+            <Image 
+            src={character.rc5}
+            alt="RC 5"
+            width={50}
+            height={50}
+            className="w-[75%] h-auto"/>
+            <Image 
+            src={character.rc6}
+            alt="RC 6"
+            width={50}
+            height={50}
+            className="w-[75%] h-auto"/> */}
           </div>
         </div>
       </div>)}
