@@ -460,7 +460,7 @@ export default function Home() {
         max={6}
         value={String(RC)}
         onChange={(e) => setRC(Number(e.target.value))}
-        className="w-full"
+        className="w-full accent-sk-light-blue"
       />
     </div>
       {ocrData && character && weapon && (
@@ -524,6 +524,10 @@ export default function Home() {
                   <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-lg text-white leading-none ml-1 mr-3">{weapon.subStatNum}</p>
                 </div>
               </div>
+            </div>
+            <div className="flex flex-row items-center justify-start gap-0.5">
+              <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/WuwaNetworkLogo.png" alt="WuwaNetwork Logo" className="w-10 h-10"/>
+              <p className="text-lg bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">Wuwa.Network</p>
             </div>
           </div>
           <div className="flex flex-row ml-12 items-start">
