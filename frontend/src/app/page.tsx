@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { getCharacterInfo, CharacterInfo } from "./characterMap";
 import { getWeaponInfo } from "./weaponMap";
 import { getStatIcon } from "./statMap";
-import { Field, Label, Radio, RadioGroup, Menu, MenuButton, MenuItem, MenuItems, Checkbox, Listbox } from '@headlessui/react'
+import { Field, Label, Radio, RadioGroup, Menu, MenuButton, MenuItem, MenuItems, Checkbox, Listbox, ListboxOption, ListboxOptions, ListboxButton } from '@headlessui/react'
 import { ChevronDownIcon, ChevronUpDownIcon, CheckIcon } from '@heroicons/react/20/solid'
 import { getEchoInfo, EchoInfo, echoMap } from "./echoMap";
 
@@ -16,7 +16,7 @@ const options = [
 
 type Echo = {
   name: string;
-  image?: string;
+  icon: string;
 };
 
 type EchoDropdownProps = {
@@ -370,26 +370,27 @@ export default function Home() {
         onChange={(value) => handleEchoChange(index, value)}
       >
         <div className="relative w-60">
-          <Listbox.Button className="relative w-full cursor-pointer rounded border bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm">
+          <ListboxButton className="relative w-full cursor-pointer rounded border bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm">
             <span className="block truncate text-black">
               {selectedEcho?.name || "None"}
             </span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
             </span>
-          </Listbox.Button>
+          </ListboxButton>
 
-          <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-            <Listbox.Option key="none" value="">
+          <ListboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+            <ListboxOption key="none" value="" className={"text-black ml-2"}>
               None
-            </Listbox.Option>
+            </ListboxOption>
 
             {echoes.map((echo) => (
-              <Listbox.Option key={echo.name} value={echo.name}>
+              <ListboxOption key={echo.name} value={echo.name} className={"flex gap-1 text-black"}>
+                <img src={echo.icon} alt={echo.name} className="ml-2 w-6 h-6 inline-block mr-2" />
                 {echo.name}
-              </Listbox.Option>
+              </ListboxOption>
             ))}
-          </Listbox.Options>
+          </ListboxOptions>
         </div>
       </Listbox>
     );
@@ -435,19 +436,21 @@ export default function Home() {
           ))}
         </div>
       </RadioGroup>
-      <div className="flex flex-col gap-1">
-        <h2 className="text-lg font-bold">
+      <div className="flex flex-col gap-2">
+        <h2 className="text-lg font-bold self-center">
           Select Echoes for {selectedSet.set}
         </h2>
-        {selectedEchoes.map((selectedEcho, index) => (
-          <EchoDropdown
-            key={index}
-            index={index}
-            selectedEcho={selectedEcho}
-            echoes={echoesForSelectedSet}
-            handleEchoChange={handleEchoChange}
-          />
-        ))}
+        <div className="flex flex-row gap-5">
+          {selectedEchoes.map((selectedEcho, index) => (
+            <EchoDropdown
+              key={index}
+              index={index}
+              selectedEcho={selectedEcho}
+              echoes={echoesForSelectedSet}
+              handleEchoChange={handleEchoChange}
+            />
+          ))}
+        </div>
       </div>
       <div className="flex flex-col gap-2">
       <label htmlFor="resonance" className="font-medium">
