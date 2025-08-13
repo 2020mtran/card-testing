@@ -406,6 +406,8 @@ export default function Home() {
     character?.rc6,
   ]
 
+  const [ WR, setWR ] = useState<number>(0);
+
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-blurple gap-5">
       <div className="flex flex-col mt-5">
@@ -458,16 +460,16 @@ export default function Home() {
               <Image src={weapon?.imageUrl} alt="Character Weapon Icon" width={100} height={100} className="w-[20%] aspect-square" />
               <div className="flex flex-col gap-1">
                 <p className="font-lagu-semibold text-md text-white leading-none">{weapon.name}</p>
-                <label htmlFor="resonance" className="font-medium">
-                  Rank: {String(RC)}/5
+                <label htmlFor="weapon" className="font-medium">
+                  Rank: {String(WR)}/5
                 </label>
                 <input
                   id="resonance"
                   type="range"
-                  min={0}
-                  max={6}
-                  value={String(RC)}
-                  onChange={(e) => setRC(Number(e.target.value))}
+                  min={1}
+                  max={5}
+                  value={String(WR)}
+                  onChange={(e) => setWR(Number(e.target.value))}
                   className="w-full accent-sk-light-blue"
                 />
                 <p className="font-lagu-semibold text-md text-white leading-none">Level {ocrData.weaponLvl}/90</p>
@@ -638,7 +640,7 @@ export default function Home() {
                 <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-xl text-white leading-none">{weapon.name}</p>
                 <div className="flex flex-row gap-3.5">
                   <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-lg text-white leading-none">Lv. {ocrData.weaponLvl}/90</p>
-                  <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-lg text-white leading-none">R1</p>
+                  <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-lg text-white leading-none">Rank {WR}</p>
                 </div>
                 <div className="flex flex-row items-center">
                   <Image 
@@ -956,42 +958,6 @@ export default function Home() {
                 />
               )
             })}
-            {/* <Image 
-            src={character.rc1}
-            alt="RC 1"
-            width={50}
-            height={50}
-            className="w-[75%] h-auto mt-31"/>
-            <Image 
-            src={character.rc2}
-            alt="RC 2"
-            width={50}
-            height={50}
-            className="w-[75%] h-auto"/>
-            <Image 
-            src={character.rc3} 
-            alt="RC 3"
-            width={50}
-            height={50}
-            className="w-[75%] h-auto"/>
-            <Image 
-            src={character.rc4}
-            alt="RC 4"
-            width={50}
-            height={50}
-            className="w-[75%] h-auto"/>
-            <Image 
-            src={character.rc5}
-            alt="RC 5"
-            width={50}
-            height={50}
-            className="w-[75%] h-auto"/>
-            <Image 
-            src={character.rc6}
-            alt="RC 6"
-            width={50}
-            height={50}
-            className="w-[75%] h-auto"/> */}
           </div>
         </div>
       </div>)}
