@@ -407,7 +407,7 @@ export default function Home() {
   ]
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen">
+    <div className="flex flex-col justify-center items-center min-h-screen bg-blurple">
       <input
         type="file"
         accept="image/*"
@@ -421,6 +421,37 @@ export default function Home() {
       >
         {loading ? 'Processing...' : 'Upload'}
       </button>
+      {character && (
+        <div className="flex flex-row">
+          <div className="flex flex-col items-center">
+            <div className="flex flex-row gap-2">
+              <img src={character.typeIcon} alt="Character Type" className="w-12 h-12"/>
+              <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-charName text-white leading-none">{ocrData.character}</p>
+            </div>
+            <Image src={character.imageUrl} alt="Character Portrait" width={1000} height={860} className="w-auto"/>
+            <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-3xl text-white leading-none">Level {ocrData.level}/90</p>
+          </div>
+          <div className="flex flex-row">
+            <div className="flex flex-row">
+              <Image src={character.waveband} alt="Character Waveband" width={100} height={100} className="w-20 h-20" />
+              <div className="flex flex-col gap-2">
+                <label htmlFor="resonance" className="font-medium">
+                  Resonance Chains: {String(RC)}
+                </label>
+                <input
+                  id="resonance"
+                  type="range"
+                  min={0}
+                  max={6}
+                  value={String(RC)}
+                  onChange={(e) => setRC(Number(e.target.value))}
+                  className="w-full accent-sk-light-blue"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <RadioGroup value={selectedSet} onChange={setSelectedSet} aria-label="Server size">
         <div className="flex flex-row gap-4">
           {options.map((option) => (
@@ -452,20 +483,6 @@ export default function Home() {
           ))}
         </div>
       </div>
-      <div className="flex flex-col gap-2">
-      <label htmlFor="resonance" className="font-medium">
-        Resonance Chains: {String(RC)}
-      </label>
-      <input
-        id="resonance"
-        type="range"
-        min={0}
-        max={6}
-        value={String(RC)}
-        onChange={(e) => setRC(Number(e.target.value))}
-        className="w-full accent-sk-light-blue"
-      />
-    </div>
       {ocrData && character && weapon && (
       <div className="relative w-[1214px] h-[541px] rounded-xl overflow-hidden shadow-lg">
         <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center"></div>
