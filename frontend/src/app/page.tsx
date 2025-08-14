@@ -370,7 +370,7 @@ export default function Home() {
         onChange={(value) => handleEchoChange(index, value)}
       >
         <div className="relative w-60">
-          <ListboxButton className="relative w-full cursor-pointer rounded border bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm">
+          <ListboxButton className="relative w-full cursor-pointer rounded border bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-2 focus:ring-sk-light-blue sm:text-sm">
             <span className="block truncate text-black">
               {selectedEcho?.name || "None"}
             </span>
@@ -379,7 +379,7 @@ export default function Home() {
             </span>
           </ListboxButton>
 
-          <ListboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+          <ListboxOptions className="absolute z-10 mt-1 max-h-40 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
             <ListboxOption key="none" value="" className={"text-black ml-2"}>
               None
             </ListboxOption>
@@ -406,10 +406,10 @@ export default function Home() {
     character?.rc6,
   ]
 
-  const [ WR, setWR ] = useState<number>(0);
+  const [ WR, setWR ] = useState<number>(1);
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen bg-blurple gap-5">
+    <div className="flex flex-col justify-center items-center min-h-screen bg-blurple gap-5 py-10">
       <div className="flex flex-col mt-5">
         <input
           type="file"
@@ -426,180 +426,182 @@ export default function Home() {
         </button>
       </div>
       {character && weapon && (
-        <div className="flex flex-row w-[70%]">
-          <div className="flex flex-col items-center">
-            <div className="flex flex-row gap-2">
-              <img src={character.typeIcon} alt="Character Type" className="w-12 h-12"/>
-              <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-charName text-white leading-none">{ocrData.character}</p>
+        <div className="flex flex-col items-center gap-5">
+          <div className="flex flex-row w-[70%]">
+            <div className="flex flex-col items-center">
+              <div className="flex flex-row gap-2">
+                <img src={character.typeIcon} alt="Character Type" className="w-12 h-12"/>
+                <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-charName text-white leading-none">{ocrData.character}</p>
+              </div>
+              <div className="relative overflow-hidden h-[100%] w-full">
+                <Image src={character.imageUrl} alt="Character Portrait" width={1000} height={860} className="w-auto pt-10 scale-125 object-cover object-top"/>
+                <div className="absolute bottom-0 left-0 w-full h-1/4 bg-gradient-to-t from-blurple/100 to-blurple/0 pointer-events-none"></div>
+                <div className="absolute top-0 left-0 w-1/8 h-full bg-gradient-to-r from-blurple/100 to-transparent pointer-events-none" />
+                <div className="absolute top-0 right-0 w-1/6 h-full bg-gradient-to-l from-blurple/100 to-transparent pointer-events-none" />
+              </div>
+              <p className="font-lagu-semibold text-3xl text-white leading-none">Level {ocrData.level}/90</p>
             </div>
-            <div className="relative overflow-hidden h-[100%] w-full">
-              <Image src={character.imageUrl} alt="Character Portrait" width={1000} height={860} className="w-auto pt-10 scale-125 object-cover object-top"/>
-              <div className="absolute bottom-0 left-0 w-full h-1/4 bg-gradient-to-t from-blurple/100 to-blurple/0 pointer-events-none"></div>
-              <div className="absolute top-0 left-0 w-1/8 h-full bg-gradient-to-r from-blurple/100 to-transparent pointer-events-none" />
-              <div className="absolute top-0 right-0 w-1/6 h-full bg-gradient-to-l from-blurple/100 to-transparent pointer-events-none" />
+            <div className="flex flex-col gap-2 items-center">
+              <div className="flex flex-row items-center">
+                <Image src={character.waveband} alt="Character Waveband" width={100} height={100} className="w-[22%] aspect-square" />
+                <div className="flex flex-col flex-grow gap-1">
+                  <label htmlFor="resonance" className="font-medium text-wrap">
+                    Resonance Chains: {String(RC)}/6
+                  </label>
+                  <input
+                    id="resonance"
+                    type="range"
+                    min={0}
+                    max={6}
+                    value={String(RC)}
+                    onChange={(e) => setRC(Number(e.target.value))}
+                    className="w-full accent-sk-light-blue"
+                  />
+                </div>
+                <Image src={weapon?.imageUrl} alt="Character Weapon Icon" width={100} height={100} className="w-[20%] aspect-square" />
+                <div className="flex flex-col gap-1">
+                  <p className="font-lagu-semibold text-md text-white leading-none">{weapon.name}</p>
+                  <label htmlFor="weapon" className="font-medium">
+                    Rank: {String(WR)}/5
+                  </label>
+                  <input
+                    id="resonance"
+                    type="range"
+                    min={1}
+                    max={5}
+                    value={String(WR)}
+                    onChange={(e) => setWR(Number(e.target.value))}
+                    className="w-full accent-sk-light-blue"
+                  />
+                  <p className="font-lagu-semibold text-md text-white leading-none">Level {ocrData.weaponLvl}/90</p>
+                </div>
+              </div>
+              <div className="flex flex-row justify-center flex-1 h-full ">
+                <div className="flex flex-col items-center justify-center h-full">
+                  <div className="w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
+                    <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-[90%]"></img>
+                  </div>
+                  <div className="h-[10%] w-[3%] bg-white/20" />
+                  <div className="w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
+                    <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-[90%]"></img>
+                  </div>                
+                  <div className="h-[10%] w-[3%] bg-white/20 mb-2" />
+                  <div className="w-[45%] aspect-square rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
+                    <img src={character.normal} alt="Normal Attack" className="-rotate-45 invert w-[90%]"></img>
+                  </div>
+                  <p className="flex flex-col leading-tight text-center mt-3 text-xs">
+                    <span>Lv. {ocrData.basicAtkLvl && ocrData.basicAtkLvl.match(/\d+/)?.[0]}</span>
+                    <span>Normal</span>
+                  </p>
+                </div>
+                <div className="flex flex-col items-center justify-center mb-5">
+                  <div className="w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
+                    <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-[87%]"></img>
+                  </div>
+                  <div className="h-[10%] w-[3%] bg-white/20" />
+                  <div className="w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
+                    <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-[87%]"></img>
+                  </div>                
+                  <div className="h-[10%] w-[3%] bg-white/20 mb-2" />
+                  <div className="w-[45%] aspect-square rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
+                    <img src={character.skill} alt="Skill" className="-rotate-45 invert w-[90%]"></img>
+                  </div>
+                  <p className="flex flex-col leading-tight text-center mt-3 text-xs">
+                    <span>Lv. {ocrData.skillLvl && ocrData.skillLvl.match(/\d+/)?.[0]}</span>
+                    <span>Skill</span>
+                  </p>
+                </div>
+                <div className="flex flex-col items-center justify-center pb-10">
+                  <div className="w-[45%] aspect-square border-3 border-black/75 bg-white flex items-center justify-center">
+                    <div className="w-[100%] aspect-square rotate-45 border-3 border-black/70 bg-white flex items-center justify-center">
+                      <img src={character.passive2} alt="Passive Skill 2" className="-rotate-45 invert w-[90%]"></img>
+                    </div>  
+                  </div>
+                  <div className="h-4 w-[3px] bg-white/20" />
+                  <div className="w-[45%] aspect-square border-3 border-black/75 bg-white flex items-center justify-center">
+                    <div className="w-[100%] aspect-square rotate-45 border-3 border-black/70 bg-white flex items-center justify-center">
+                      <img src={character.passive1} alt="Passive Skill 1" className="-rotate-45 invert w-[90%]"></img>
+                    </div>  
+                  </div>
+                  <div className="h-4 w-[3px] bg-white/20 mb-2" />
+                  <div className="w-[45%] aspect-square rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
+                    <img src={character.forte} alt="Forte Circuit" className="-rotate-45 invert w-[90%]"></img>
+                  </div>
+                  <p className="flex flex-col leading-tight text-center mt-3 text-xs">
+                    <span>Lv. {ocrData.forteCircuitLvl && ocrData.forteCircuitLvl.match(/\d+/)?.[0]}</span>
+                    <span>Forte</span>
+                  </p>
+                </div>
+                <div className="flex flex-col items-center justify-center mb-5">
+                  <div className="w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
+                    <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-[87%]"></img>
+                  </div>
+                  <div className="h-[10%] w-[3%] bg-white/20" />
+                  <div className="w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
+                    <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-[87%]"></img>
+                  </div>                
+                  <div className="h-[10%] w-[3%] bg-white/20 mb-2" />
+                  <div className="w-[45%] rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
+                    <img src={character.liberation} alt="Resonance Liberation" className="-rotate-45 invert w-[90%]"></img>
+                  </div>
+                  <p className="flex flex-col leading-tight text-center mt-3 text-xs">
+                    <span>Lv. {ocrData.ultimateLvl && ocrData.ultimateLvl.match(/\d+/)?.[0]}</span>
+                    <span>Liberation</span>
+                  </p>
+                </div>
+                <div className="flex flex-col items-center justify-center">
+                  <div className="w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
+                    <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-[90%]"></img>
+                  </div>
+                  <div className="h-[10%] w-[3%] bg-white/20" />
+                  <div className="w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
+                    <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-[90%]"></img>
+                  </div>                
+                  <div className="h-[10%] w-[3%] bg-white/20 mb-2" />
+                  <div className="w-[45%] rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
+                    <img src={character.intro} alt="Intro Skill" className="-rotate-45 invert w-[90%]"></img>
+                  </div>
+                  <p className="flex flex-col leading-tight text-center mt-3 text-xs">
+                    <span>Lv. {ocrData.introSkillLvl && ocrData.introSkillLvl.match(/\d+/)?.[0]}</span>
+                    <span>Intro</span>
+                  </p>
+                </div>
+              </div>
             </div>
-            <p className="font-lagu-semibold text-3xl text-white leading-none">Level {ocrData.level}/90</p>
           </div>
-          <div className="flex flex-col gap-2 items-center">
-            <div className="flex flex-row items-center">
-              <Image src={character.waveband} alt="Character Waveband" width={100} height={100} className="w-[22%] aspect-square" />
-              <div className="flex flex-col flex-grow gap-1">
-                <label htmlFor="resonance" className="font-medium text-wrap">
-                  Resonance Chains: {String(RC)}/6
-                </label>
-                <input
-                  id="resonance"
-                  type="range"
-                  min={0}
-                  max={6}
-                  value={String(RC)}
-                  onChange={(e) => setRC(Number(e.target.value))}
-                  className="w-full accent-sk-light-blue"
-                />
+            <RadioGroup value={selectedSet} onChange={setSelectedSet} aria-label="Echo Set Selection">
+              <div className="flex flex-row gap-4">
+                {options.map((option) => (
+                  <Field key={option.set} className="flex items-center gap-2">
+                    <Radio            value={option}
+                      className="group flex size-5 items-center justify-center rounded-full border bg-white data-checked:bg-blue-400"
+                    >
+                      <span className="invisible size-2 rounded-full bg-white group-data-checked:visible" />
+                    </Radio>
+                    <Label>{option.set}</Label>
+                    <img src={option.icon} alt={option.set} className="w-5 h-5" />
+                  </Field>
+                ))}
               </div>
-              <Image src={weapon?.imageUrl} alt="Character Weapon Icon" width={100} height={100} className="w-[20%] aspect-square" />
-              <div className="flex flex-col gap-1">
-                <p className="font-lagu-semibold text-md text-white leading-none">{weapon.name}</p>
-                <label htmlFor="weapon" className="font-medium">
-                  Rank: {String(WR)}/5
-                </label>
-                <input
-                  id="resonance"
-                  type="range"
-                  min={1}
-                  max={5}
-                  value={String(WR)}
-                  onChange={(e) => setWR(Number(e.target.value))}
-                  className="w-full accent-sk-light-blue"
-                />
-                <p className="font-lagu-semibold text-md text-white leading-none">Level {ocrData.weaponLvl}/90</p>
+            </RadioGroup>
+            <div className="flex flex-col gap-2">
+              <h2 className="text-lg font-bold self-center">
+                Select Echoes for {selectedSet.set}
+              </h2>
+              <div className="flex flex-row gap-5">
+                {selectedEchoes.map((selectedEcho, index) => (
+                  <EchoDropdown
+                    key={index}
+                    index={index}
+                    selectedEcho={selectedEcho}
+                    echoes={echoesForSelectedSet}
+                    handleEchoChange={handleEchoChange}
+                  />
+                ))}
               </div>
             </div>
-            <div className="flex flex-row justify-center flex-1 h-full ">
-              <div className="flex flex-col items-center justify-center h-full">
-                <div className="w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
-                  <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-[90%]"></img>
-                </div>
-                <div className="h-[10%] w-[3%] bg-white/20" />
-                <div className="w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
-                  <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-[90%]"></img>
-                </div>                
-                <div className="h-[10%] w-[3%] bg-white/20 mb-2" />
-                <div className="w-[45%] aspect-square rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
-                  <img src={character.normal} alt="Normal Attack" className="-rotate-45 invert w-[90%]"></img>
-                </div>
-                <p className="flex flex-col leading-tight text-center mt-3 text-xs">
-                  <span>Lv. {ocrData.basicAtkLvl && ocrData.basicAtkLvl.match(/\d+/)?.[0]}</span>
-                  <span>Normal</span>
-                </p>
-              </div>
-              <div className="flex flex-col items-center justify-center mb-5">
-                <div className="w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
-                  <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-[87%]"></img>
-                </div>
-                <div className="h-[10%] w-[3%] bg-white/20" />
-                <div className="w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
-                  <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-[87%]"></img>
-                </div>                
-                <div className="h-[10%] w-[3%] bg-white/20 mb-2" />
-                <div className="w-[45%] aspect-square rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
-                  <img src={character.skill} alt="Skill" className="-rotate-45 invert w-[90%]"></img>
-                </div>
-                <p className="flex flex-col leading-tight text-center mt-3 text-xs">
-                  <span>Lv. {ocrData.skillLvl && ocrData.skillLvl.match(/\d+/)?.[0]}</span>
-                  <span>Skill</span>
-                </p>
-              </div>
-              <div className="flex flex-col items-center justify-center pb-10">
-                <div className="w-[45%] aspect-square border-3 border-black/75 bg-white flex items-center justify-center">
-                  <div className="w-[100%] aspect-square rotate-45 border-3 border-black/70 bg-white flex items-center justify-center">
-                    <img src={character.passive2} alt="Passive Skill 2" className="-rotate-45 invert w-[90%]"></img>
-                  </div>  
-                </div>
-                <div className="h-4 w-[3px] bg-white/20" />
-                <div className="w-[45%] aspect-square border-3 border-black/75 bg-white flex items-center justify-center">
-                  <div className="w-[100%] aspect-square rotate-45 border-3 border-black/70 bg-white flex items-center justify-center">
-                    <img src={character.passive1} alt="Passive Skill 1" className="-rotate-45 invert w-[90%]"></img>
-                  </div>  
-                </div>
-                <div className="h-4 w-[3px] bg-white/20 mb-2" />
-                <div className="w-[45%] aspect-square rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
-                  <img src={character.forte} alt="Forte Circuit" className="-rotate-45 invert w-[90%]"></img>
-                </div>
-                <p className="flex flex-col leading-tight text-center mt-3 text-xs">
-                  <span>Lv. {ocrData.forteCircuitLvl && ocrData.forteCircuitLvl.match(/\d+/)?.[0]}</span>
-                  <span>Forte</span>
-                </p>
-              </div>
-              <div className="flex flex-col items-center justify-center mb-5">
-                <div className="w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
-                  <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-[87%]"></img>
-                </div>
-                <div className="h-[10%] w-[3%] bg-white/20" />
-                <div className="w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
-                  <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-[87%]"></img>
-                </div>                
-                <div className="h-[10%] w-[3%] bg-white/20 mb-2" />
-                <div className="w-[45%] rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
-                  <img src={character.liberation} alt="Resonance Liberation" className="-rotate-45 invert w-[90%]"></img>
-                </div>
-                <p className="flex flex-col leading-tight text-center mt-3 text-xs">
-                  <span>Lv. {ocrData.ultimateLvl && ocrData.ultimateLvl.match(/\d+/)?.[0]}</span>
-                  <span>Liberation</span>
-                </p>
-              </div>
-              <div className="flex flex-col items-center justify-center">
-                <div className="w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
-                  <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-[90%]"></img>
-                </div>
-                <div className="h-[10%] w-[3%] bg-white/20" />
-                <div className="w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
-                  <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-[90%]"></img>
-                </div>                
-                <div className="h-[10%] w-[3%] bg-white/20 mb-2" />
-                <div className="w-[45%] rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
-                  <img src={character.intro} alt="Intro Skill" className="-rotate-45 invert w-[90%]"></img>
-                </div>
-                <p className="flex flex-col leading-tight text-center mt-3 text-xs">
-                  <span>Lv. {ocrData.introSkillLvl && ocrData.introSkillLvl.match(/\d+/)?.[0]}</span>
-                  <span>Intro</span>
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
       )}
-      <RadioGroup value={selectedSet} onChange={setSelectedSet} aria-label="Server size">
-        <div className="flex flex-row gap-4">
-          {options.map((option) => (
-            <Field key={option.set} className="flex items-center gap-2">
-              <Radio            value={option}
-                className="group flex size-5 items-center justify-center rounded-full border bg-white data-checked:bg-blue-400"
-              >
-                <span className="invisible size-2 rounded-full bg-white group-data-checked:visible" />
-              </Radio>
-              <Label>{option.set}</Label>
-              <img src={option.icon} alt={option.set} className="w-5 h-5" />
-            </Field>
-          ))}
-        </div>
-      </RadioGroup>
-      <div className="flex flex-col gap-2">
-        <h2 className="text-lg font-bold self-center">
-          Select Echoes for {selectedSet.set}
-        </h2>
-        <div className="flex flex-row gap-5">
-          {selectedEchoes.map((selectedEcho, index) => (
-            <EchoDropdown
-              key={index}
-              index={index}
-              selectedEcho={selectedEcho}
-              echoes={echoesForSelectedSet}
-              handleEchoChange={handleEchoChange}
-            />
-          ))}
-        </div>
-      </div>
       {ocrData && character && weapon && (
       <div className="relative w-[1214px] h-[541px] rounded-xl overflow-hidden shadow-lg">
         <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center"></div>
