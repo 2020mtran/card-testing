@@ -106,7 +106,9 @@ export default function Home() {
       console.error(err);
     } finally {
       setLoading(false);
-      bottomRef.current?.scrollIntoView({behavior: "smooth"})
+      requestAnimationFrame(() => {
+        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+      });
     }
   };
 
@@ -425,6 +427,15 @@ export default function Home() {
   }, [file]);
 
   const [ showCard, setShowCard ] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleShowCard = () => {
+    setShowCard(true);
+
+    requestAnimationFrame(() => {
+      cardRef.current?.scrollIntoView({behavior: "smooth"});
+    })
+  }
 
   return (
     <div className="flex flex-col justify-center min-h-screen bg-blurple gap-5 py-10">
@@ -633,11 +644,11 @@ export default function Home() {
                 ))}
               </div>
             </div>
+          <button onClick={handleShowCard} className="w-[20%] bg-blue-600 text-white px-4 py-2 rounded-xl text-2xl">Process</button>
         </div>
       )}
-      <button onClick={() => setShowCard(true)}></button>
-      {ocrData && character && weapon && (
-      <div className="relative w-[1214px] h-[541px] rounded-xl overflow-hidden shadow-lg self-center">
+      {showCard && ocrData && character && weapon && (
+      <div className="relative w-[1214px] h-[541px] rounded-xl overflow-hidden shadow-lg self-center" ref={cardRef}>
         <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center"></div>
         <div className={`absolute inset-0 ${typeToBgClass[character.type] || "bg-gray-500/35"}`} />
         <Image 
