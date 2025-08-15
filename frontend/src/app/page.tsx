@@ -410,7 +410,12 @@ export default function Home() {
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-blurple gap-5 py-10">
-      <div className="flex flex-col mt-5">
+      <div className="absolute inset-0">
+        <div className="h-[120vh] bg-[url(https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/ShorekeeperBackground2.png)] bg-cover bg-center">
+          <div className="h-[120vh] bg-gradient-to-b from-transparent from-90% to-blurple"></div>
+        </div>
+      </div>
+      <div className="flex flex-col self-start ml-[10%] relative z-10">
         <input
           type="file"
           accept="image/*"
