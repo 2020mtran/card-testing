@@ -1,7 +1,7 @@
 'use client';
 
 import Image from "next/image";
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { getCharacterInfo, CharacterInfo } from "./characterMap";
 import { getWeaponInfo } from "./weaponMap";
 import { getStatIcon } from "./statMap";
@@ -82,6 +82,8 @@ export default function Home() {
     { label: ocrData.echo5FifthSubstat, value: ocrData.echo5FifthSubstatNum },
   ] : [];
 
+  const bottomRef = useRef<HTMLDivElement>(null);
+
   const handleUpload = async () => {
     if (!file) return;
     const formData = new FormData();
@@ -104,6 +106,7 @@ export default function Home() {
       console.error(err);
     } finally {
       setLoading(false);
+      bottomRef.current?.scrollIntoView({behavior: "smooth"})
     }
   };
 
@@ -408,30 +411,55 @@ export default function Home() {
 
   const [ WR, setWR ] = useState<number>(1);
 
+  const [ filePreview, setFilePreview ] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!file) return;
+
+    // Create a preview URL for the uploaded file
+    const objectUrl = URL.createObjectURL(file);
+    setFilePreview(objectUrl);
+
+    // Clean up when the component unmounts or file changes
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [file]);
+
+  const [ showCard, setShowCard ] = useState(false);
+
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen bg-blurple gap-5 py-10">
-      <div className="absolute inset-0">
-        <div className="h-[120vh] bg-[url(https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/ShorekeeperBackground2.png)] bg-cover bg-center">
-          <div className="h-[120vh] bg-gradient-to-b from-transparent from-90% to-blurple"></div>
+    <div className="flex flex-col justify-center min-h-screen bg-blurple gap-5 py-10">
+      <div className="flex flex-col justify-center items-start min-h-screen bg-blurple">
+        <div className="absolute inset-0">
+          <div className="h-[120vh] bg-[url(https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/ShorekeeperBackground2.png)] bg-cover bg-center">
+            <div className="h-[120vh] bg-gradient-to-b from-transparent from-90% to-blurple"></div>
+          </div>
+        </div>
+        <div className="flex flex-col w-[42%] h-[50vh] ml-[10%] relative z-10 items-center gap-5">
+          <input
+            id="file-upload"
+            type="file"
+            accept="image/*"
+            onChange={(e) => setFile(e.target.files?.[0] || null)}
+            className="mb-2 hidden"
+          />
+          <label
+            htmlFor="file-upload"
+            className="w-full h-full cursor-pointer bg-black/30 text-3xl flex justify-center items-center rounded-2xl"
+          >
+            {filePreview ? (
+              <img src={filePreview} alt="Uploaded Preview" className="w-full h-full object-cover" /> ) : ( "Upload Here" )}
+          </label>
+          <button
+            onClick={handleUpload}
+            className="w-[40%] bg-blue-600 text-white px-4 py-2 rounded"
+            disabled={loading}
+          >
+            {loading ? 'Processing...' : 'Upload'}
+          </button>
         </div>
       </div>
-      <div className="flex flex-col self-start ml-[10%] relative z-10">
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setFile(e.target.files?.[0] || null)}
-          className="mb-2"
-        />
-        <button
-          onClick={handleUpload}
-          className="bg-blue-600 text-white px-4 py-2 rounded"
-          disabled={loading}
-        >
-          {loading ? 'Processing...' : 'Upload'}
-        </button>
-      </div>
       {character && weapon && (
-        <div className="flex flex-col items-center gap-5">
+        <div className="flex flex-col items-center mt-35 gap-5" ref={bottomRef}>
           <div className="flex flex-row w-[70%]">
             <div className="flex flex-col items-center">
               <div className="flex flex-row gap-2">
@@ -607,8 +635,9 @@ export default function Home() {
             </div>
         </div>
       )}
+      <button onClick={() => setShowCard(true)}></button>
       {ocrData && character && weapon && (
-      <div className="relative w-[1214px] h-[541px] rounded-xl overflow-hidden shadow-lg">
+      <div className="relative w-[1214px] h-[541px] rounded-xl overflow-hidden shadow-lg self-center">
         <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center"></div>
         <div className={`absolute inset-0 ${typeToBgClass[character.type] || "bg-gray-500/35"}`} />
         <Image 
