@@ -438,14 +438,24 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col justify-center min-h-screen bg-blurple gap-5 py-10">
+    <div className="flex flex-col justify-center min-h-screen bg-blurple gap-5">
+      <header className="w-full flex flex-row relative z-10 pb-2 px-[7%]">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-header/25 via-85% to-transparent"></div>
+        <div className="flex flex-row items-center gap-0.5 relative">
+          <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/WuwaNetworkLogo.png" alt="WuwaNetwork Logo" className="w-[5%] aspect-square"/>
+          <p className="text-5xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">Wuwa.Network</p>
+        </div>
+        <div className="flex flex-row items-center relative">
+          <span className="text-5xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">Generator</span>
+        </div>
+      </header>
       <div className="flex flex-col justify-center items-start min-h-screen bg-blurple">
         <div className="absolute inset-0">
           <div className="h-[120vh] bg-[url(https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/ShorekeeperBackground2.png)] bg-cover bg-center">
             <div className="h-[120vh] bg-gradient-to-b from-transparent from-90% to-blurple"></div>
           </div>
         </div>
-        <div className="flex flex-col w-[42%] h-[50vh] ml-[10%] relative z-10 items-center gap-5">
+        <div className="flex flex-col w-[42%] h-[50vh] ml-[7%] -mt-[13%] relative z-10 items-center gap-5">
           <input
             id="file-upload"
             type="file"
@@ -644,11 +654,11 @@ export default function Home() {
                 ))}
               </div>
             </div>
-          <button onClick={handleShowCard} className="w-[20%] bg-blue-600 text-white px-4 py-2 rounded-xl text-2xl">Process</button>
+          <button onClick={handleShowCard} className="w-[20%] bg-blue-600 text-white px-4 py-2 rounded-xl text-2xl mb-10">Process</button>
         </div>
       )}
       {showCard && ocrData && character && weapon && (
-      <div className="relative w-[1214px] h-[541px] rounded-xl overflow-hidden shadow-lg self-center" ref={cardRef}>
+      <div className="relative w-[1214px] h-[541px] rounded-xl overflow-hidden shadow-lg self-center mb-10" ref={cardRef}>
         <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center"></div>
         <div className={`absolute inset-0 ${typeToBgClass[character.type] || "bg-gray-500/35"}`} />
         <Image 
