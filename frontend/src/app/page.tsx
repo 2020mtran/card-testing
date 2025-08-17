@@ -439,10 +439,10 @@ export default function Home() {
 
   return (
     <div className="flex flex-col justify-center min-h-screen bg-blurple gap-5">
-      <header className="w-full flex flex-row relative z-10 pb-2 px-[7%]">
+      <header className="w-full flex flex-row relative z-10 pb-2 px-[7%] gap-10">
         <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-header/25 via-85% to-transparent"></div>
         <div className="flex flex-row items-center gap-0.5 relative">
-          <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/WuwaNetworkLogo.png" alt="WuwaNetwork Logo" className="w-[5%] aspect-square"/>
+          <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/WuwaNetworkLogo.png" alt="WuwaNetwork Logo" className="h-12 w-auto translate-y-0.5"/>
           <p className="text-5xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">Wuwa.Network</p>
         </div>
         <div className="flex flex-row items-center relative">
