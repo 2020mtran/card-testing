@@ -443,19 +443,20 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-header/25 via-85% to-transparent"></div>
         <div className="flex flex-row items-center gap-0.5 relative">
           <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/WuwaNetworkLogo.png" alt="WuwaNetwork Logo" className="h-12 w-auto translate-y-0.5"/>
-          <p className="text-5xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">Wuwa.Network</p>
+          <p className="text-3xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">Wuwa.Network</p>
         </div>
         <div className="flex flex-row items-center relative">
-          <span className="text-5xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">Generator</span>
+          <span className="hidden lg:flex text-3xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">Generator</span>
         </div>
       </header>
-      <div className="flex flex-col justify-center items-start min-h-screen bg-blurple">
+      <div className="flex flex-col justify-center items-center lg:items-start min-h-screen bg-blurple">
         <div className="absolute inset-0">
           <div className="h-[120vh] bg-[url(https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/ShorekeeperBackground2.png)] bg-cover bg-center">
             <div className="h-[120vh] bg-gradient-to-b from-transparent from-90% to-blurple"></div>
           </div>
         </div>
-        <div className="flex flex-col w-[42%] h-[50vh] ml-[7%] -mt-[13%] relative z-10 items-center gap-5">
+        <div className="flex flex-col w-[70%] lg:w-[42%] h-[60vh] lg:ml-[7%] -mt-[35%] lg:-mt-[15%] relative z-10 items-center gap-5">
+          <p className="text-lg lg:text-4xl text-center relative z-10 [text-shadow:2px_1px_2px_rgba(0,0,0,0.7)]">Upload your image from WuwaBot</p>
           <input
             id="file-upload"
             type="file"
@@ -463,16 +464,26 @@ export default function Home() {
             onChange={(e) => setFile(e.target.files?.[0] || null)}
             className="mb-2 hidden"
           />
+          {filePreview ? (
           <label
+            htmlFor="file-upload"
+            className="w-full cursor-pointer text-3xl flex justify-center items-center rounded-2xl"
+          >
+            {filePreview ? (
+              <img src={filePreview} alt="Uploaded Preview" className="w-full h-full object-contain lg:object-cover" /> ) : ( <p className="text-sm">Upload Here</p> )}
+          </label> ) : (
+            <label
             htmlFor="file-upload"
             className="w-full h-full cursor-pointer bg-black/30 text-3xl flex justify-center items-center rounded-2xl"
           >
             {filePreview ? (
-              <img src={filePreview} alt="Uploaded Preview" className="w-full h-full object-cover" /> ) : ( "Upload Here" )}
+              <img src={filePreview} alt="Uploaded Preview" className="w-full h-full object-contain lg:object-cover" /> ) : ( <p className="text-sm">Upload Here</p> )}
           </label>
+          )}
+          <p className="text-lg -mt-4 -mb-4 [text-shadow:2px_1px_2px_rgba(0,0,0,0.7)]">Don't know what to upload? Check the home page!</p>
           <button
             onClick={handleUpload}
-            className="w-[40%] bg-blue-600 text-white px-4 py-2 rounded"
+            className=" w-auto bg-blue-600 text-white px-6 py-2 rounded text-center whitespace-nowrap"
             disabled={loading}
           >
             {loading ? 'Processing...' : 'Upload'}
@@ -480,67 +491,75 @@ export default function Home() {
         </div>
       </div>
       {character && weapon && (
-        <div className="flex flex-col items-center mt-35 gap-5" ref={bottomRef}>
-          <div className="flex flex-row w-[70%]">
-            <div className="flex flex-col items-center">
-              <div className="flex flex-row gap-2">
-                <img src={character.typeIcon} alt="Character Type" className="w-12 h-12"/>
-                <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-charName text-white leading-none">{ocrData.character}</p>
+        <div className="flex flex-col items-center mt-25 gap-5 lg:mt-35 lg:gap-5" ref={bottomRef}>
+          <div className="flex flex-col lg:flex-row w-[85%] lg:w-[70%]">
+            <div className="flex flex-col items-center gap-2">
+              <div className="flex flex-row lg:gap-2 items-center">
+                <img src={character.typeIcon} alt="Character Type" className="w-8 h-8 lg:w-12 lg:h-12"/>
+                <div className="flex flex-row gap-2">
+                  <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-2xl lg:text-charName text-white leading-none">{ocrData.character}</p>
+                  <p className="lg:hidden font-lagu-semibold text-shadow-divider text-shadow-lg text-2xl lg:text-charName text-white leading-none">|</p>
+                  <p className="lg:hidden font-lagu-semibold text-shadow-divider text-shadow-lg text-2xl lg:text-3xl text-white leading-none">Lvl. {ocrData.level}/90</p>           
+                </div>
               </div>
               <div className="relative overflow-hidden h-[100%] w-full">
-                <Image src={character.imageUrl} alt="Character Portrait" width={1000} height={860} className="w-auto pt-10 scale-125 object-cover object-top"/>
+                <Image src={character.imageUrl} alt="Character Portrait" width={1000} height={860} className="w-auto pt-3 lg:pt-10 scale-125 object-cover object-top"/>
                 <div className="absolute bottom-0 left-0 w-full h-1/4 bg-gradient-to-t from-blurple/100 to-blurple/0 pointer-events-none"></div>
                 <div className="absolute top-0 left-0 w-1/8 h-full bg-gradient-to-r from-blurple/100 to-transparent pointer-events-none" />
                 <div className="absolute top-0 right-0 w-1/6 h-full bg-gradient-to-l from-blurple/100 to-transparent pointer-events-none" />
               </div>
-              <p className="font-lagu-semibold text-3xl text-white leading-none">Level {ocrData.level}/90</p>
+              <p className="hidden lg:flex font-lagu-semibold lg:text-3xl text-white leading-none">Level {ocrData.level}/90</p>
             </div>
-            <div className="flex flex-col gap-2 items-center">
-              <div className="flex flex-row items-center">
-                <Image src={character.waveband} alt="Character Waveband" width={100} height={100} className="w-[22%] aspect-square" />
-                <div className="flex flex-col flex-grow gap-1">
-                  <label htmlFor="resonance" className="font-medium text-wrap">
-                    Resonance Chains: {String(RC)}/6
-                  </label>
-                  <input
-                    id="resonance"
-                    type="range"
-                    min={0}
-                    max={6}
-                    value={String(RC)}
-                    onChange={(e) => setRC(Number(e.target.value))}
-                    className="w-full accent-sk-light-blue"
-                  />
+            <div className="flex flex-col gap-5 items-center">
+              <div className="flex flex-col lg:flex-row items-center w-full">
+                <div className="flex flex-row items-center w-full">
+                  <Image src={character.waveband} alt="Character Waveband" width={100} height={100} className="lg:w-[22%] aspect-square" />
+                  <div className="flex flex-col flex-grow gap-1">
+                    <label htmlFor="resonance" className="font-medium text-wrap">
+                      Resonance Chains: {String(RC)}/6
+                    </label>
+                    <input
+                      id="resonance"
+                      type="range"
+                      min={0}
+                      max={6}
+                      value={String(RC)}
+                      onChange={(e) => setRC(Number(e.target.value))}
+                      className="w-full accent-sk-light-blue"
+                    />
+                  </div>
                 </div>
-                <Image src={weapon?.imageUrl} alt="Character Weapon Icon" width={100} height={100} className="w-[20%] aspect-square" />
-                <div className="flex flex-col gap-1">
-                  <p className="font-lagu-semibold text-md text-white leading-none">{weapon.name}</p>
-                  <label htmlFor="weapon" className="font-medium">
-                    Rank: {String(WR)}/5
-                  </label>
-                  <input
-                    id="resonance"
-                    type="range"
-                    min={1}
-                    max={5}
-                    value={String(WR)}
-                    onChange={(e) => setWR(Number(e.target.value))}
-                    className="w-full accent-sk-light-blue"
-                  />
-                  <p className="font-lagu-semibold text-md text-white leading-none">Level {ocrData.weaponLvl}/90</p>
+                <div className="flex flex-row items-center w-full">
+                  <Image src={weapon?.imageUrl} alt="Character Weapon Icon" width={100} height={100} className="aspect-square" />
+                  <div className="flex flex-col gap-1 w-full">
+                    <p className="font-lagu-semibold text-md text-white leading-none">{weapon.name}</p>
+                    <label htmlFor="weapon" className="font-medium">
+                      Rank: {String(WR)}/5
+                    </label>
+                    <input
+                      id="resonance"
+                      type="range"
+                      min={1}
+                      max={5}
+                      value={String(WR)}
+                      onChange={(e) => setWR(Number(e.target.value))}
+                      className="w-full accent-sk-light-blue"
+                    />
+                    <p className="font-lagu-semibold text-md text-white leading-none">Level {ocrData.weaponLvl}/90</p>
+                  </div>
                 </div>
               </div>
-              <div className="flex flex-row justify-center flex-1 h-full ">
-                <div className="flex flex-col items-center justify-center h-full">
-                  <div className="w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
+              <div className="flex flex-row justify-center flex-1 h-full">
+                <div className="flex flex-col items-center justify-center">
+                  <div className="w-[70%] lg:w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
                     <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-[90%]"></img>
                   </div>
                   <div className="h-[10%] w-[3%] bg-white/20" />
-                  <div className="w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
+                  <div className="w-[70%] lg:w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
                     <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-[90%]"></img>
                   </div>                
                   <div className="h-[10%] w-[3%] bg-white/20 mb-2" />
-                  <div className="w-[45%] aspect-square rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
+                  <div className="w-[85%] lg:w-[45%] aspect-square rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
                     <img src={character.normal} alt="Normal Attack" className="-rotate-45 invert w-[90%]"></img>
                   </div>
                   <p className="flex flex-col leading-tight text-center mt-3 text-xs">
@@ -549,15 +568,15 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="flex flex-col items-center justify-center mb-5">
-                  <div className="w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
+                  <div className="w-[70%] lg:w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
                     <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-[87%]"></img>
                   </div>
                   <div className="h-[10%] w-[3%] bg-white/20" />
-                  <div className="w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
+                  <div className="w-[70%] lg:w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
                     <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-[87%]"></img>
                   </div>                
                   <div className="h-[10%] w-[3%] bg-white/20 mb-2" />
-                  <div className="w-[45%] aspect-square rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
+                  <div className="w-[85%] lg:w-[45%] aspect-square rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
                     <img src={character.skill} alt="Skill" className="-rotate-45 invert w-[90%]"></img>
                   </div>
                   <p className="flex flex-col leading-tight text-center mt-3 text-xs">
@@ -566,19 +585,19 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="flex flex-col items-center justify-center pb-10">
-                  <div className="w-[45%] aspect-square border-3 border-black/75 bg-white flex items-center justify-center">
+                  <div className="w-[85%] lg:w-[45%] aspect-square border-3 border-black/75 bg-white flex items-center justify-center">
                     <div className="w-[100%] aspect-square rotate-45 border-3 border-black/70 bg-white flex items-center justify-center">
                       <img src={character.passive2} alt="Passive Skill 2" className="-rotate-45 invert w-[90%]"></img>
                     </div>  
                   </div>
                   <div className="h-4 w-[3px] bg-white/20" />
-                  <div className="w-[45%] aspect-square border-3 border-black/75 bg-white flex items-center justify-center">
+                  <div className="w-[85%] lg:w-[45%] aspect-square border-3 border-black/75 bg-white flex items-center justify-center">
                     <div className="w-[100%] aspect-square rotate-45 border-3 border-black/70 bg-white flex items-center justify-center">
                       <img src={character.passive1} alt="Passive Skill 1" className="-rotate-45 invert w-[90%]"></img>
                     </div>  
                   </div>
                   <div className="h-4 w-[3px] bg-white/20 mb-2" />
-                  <div className="w-[45%] aspect-square rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
+                  <div className="w-[85%] lg:w-[45%] aspect-square rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
                     <img src={character.forte} alt="Forte Circuit" className="-rotate-45 invert w-[90%]"></img>
                   </div>
                   <p className="flex flex-col leading-tight text-center mt-3 text-xs">
@@ -587,15 +606,15 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="flex flex-col items-center justify-center mb-5">
-                  <div className="w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
+                  <div className="w-[70%] lg:w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
                     <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-[87%]"></img>
                   </div>
                   <div className="h-[10%] w-[3%] bg-white/20" />
-                  <div className="w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
+                  <div className="w-[70%] lg:w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
                     <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-[87%]"></img>
                   </div>                
                   <div className="h-[10%] w-[3%] bg-white/20 mb-2" />
-                  <div className="w-[45%] rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
+                  <div className="w-[85%] lg:w-[45%] rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
                     <img src={character.liberation} alt="Resonance Liberation" className="-rotate-45 invert w-[90%]"></img>
                   </div>
                   <p className="flex flex-col leading-tight text-center mt-3 text-xs">
@@ -604,15 +623,15 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="flex flex-col items-center justify-center">
-                  <div className="w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
+                  <div className="w-[70%] lg:w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
                     <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-[90%]"></img>
                   </div>
                   <div className="h-[10%] w-[3%] bg-white/20" />
-                  <div className="w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
+                  <div className="w-[70%] lg:w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
                     <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-[90%]"></img>
                   </div>                
                   <div className="h-[10%] w-[3%] bg-white/20 mb-2" />
-                  <div className="w-[45%] rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
+                  <div className="w-[85%] lg:w-[45%] rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
                     <img src={character.intro} alt="Intro Skill" className="-rotate-45 invert w-[90%]"></img>
                   </div>
                   <p className="flex flex-col leading-tight text-center mt-3 text-xs">
@@ -623,38 +642,38 @@ export default function Home() {
               </div>
             </div>
           </div>
-            <RadioGroup value={selectedSet} onChange={setSelectedSet} aria-label="Echo Set Selection">
-              <div className="flex flex-row gap-4">
-                {options.map((option) => (
-                  <Field key={option.set} className="flex items-center gap-2">
-                    <Radio            value={option}
-                      className="group flex size-5 items-center justify-center rounded-full border bg-white data-checked:bg-blue-400"
-                    >
-                      <span className="invisible size-2 rounded-full bg-white group-data-checked:visible" />
-                    </Radio>
-                    <Label>{option.set}</Label>
-                    <img src={option.icon} alt={option.set} className="w-5 h-5" />
-                  </Field>
-                ))}
-              </div>
-            </RadioGroup>
-            <div className="flex flex-col gap-2">
-              <h2 className="text-lg font-bold self-center">
-                Select Echoes for {selectedSet.set}
-              </h2>
-              <div className="flex flex-row gap-5">
-                {selectedEchoes.map((selectedEcho, index) => (
-                  <EchoDropdown
-                    key={index}
-                    index={index}
-                    selectedEcho={selectedEcho}
-                    echoes={echoesForSelectedSet}
-                    handleEchoChange={handleEchoChange}
-                  />
-                ))}
-              </div>
+          <RadioGroup value={selectedSet} onChange={setSelectedSet} aria-label="Echo Set Selection">
+            <div className="lg:flex lg:flex-row gap-4">
+              {options.map((option) => (
+                <Field key={option.set} className="flex items-center gap-2">
+                  <Radio            value={option}
+                    className="group flex size-5 items-center justify-center rounded-full border bg-white data-checked:bg-blue-400"
+                  >
+                    <span className="invisible size-2 rounded-full bg-white group-data-checked:visible" />
+                  </Radio>
+                  <Label>{option.set}</Label>
+                  <img src={option.icon} alt={option.set} className="w-5 h-5" />
+                </Field>
+              ))}
             </div>
-          <button onClick={handleShowCard} className="w-[20%] bg-blue-600 text-white px-4 py-2 rounded-xl text-2xl mb-10">Process</button>
+          </RadioGroup>
+          <div className="flex flex-col gap-2">
+            <h2 className="text-lg font-bold self-center">
+              Select Echoes for {selectedSet.set}
+            </h2>
+            <div className="flex flex-col lg:flex-row gap-5 items-center">
+              {selectedEchoes.map((selectedEcho, index) => (
+                <EchoDropdown
+                  key={index}
+                  index={index}
+                  selectedEcho={selectedEcho}
+                  echoes={echoesForSelectedSet}
+                  handleEchoChange={handleEchoChange}
+                />
+              ))}
+            </div>
+          </div>
+          <button onClick={handleShowCard} className="w-auto bg-blue-600 text-white px-4 py-2 rounded-xl text-2xl mb-10 text-center whitespace-nowrap">Process</button>
         </div>
       )}
       {showCard && ocrData && character && weapon && (
