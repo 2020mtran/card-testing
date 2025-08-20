@@ -677,6 +677,7 @@ export default function Home() {
         </div>
       )}
       {showCard && ocrData && character && weapon && (
+      <div className="w-[90%] overflow-x-auto self-center">
       <div className="relative w-[1214px] h-[541px] rounded-xl overflow-hidden shadow-lg self-center mb-10" ref={cardRef}>
         <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center"></div>
         <div className={`absolute inset-0 ${typeToBgClass[character.type] || "bg-gray-500/35"}`} />
@@ -1036,6 +1037,7 @@ export default function Home() {
             })}
           </div>
         </div>
+      </div>
       </div>)}
     </div> // Card Container
   );
