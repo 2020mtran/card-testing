@@ -513,9 +513,9 @@ export default function Home() {
             <div className="flex flex-col gap-5 items-center">
               <div className="flex flex-col lg:flex-row items-center w-full">
                 <div className="flex flex-row items-center w-full">
-                  <Image src={character.waveband} alt="Character Waveband" width={100} height={100} className="lg:w-[22%] aspect-square" />
+                  <Image src={character.waveband} alt="Character Waveband" width={100} height={100} className="aspect-square" />
                   <div className="flex flex-col flex-grow gap-1">
-                    <label htmlFor="resonance" className="font-medium text-wrap">
+                    <label htmlFor="resonance" className="lg:text-xl font-medium text-wrap">
                       Resonance Chains: {String(RC)}/6
                     </label>
                     <input
@@ -585,13 +585,13 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="flex flex-col items-center justify-center pb-10">
-                  <div className="w-[85%] lg:w-[45%] aspect-square border-3 border-black/75 bg-white flex items-center justify-center">
+                  <div className="w-[82%] lg:w-[45%] aspect-square border-3 border-black/75 bg-white flex items-center justify-center">
                     <div className="w-[100%] aspect-square rotate-45 border-3 border-black/70 bg-white flex items-center justify-center">
                       <img src={character.passive2} alt="Passive Skill 2" className="-rotate-45 invert w-[90%]"></img>
                     </div>  
                   </div>
                   <div className="h-4 w-[3px] bg-white/20" />
-                  <div className="w-[85%] lg:w-[45%] aspect-square border-3 border-black/75 bg-white flex items-center justify-center">
+                  <div className="w-[82%] lg:w-[45%] aspect-square border-3 border-black/75 bg-white flex items-center justify-center">
                     <div className="w-[100%] aspect-square rotate-45 border-3 border-black/70 bg-white flex items-center justify-center">
                       <img src={character.passive1} alt="Passive Skill 1" className="-rotate-45 invert w-[90%]"></img>
                     </div>  
@@ -677,7 +677,8 @@ export default function Home() {
         </div>
       )}
       {showCard && ocrData && character && weapon && (
-      <div className="w-[90%] overflow-x-auto self-center">
+      <div className="mx-auto w-[90%] overflow-x-auto">
+      <div className="lg:flex justify-center">
       <div className="relative w-[1214px] h-[541px] rounded-xl overflow-hidden shadow-lg self-center mb-10" ref={cardRef}>
         <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center"></div>
         <div className={`absolute inset-0 ${typeToBgClass[character.type] || "bg-gray-500/35"}`} />
@@ -1037,6 +1038,7 @@ export default function Home() {
             })}
           </div>
         </div>
+      </div>
       </div>
       </div>)}
     </div> // Card Container
