@@ -384,7 +384,7 @@ export default function Home() {
             </span>
           </ListboxButton>
 
-          <ListboxOptions className="absolute z-10 mt-1 md:mt-4 max-h-40 w-full overflow-auto rounded-md bg-white py-1 text-base md:text-xl shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+          <ListboxOptions className="absolute z-10 mt-1 md:mt-3 max-h-40 w-full overflow-auto rounded-md bg-white py-1 text-base md:text-xl shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
             <ListboxOption key="none" value="" className={"text-black ml-2"}>
               None
             </ListboxOption>
@@ -510,7 +510,7 @@ export default function Home() {
               </div>
               <p className="hidden lg:flex font-lagu-semibold lg:text-3xl text-white leading-none">Level {ocrData.level}/90</p>
             </div>
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-10">
               <div className="flex flex-col lg:flex-row items-center">
                 <div className="flex flex-row items-center md:min-w-[375px]">
                   <Image src={character.waveband} alt="Character Waveband" width={100} height={100} className="aspect-square" />
@@ -584,7 +584,7 @@ export default function Home() {
                     <span>Skill</span>
                   </p>
                 </div>
-                <div className="flex flex-col items-center justify-center pb-10 md:pb-15">
+                <div className="flex flex-col items-center justify-center mb-10 md:mb-15">
                   <div className="w-[82%] md:w-[70%] lg:w-[45%] aspect-square border-3 border-black/75 bg-white flex items-center justify-center">
                     <div className="w-[100%] aspect-square rotate-45 border-3 border-black/70 bg-white flex items-center justify-center">
                       <img src={character.passive2} alt="Passive Skill 2" className="-rotate-45 invert w-[90%]"></img>
@@ -643,7 +643,7 @@ export default function Home() {
             </div>
           </div>
           <RadioGroup value={selectedSet} onChange={setSelectedSet} aria-label="Echo Set Selection">
-            <div className="md:flex md:flex-col lg:flex-row gap-4">
+            <div className="md:-mt-6 md:flex md:flex-col lg:flex-row gap-4">
               <h2 className="text-lg md:text-3xl font-bold text-center underline underline-offset-3">
                 Select Echoes Set
               </h2>
