@@ -375,7 +375,7 @@ export default function Home() {
         onChange={(value) => handleEchoChange(index, value)}
       >
         <div className="relative w-60">
-          <ListboxButton className="relative w-full cursor-pointer rounded border bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-2 focus:ring-sk-light-blue sm:text-sm">
+          <ListboxButton className="relative w-full cursor-pointer rounded border bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-2 focus:ring-sk-light-blue sm:text-sm md:text-xl">
             <span className="block truncate text-black">
               {selectedEcho?.name || "None"}
             </span>
@@ -384,14 +384,14 @@ export default function Home() {
             </span>
           </ListboxButton>
 
-          <ListboxOptions className="absolute z-10 mt-1 max-h-40 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+          <ListboxOptions className="absolute z-10 mt-1 md:mt-4 max-h-40 w-full overflow-auto rounded-md bg-white py-1 text-base md:text-xl shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
             <ListboxOption key="none" value="" className={"text-black ml-2"}>
               None
             </ListboxOption>
 
             {echoes.map((echo) => (
               <ListboxOption key={echo.name} value={echo.name} className={"flex gap-1 text-black"}>
-                <img src={echo.icon} alt={echo.name} className="ml-2 w-6 h-6 inline-block mr-2" />
+                <img src={echo.icon} alt={echo.name} className="ml-2 w-6 h-6 md:w-10 md:h-10 inline-block mr-2" />
                 {echo.name}
               </ListboxOption>
             ))}
@@ -492,7 +492,7 @@ export default function Home() {
       </div>
       {character && weapon && (
         <div className="flex flex-col items-center mt-25 gap-5 lg:mt-35 lg:gap-5" ref={bottomRef}>
-          <div className="flex flex-col lg:flex-row w-[85%] lg:w-[70%]">
+          <div className="flex flex-col lg:flex-row w-[85%] md:w-[70%]">
             <div className="flex flex-col items-center gap-2">
               <div className="flex flex-row lg:gap-2 items-center">
                 <img src={character.typeIcon} alt="Character Type" className="w-8 h-8 lg:w-12 lg:h-12"/>
@@ -503,19 +503,19 @@ export default function Home() {
                 </div>
               </div>
               <div className="relative overflow-hidden h-[100%] w-full">
-                <Image src={character.imageUrl} alt="Character Portrait" width={1000} height={860} className="w-auto pt-3 lg:pt-10 scale-125 object-cover object-top"/>
+                <Image src={character.imageUrl} alt="Character Portrait" width={1000} height={860} className="w-auto mx-auto pt-3 lg:pt-10 scale-125 object-cover object-top"/>
                 <div className="absolute bottom-0 left-0 w-full h-1/4 bg-gradient-to-t from-blurple/100 to-blurple/0 pointer-events-none"></div>
                 <div className="absolute top-0 left-0 w-1/8 h-full bg-gradient-to-r from-blurple/100 to-transparent pointer-events-none" />
                 <div className="absolute top-0 right-0 w-1/6 h-full bg-gradient-to-l from-blurple/100 to-transparent pointer-events-none" />
               </div>
               <p className="hidden lg:flex font-lagu-semibold lg:text-3xl text-white leading-none">Level {ocrData.level}/90</p>
             </div>
-            <div className="flex flex-col gap-5 items-center">
-              <div className="flex flex-col lg:flex-row items-center w-full">
-                <div className="flex flex-row items-center w-full">
+            <div className="flex flex-col gap-5">
+              <div className="flex flex-col lg:flex-row items-center">
+                <div className="flex flex-row items-center md:min-w-[375px]">
                   <Image src={character.waveband} alt="Character Waveband" width={100} height={100} className="aspect-square" />
                   <div className="flex flex-col flex-grow gap-1">
-                    <label htmlFor="resonance" className="lg:text-xl font-medium text-wrap">
+                    <label htmlFor="resonance" className="md:text-2xl lg:text-xl font-medium text-wrap">
                       Resonance Chains: {String(RC)}/6
                     </label>
                     <input
@@ -529,11 +529,11 @@ export default function Home() {
                     />
                   </div>
                 </div>
-                <div className="flex flex-row items-center w-full">
+                <div className="flex flex-row items-center md:min-w-[375px]">
                   <Image src={weapon?.imageUrl} alt="Character Weapon Icon" width={100} height={100} className="aspect-square" />
-                  <div className="flex flex-col gap-1 w-full">
-                    <p className="font-lagu-semibold text-md text-white leading-none">{weapon.name}</p>
-                    <label htmlFor="weapon" className="font-medium">
+                  <div className="flex flex-col flex-grow gap-1">
+                    <p className="md:text-xl font-lagu-semibold text-md text-white leading-none">{weapon.name}</p>
+                    <label htmlFor="weapon" className="md:text-xl font-medium text-wrap">
                       Rank: {String(WR)}/5
                     </label>
                     <input
@@ -545,96 +545,96 @@ export default function Home() {
                       onChange={(e) => setWR(Number(e.target.value))}
                       className="w-full accent-sk-light-blue"
                     />
-                    <p className="font-lagu-semibold text-md text-white leading-none">Level {ocrData.weaponLvl}/90</p>
+                    <p className="md:text-xl font-lagu-semibold text-md text-white leading-none">Level {ocrData.weaponLvl}/90</p>
                   </div>
                 </div>
               </div>
               <div className="flex flex-row justify-center flex-1 h-full">
                 <div className="flex flex-col items-center justify-center">
-                  <div className="w-[70%] lg:w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
+                  <div className="w-[70%] md:w-[60%] lg:w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
                     <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-[90%]"></img>
                   </div>
                   <div className="h-[10%] w-[3%] bg-white/20" />
-                  <div className="w-[70%] lg:w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
+                  <div className="w-[70%] md:w-[60%] lg:w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
                     <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-[90%]"></img>
                   </div>                
                   <div className="h-[10%] w-[3%] bg-white/20 mb-2" />
-                  <div className="w-[85%] lg:w-[45%] aspect-square rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
+                  <div className="w-[85%] md:w-[75%] lg:w-[45%] aspect-square rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
                     <img src={character.normal} alt="Normal Attack" className="-rotate-45 invert w-[90%]"></img>
                   </div>
-                  <p className="flex flex-col leading-tight text-center mt-3 text-xs">
+                  <p className="flex flex-col leading-tight text-center mt-3 md:mt-5 text-xs md:text-lg">
                     <span>Lv. {ocrData.basicAtkLvl && ocrData.basicAtkLvl.match(/\d+/)?.[0]}</span>
                     <span>Normal</span>
                   </p>
                 </div>
                 <div className="flex flex-col items-center justify-center mb-5">
-                  <div className="w-[70%] lg:w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
+                  <div className="w-[70%] md:w-[60%] lg:w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
                     <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-[87%]"></img>
                   </div>
                   <div className="h-[10%] w-[3%] bg-white/20" />
-                  <div className="w-[70%] lg:w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
+                  <div className="w-[70%] md:w-[60%] lg:w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
                     <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-[87%]"></img>
                   </div>                
                   <div className="h-[10%] w-[3%] bg-white/20 mb-2" />
-                  <div className="w-[85%] lg:w-[45%] aspect-square rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
+                  <div className="w-[85%] md:w-[75%] lg:w-[45%] aspect-square rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
                     <img src={character.skill} alt="Skill" className="-rotate-45 invert w-[90%]"></img>
                   </div>
-                  <p className="flex flex-col leading-tight text-center mt-3 text-xs">
+                  <p className="flex flex-col leading-tight text-center mt-3 md:mt-5 text-xs md:text-lg">
                     <span>Lv. {ocrData.skillLvl && ocrData.skillLvl.match(/\d+/)?.[0]}</span>
                     <span>Skill</span>
                   </p>
                 </div>
-                <div className="flex flex-col items-center justify-center pb-10">
-                  <div className="w-[82%] lg:w-[45%] aspect-square border-3 border-black/75 bg-white flex items-center justify-center">
+                <div className="flex flex-col items-center justify-center pb-10 md:pb-15">
+                  <div className="w-[82%] md:w-[70%] lg:w-[45%] aspect-square border-3 border-black/75 bg-white flex items-center justify-center">
                     <div className="w-[100%] aspect-square rotate-45 border-3 border-black/70 bg-white flex items-center justify-center">
                       <img src={character.passive2} alt="Passive Skill 2" className="-rotate-45 invert w-[90%]"></img>
                     </div>  
                   </div>
-                  <div className="h-4 w-[3px] bg-white/20" />
-                  <div className="w-[82%] lg:w-[45%] aspect-square border-3 border-black/75 bg-white flex items-center justify-center">
+                  <div className="h-4 md:h-8 w-[3px] bg-white/20" />
+                  <div className="w-[82%] md:w-[70%] lg:w-[45%] aspect-square border-3 border-black/75 bg-white flex items-center justify-center">
                     <div className="w-[100%] aspect-square rotate-45 border-3 border-black/70 bg-white flex items-center justify-center">
                       <img src={character.passive1} alt="Passive Skill 1" className="-rotate-45 invert w-[90%]"></img>
                     </div>  
                   </div>
-                  <div className="h-4 w-[3px] bg-white/20 mb-2" />
-                  <div className="w-[85%] lg:w-[45%] aspect-square rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
+                  <div className="h-4 md:h-8 w-[3px] bg-white/20 mb-2" />
+                  <div className="w-[85%] md:w-[75%] lg:w-[45%] aspect-square rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
                     <img src={character.forte} alt="Forte Circuit" className="-rotate-45 invert w-[90%]"></img>
                   </div>
-                  <p className="flex flex-col leading-tight text-center mt-3 text-xs">
+                  <p className="flex flex-col leading-tight text-center mt-3 md:mt-5 text-xs md:text-lg">
                     <span>Lv. {ocrData.forteCircuitLvl && ocrData.forteCircuitLvl.match(/\d+/)?.[0]}</span>
                     <span>Forte</span>
                   </p>
                 </div>
                 <div className="flex flex-col items-center justify-center mb-5">
-                  <div className="w-[70%] lg:w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
+                  <div className="w-[70%] md:w-[60%] lg:w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
                     <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-[87%]"></img>
                   </div>
                   <div className="h-[10%] w-[3%] bg-white/20" />
-                  <div className="w-[70%] lg:w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
+                  <div className="w-[70%] md:w-[60%] lg:w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
                     <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-[87%]"></img>
                   </div>                
                   <div className="h-[10%] w-[3%] bg-white/20 mb-2" />
-                  <div className="w-[85%] lg:w-[45%] rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
+                  <div className="w-[85%] md:w-[75%] lg:w-[45%] rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
                     <img src={character.liberation} alt="Resonance Liberation" className="-rotate-45 invert w-[90%]"></img>
                   </div>
-                  <p className="flex flex-col leading-tight text-center mt-3 text-xs">
+                  <p className="flex flex-col leading-tight text-center mt-3 md:mt-5 text-xs md:text-lg">
                     <span>Lv. {ocrData.ultimateLvl && ocrData.ultimateLvl.match(/\d+/)?.[0]}</span>
                     <span>Liberation</span>
                   </p>
                 </div>
                 <div className="flex flex-col items-center justify-center">
-                  <div className="w-[70%] lg:w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
+                  <div className="w-[70%] md:w-[60%] lg:w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
                     <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-[90%]"></img>
                   </div>
                   <div className="h-[10%] w-[3%] bg-white/20" />
-                  <div className="w-[70%] lg:w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
+                  <div className="w-[70%] md:w-[60%] lg:w-[40%] aspect-square flex justify-center items-center bg-white rounded-full border-3 border-black/30">
                     <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-[90%]"></img>
                   </div>                
                   <div className="h-[10%] w-[3%] bg-white/20 mb-2" />
-                  <div className="w-[85%] lg:w-[45%] rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
+                  <div className="w-[85%] md:w-[75%] lg:w-[45%] rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
                     <img src={character.intro} alt="Intro Skill" className="-rotate-45 invert w-[90%]"></img>
                   </div>
-                  <p className="flex flex-col leading-tight text-center mt-3 text-xs">
+                  <p className="flex flex-col leading-tight text-center mt-3 md:mt-5 text-xs md:text-lg">
                     <span>Lv. {ocrData.introSkillLvl && ocrData.introSkillLvl.match(/\d+/)?.[0]}</span>
                     <span>Intro</span>
                   </p>
@@ -643,9 +643,12 @@ export default function Home() {
             </div>
           </div>
           <RadioGroup value={selectedSet} onChange={setSelectedSet} aria-label="Echo Set Selection">
-            <div className="lg:flex lg:flex-row gap-4">
+            <div className="md:flex md:flex-col lg:flex-row gap-4">
+              <h2 className="text-lg md:text-3xl font-bold text-center underline underline-offset-3">
+                Select Echoes Set
+              </h2>
               {options.map((option) => (
-                <Field key={option.set} className="flex items-center gap-2">
+                <Field key={option.set} className="flex items-center gap-2 text-2xl">
                   <Radio            value={option}
                     className="group flex size-5 items-center justify-center rounded-full border bg-white data-checked:bg-blue-400"
                   >
@@ -658,7 +661,7 @@ export default function Home() {
             </div>
           </RadioGroup>
           <div className="flex flex-col gap-2">
-            <h2 className="text-lg font-bold self-center">
+            <h2 className="text-lg md:text-3xl font-bold self-center">
               Select Echoes for {selectedSet.set}
             </h2>
             <div className="flex flex-col lg:flex-row gap-5 items-center">
