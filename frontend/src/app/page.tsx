@@ -374,7 +374,7 @@ export default function Home() {
         value={selectedEcho?.name || ""}
         onChange={(value) => handleEchoChange(index, value)}
       >
-        <div className="relative w-60">
+        <div className="relative w-60 lg:w-full">
           <ListboxButton className="relative w-full cursor-pointer rounded border bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-2 focus:ring-sk-light-blue sm:text-sm md:text-xl">
             <span className="block truncate text-black">
               {selectedEcho?.name || "None"}
@@ -470,14 +470,14 @@ export default function Home() {
             className="w-full cursor-pointer text-3xl flex justify-center items-center rounded-2xl"
           >
             {filePreview ? (
-              <img src={filePreview} alt="Uploaded Preview" className="w-full h-full object-contain lg:object-cover" /> ) : ( <p className="text-sm">Upload Here</p> )}
+              <img src={filePreview} alt="Uploaded Preview" className="w-full h-full object-contain lg:object-cover" /> ) : ( <p className="text-sm md:text-3xl">Upload Here</p> )}
           </label> ) : (
             <label
             htmlFor="file-upload"
             className="w-full h-full cursor-pointer bg-black/30 text-3xl flex justify-center items-center rounded-2xl"
           >
             {filePreview ? (
-              <img src={filePreview} alt="Uploaded Preview" className="w-full h-full object-contain lg:object-cover" /> ) : ( <p className="text-sm">Upload Here</p> )}
+              <img src={filePreview} alt="Uploaded Preview" className="w-full h-full object-contain lg:object-cover" /> ) : ( <p className="text-sm md:text-3xl">Upload Here</p> )}
           </label>
           )}
           <p className="text-lg -mt-4 -mb-4 [text-shadow:2px_1px_2px_rgba(0,0,0,0.7)]">Don't know what to upload? Check the home page!</p>
@@ -491,8 +491,8 @@ export default function Home() {
         </div>
       </div>
       {character && weapon && (
-        <div className="flex flex-col items-center mt-25 gap-5 lg:mt-35 lg:gap-5" ref={bottomRef}>
-          <div className="flex flex-col lg:flex-row w-[85%] md:w-[70%]">
+        <div className="flex flex-col items-center mt-25 gap-5 lg:mt-35" ref={bottomRef}>
+          <div className="flex flex-col lg:flex-row w-[85%] md:w-[70%] lg:w-[85%]">
             <div className="flex flex-col items-center gap-2">
               <div className="flex flex-row lg:gap-2 items-center">
                 <img src={character.typeIcon} alt="Character Type" className="w-8 h-8 lg:w-12 lg:h-12"/>
@@ -512,7 +512,7 @@ export default function Home() {
             </div>
             <div className="flex flex-col gap-10">
               <div className="flex flex-col lg:flex-row items-center">
-                <div className="flex flex-row items-center md:min-w-[375px]">
+                <div className="flex flex-row items-center md:min-w-[375px] lg:min-w-[0px]">
                   <Image src={character.waveband} alt="Character Waveband" width={100} height={100} className="aspect-square" />
                   <div className="flex flex-col flex-grow gap-1">
                     <label htmlFor="resonance" className="md:text-2xl lg:text-xl font-medium text-wrap">
@@ -529,7 +529,7 @@ export default function Home() {
                     />
                   </div>
                 </div>
-                <div className="flex flex-row items-center md:min-w-[375px]">
+                <div className="flex flex-row items-center md:min-w-[375px] lg:min-w-[50%]">
                   <Image src={weapon?.imageUrl} alt="Character Weapon Icon" width={100} height={100} className="aspect-square" />
                   <div className="flex flex-col flex-grow gap-1">
                     <p className="md:text-xl font-lagu-semibold text-md text-white leading-none">{weapon.name}</p>
@@ -643,28 +643,30 @@ export default function Home() {
             </div>
           </div>
           <RadioGroup value={selectedSet} onChange={setSelectedSet} aria-label="Echo Set Selection">
-            <div className="md:-mt-6 md:flex md:flex-col lg:flex-row gap-4">
+            <div className="md:-mt-6 md:flex md:flex-col gap-3">
               <h2 className="text-lg md:text-3xl font-bold text-center underline underline-offset-3">
                 Select Echoes Set
               </h2>
-              {options.map((option) => (
-                <Field key={option.set} className="flex items-center gap-2 text-2xl">
-                  <Radio            value={option}
-                    className="group flex size-5 items-center justify-center rounded-full border bg-white data-checked:bg-blue-400"
-                  >
-                    <span className="invisible size-2 rounded-full bg-white group-data-checked:visible" />
-                  </Radio>
-                  <Label>{option.set}</Label>
-                  <img src={option.icon} alt={option.set} className="w-5 h-5" />
-                </Field>
-              ))}
+              <div className="md:flex md:flex-col lg:flex-row gap-4">
+                {options.map((option) => (
+                  <Field key={option.set} className="flex items-center gap-2 lg:text-2xl">
+                    <Radio            value={option}
+                      className="group flex size-5 items-center justify-center rounded-full border bg-white data-checked:bg-blue-400"
+                    >
+                      <span className="invisible size-2 rounded-full bg-white group-data-checked:visible" />
+                    </Radio>
+                    <Label>{option.set}</Label>
+                    <img src={option.icon} alt={option.set} className="w-5 h-5" />
+                  </Field>
+                ))}
+              </div>
             </div>
           </RadioGroup>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 w-full items-center">
             <h2 className="text-lg md:text-3xl font-bold self-center">
               Select Echoes for {selectedSet.set}
             </h2>
-            <div className="flex flex-col lg:flex-row gap-5 items-center">
+            <div className="flex flex-col lg:flex-row gap-5 lg:w-[85%] items-center">
               {selectedEchoes.map((selectedEcho, index) => (
                 <EchoDropdown
                   key={index}
@@ -681,7 +683,7 @@ export default function Home() {
       )}
       {showCard && ocrData && character && weapon && (
       <div className="mx-auto w-[90%] overflow-x-auto">
-      <div className="lg:flex justify-center">
+      <div className="xl:flex justify-center">
       <div className="relative w-[1214px] h-[541px] rounded-xl overflow-hidden shadow-lg self-center mb-10" ref={cardRef}>
         <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center"></div>
         <div className={`absolute inset-0 ${typeToBgClass[character.type] || "bg-gray-500/35"}`} />
