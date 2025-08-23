@@ -491,14 +491,17 @@ export default function Home() {
         </div>
       </div>
       {character && weapon && (
-        <div className="flex flex-col items-center mt-25 gap-5 lg:mt-35" ref={bottomRef}>
-          <div className="flex flex-col lg:flex-row w-[85%] md:w-[70%] lg:w-[85%]">
+        <div className="flex flex-col items-center mt-35 gap-5 lg:mt-35" ref={bottomRef}>
+          <div className="flex flex-col lg:flex-row w-[85%] md:w-[70%] lg:w-[85%] xl:items-center xl:justify-center">
             <div className="flex flex-col items-center gap-2">
               <div className="flex flex-row lg:gap-2 items-center">
-                <img src={character.typeIcon} alt="Character Type" className="w-8 h-8 lg:w-12 lg:h-12"/>
-                <div className="flex flex-row gap-2">
-                  <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-2xl lg:text-charName text-white leading-none">{ocrData.character}</p>
-                  <p className="lg:hidden font-lagu-semibold text-shadow-divider text-shadow-lg text-2xl lg:text-charName text-white leading-none">|</p>
+                {/* <img src={character.typeIcon} alt="Character Type" className="w-8 h-8 lg:w-12 lg:h-12"/> */}
+                <div className="flex flex-col items-center md:flex-row gap-2">
+                  <div className="flex flex-row lg:gap-2 items-center">
+                    <img src={character.typeIcon} alt="Character Type" className="w-8 h-8 lg:w-12 lg:h-12"/>
+                    <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-2xl lg:text-charName text-white leading-none">{ocrData.character}</p>
+                  </div>
+                  <p className="hidden md:flex lg:hidden font-lagu-semibold text-shadow-divider text-shadow-lg text-2xl lg:text-charName text-white leading-none">|</p>
                   <p className="lg:hidden font-lagu-semibold text-shadow-divider text-shadow-lg text-2xl lg:text-3xl text-white leading-none">Lvl. {ocrData.level}/90</p>           
                 </div>
               </div>
@@ -511,7 +514,7 @@ export default function Home() {
               <p className="hidden lg:flex font-lagu-semibold lg:text-3xl text-white leading-none">Level {ocrData.level}/90</p>
             </div>
             <div className="flex flex-col gap-10">
-              <div className="flex flex-col lg:flex-row items-center">
+              <div className="flex flex-col lg:flex-row lg:gap-2 items-center">
                 <div className="flex flex-row items-center md:min-w-[375px] lg:min-w-[0px]">
                   <Image src={character.waveband} alt="Character Waveband" width={100} height={100} className="aspect-square" />
                   <div className="flex flex-col flex-grow gap-1">
@@ -529,8 +532,8 @@ export default function Home() {
                     />
                   </div>
                 </div>
-                <div className="flex flex-row items-center md:min-w-[375px] lg:min-w-[50%]">
-                  <Image src={weapon?.imageUrl} alt="Character Weapon Icon" width={100} height={100} className="aspect-square" />
+                <div className="flex flex-row items-center md:min-w-[375px] lg:min-w-[50%] gap-2">
+                  <Image src={weapon?.imageUrl || "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Blazing-Justice.webp"} alt="Character Weapon Icon" width={100} height={100} className="aspect-square" />
                   <div className="flex flex-col flex-grow gap-1">
                     <p className="md:text-xl font-lagu-semibold text-md text-white leading-none">{weapon.name}</p>
                     <label htmlFor="weapon" className="md:text-xl font-medium text-wrap">

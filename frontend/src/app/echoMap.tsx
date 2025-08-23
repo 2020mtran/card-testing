@@ -16,6 +16,17 @@ export const echoMap: EchoInfo[] = [
     { name: "Diggy Duggy", sets: ["Eternal Radiance", "Tidebreaking Courage"], icon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Diggy_Duggy_Icon.webp" },
     { name: "Frostscrouge Stalker", sets: ["Eternal Radiance", "Midnight Veil"], icon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Frostscrouge_Stalker_Icon.webp" },
     { name: "Golden Junrock", sets: ["Eternal Radiance", "Frosty Resolve"], icon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Golden_Junrock_Icon.webp" },
+    { name: "Reminiscence: Fleurdelys", sets: ["Gusts of Welkin", "Windward Pilgrimage"], icon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Fleurdelys_Echo_Icon.webp" },
+    { name: "Nightmare: Kelpie", sets: ["Gusts of Welkin", "Windward Pilgrimage"], icon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Nightmare-Kelpie-Icon.webp" },
+    { name: "Kerasaur", sets: ["Flaming Clawprint", "Windward Pilgrimage"], icon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Kerasaur-Icon.webp" },
+    { name: "Pilgrim's Shell", sets: ["Flaming Clawprint", "Windward Pilgrimage"], icon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Pilgrims-Shell-Icon.webp" },
+    { name: "Devotee's Flesh", sets: ["Gusts of Welkin", "Flaming Clawprint", "Windward Pilgrimage"], icon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Devotees-Flesh-Icon.webp" },
+    { name: "Fusion Drake", sets: ["Flaming Clawprint", "Windward Pilgrimage"], icon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Fusion-Drake-Icon.webp" },
+    { name: "Glacio Drake", sets: ["Gusts of Welkin", "Windward Pilgrimage"], icon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Glacio-Drake-Icon.webp" },
+    { name: "Havoc Drake", sets: ["Flaming Clawprint", "Windward Pilgrimage"], icon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Havoc-Drake-Icon.webp" },
+    { name: "Sacerdos", sets: ["Gusts of Welkin", "Flaming Clawprint", "Windward Pilgrimage"], icon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Sacerdos-Icon.webp" },
+    { name: "Spectro Drake", sets: ["Flaming Clawprint", "Windward Pilgrimage"], icon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Spectro-Drake-Icon.webp" },
+    { name: "", sets: ["", ""], icon: "" },
     { name: "", sets: ["", ""], icon: "" },
 ]
 

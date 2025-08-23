@@ -30,7 +30,7 @@ export const characterMap: Record<string, CharacterInfo> = {
     type: "Aero",
     typeIcon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Aero.png",
     imageUrl: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Cartethyia_2.webp",
-    waveband: "",
+    waveband: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Waveband_Cartethyia.webp",
     rc1: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Cartethyia-RC-1.png",
     rc2: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Cartethyia-RC-2.png",
     rc3: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Cartethyia-RC-3.png",
