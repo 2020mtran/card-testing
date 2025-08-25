@@ -384,13 +384,13 @@ export default function Home() {
             </span>
           </ListboxButton>
 
-          <ListboxOptions className="absolute z-10 mt-1 md:mt-3 max-h-40 w-full overflow-auto rounded-md bg-white py-1 text-base md:text-xl shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+          <ListboxOptions anchor="bottom start" className="z-10 mt-1 md:mt-3 h-50 lg:h-80 w-[var(--button-width)] overflow-auto rounded-md bg-white py-1 text-base md:text-xl shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
             <ListboxOption key="none" value="" className={"text-black ml-2"}>
               None
             </ListboxOption>
 
             {echoes.map((echo) => (
-              <ListboxOption key={echo.name} value={echo.name} className={"flex gap-1 text-black"}>
+              <ListboxOption key={echo.name} value={echo.name} className={"flex gap-1 text-black text-wrap"}>
                 <img src={echo.icon} alt={echo.name} className="ml-2 w-6 h-6 md:w-10 md:h-10 inline-block mr-2" />
                 {echo.name}
               </ListboxOption>
