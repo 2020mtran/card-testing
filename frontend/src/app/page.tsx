@@ -8,6 +8,8 @@ import { getStatIcon } from "./statMap";
 import { Field, Label, Radio, RadioGroup, Menu, MenuButton, MenuItem, MenuItems, Checkbox, Listbox, ListboxOption, ListboxOptions, ListboxButton } from '@headlessui/react'
 import { ChevronDownIcon, ChevronUpDownIcon, CheckIcon } from '@heroicons/react/20/solid'
 import { getEchoInfo, EchoInfo, echoMap } from "./echoMap";
+import html2canvas from "html2canvas";
+import * as htmlToImage from "html-to-image";
 
 const options = [
     {set: "Eternal Radiance", icon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Eternal_Radiance.webp"}, 
@@ -427,15 +429,78 @@ export default function Home() {
   }, [file]);
 
   const [ showCard, setShowCard ] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
+  const cardDivRef = useRef<HTMLDivElement>(null);
 
   const handleShowCard = () => {
     setShowCard(true);
 
     requestAnimationFrame(() => {
-      cardRef.current?.scrollIntoView({behavior: "smooth"});
+      cardDivRef.current?.scrollIntoView({behavior: "smooth"});
     })
   }
+
+  const cardDownloadRef = useRef<HTMLDivElement>(null);
+  const cardTestRef = useRef<HTMLDivElement>(null);
+
+  // const handleDownload = async () => {
+  //   if (!cardDownloadRef.current) return;
+  //   const html2canvas = (await import("html2canvas-pro")).default;
+  //   const canvas = await html2canvas(cardDownloadRef.current);
+  //   const dataUrl = canvas.toDataURL("image/png");
+
+  //   const link = document.createElement("a");
+  //   link.href = dataUrl;
+  //   link.download = "card.png";
+  //   link.click();
+  // };
+
+
+  // const handleDownload = async () => {
+  //   if (!cardDownloadRef.current) return;
+
+  //   // Save old classes + styles
+  //   const oldClasses = cardDownloadRef.current.className;
+  //   const oldBackground = cardDownloadRef.current.style.background;
+
+  //   try {
+  //     // Remove Tailwind gradient classes (they rely on oklab)
+  //     cardDownloadRef.current.classList.remove("bg-gradient-to-t", "from-blurple", "to-blurple");
+  //     // Apply a safe gradient using hex values
+  //     cardDownloadRef.current.style.background = "linear-gradient(to top, #494cd4, #030132)";
+
+  //     // Take screenshot
+  //     const canvas = await html2canvas(cardDownloadRef.current, { useCORS: true });
+  //     const dataUrl = canvas.toDataURL("image/png");
+
+  //     // Trigger download
+  //     const link = document.createElement("a");
+  //     link.download = "card.png";
+  //     link.href = dataUrl;
+  //     link.click();
+  //   } finally {
+  //     // Restore original styles
+  //     cardDownloadRef.current.className = oldClasses;
+  //     cardDownloadRef.current.style.background = oldBackground;
+  //   }
+  // }
+
+  const handleDownload = async () => {
+  if (!cardTestRef.current) return;
+
+  try {
+    const dataUrl = await htmlToImage.toPng(cardTestRef.current, {
+      cacheBust: true,
+      backgroundColor: "transparent",
+    });
+
+    const link = document.createElement("a");
+    link.download = "card.png";
+    link.href = dataUrl;
+    link.click();
+  } catch (err) {
+    console.error("❌ html-to-image failed:", err, JSON.stringify(err));
+  }
+};
 
   return (
     <div className="flex flex-col justify-center min-h-screen bg-blurple gap-5">
@@ -686,16 +751,37 @@ export default function Home() {
       )}
       {showCard && ocrData && character && weapon && (
       <div className="mx-auto w-[90%] overflow-x-auto">
-      <div className="xl:flex justify-center">
-      <div className="relative w-[1214px] h-[541px] rounded-xl overflow-hidden shadow-lg self-center mb-10" ref={cardRef}>
+      <div className="xl:flex justify-center" ref={cardDivRef}>
+      {/* div below used to be roundedxl */}
+      <div className="relative w-[1214px] h-[541px] overflow-hidden shadow-lg self-center mb-10" ref={cardTestRef}>
         <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center"></div>
         <div className={`absolute inset-0 ${typeToBgClass[character.type] || "bg-gray-500/35"}`} />
-        <Image 
+        {/* <div className="absolute inset-0 flex justify-start overflow-hidden">
+          <img
+            src={character.imageUrl}
+            alt={ocrData.character}
+            className="h-full"         // full height
+            style={{
+              maxWidth: "none",        // prevents Tailwind from forcing width
+              transform: "scale(1.25)",// your zoom
+            }}
+            crossOrigin="anonymous"
+          />
+        </div> */}
+        <div className="absolute inset-0">
+          <img
+            src={character.imageUrl}
+            alt={ocrData.character}
+            className="absolute -ml-3 mt-15 scale-125 object-contain object-left w-full h-full"
+            crossOrigin="anonymous"
+          />
+        </div>
+        {/* <Image 
           src={character.imageUrl}
           alt={ocrData.character}
           layout="fill"
           className="absolute -ml-3 mt-15 scale-125 object-contain object-left"
-        />
+        /> */}
         <div className="flex flex-col absolute h-full bg-divider/80 origin-center left-[25.5%] w-[74.5%] gap-3">
           <div className="flex flex-row gap-2">
             <div className="flex flex-col">
@@ -705,22 +791,24 @@ export default function Home() {
               </div>
               <div className="flex flex-row items-center gap-1.5">
                 <p className="font-lagu-semibold text-shadow-divider text-shadow-lg ml-20 text-2xl text-white">Lv. {ocrData.level}/90</p>
-                <Image
+                <img
                   src={character.typeIcon}
                   alt={character.type}
                   width={35}
                   height={35}
                   className="h-auto"
+                  crossOrigin="anonymous"
                   />
               </div>
             </div>
             <div className="flex flex-row mt-6 gap-1">
-              <Image
+              <img
                 src={weapon.imageUrl}
                 alt={ocrData.weaponName}
                 width={70}
                 height={70}
                 className="h-[75px] w-auto"
+                crossOrigin="anonymous"
               />
               <div className="flex flex-col gap-1">
                 <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-xl text-white leading-none">{weapon.name}</p>
@@ -729,27 +817,29 @@ export default function Home() {
                   <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-lg text-white leading-none">Rank {WR}</p>
                 </div>
                 <div className="flex flex-row items-center">
-                  <Image 
+                  <img 
                     src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp" 
                     alt="Atk Icon" 
                     width={25} 
                     height={25} 
                     className="h-auto"
+                    crossOrigin="anonymous"
                   />
                   <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-lg text-white leading-none ml-1 mr-3">{weapon.baseStatNum}</p>
-                  <Image 
+                  <img 
                     src={weapon.subStatIcon}
                     alt="Weapon Substat Icon"
                     width={25} 
                     height={25} 
                     className="h-auto"
+                    crossOrigin="anonymous"
                   />
                   <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-lg text-white leading-none ml-1 mr-3">{weapon.subStatNum}</p>
                 </div>
               </div>
             </div>
             <div className="flex flex-row items-center gap-0.5 flex-grow justify-center">
-              <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/WuwaNetworkLogo.png" alt="WuwaNetwork Logo" className="w-10 h-10"/>
+              <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/WuwaNetworkLogo.png" alt="WuwaNetwork Logo" className="w-10 h-10" crossOrigin="anonymous"/>
               <p className="text-lg bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">Wuwa.Network</p>
             </div>
           </div>
@@ -761,7 +851,7 @@ export default function Home() {
                   className="flex items-center gap-3"
                   style={{ marginLeft: `${(leftLen - i - 1) * 4}px`, marginRight: `${i * 4}px`  }}
                 >
-                  <img src={icon} alt={label} className="w-7 h-7 flex-shrink-0"/>
+                  <img src={icon} alt={label} className="w-7 h-7 flex-shrink-0" crossOrigin="anonymous"/>
                   <p className="text-lg whitespace-nowrap">{label}</p>
                   <div className="flex-1 rounded-full h-[2px] bg-white opacity-20 min-w-1"></div>
                   <p className="text-lg text-right whitespace-nowrap">{value}</p>
@@ -775,7 +865,7 @@ export default function Home() {
                   className="flex items-center gap-3"
                   style={{ marginLeft: `${(leftLen - i - 1) * 4}px`, marginRight: `${i * 4}px`  }}
                 >
-                  <img src={icon} alt={label} className="w-7 h-7 flex-shrink-0"/>
+                  <img src={icon} alt={label} className="w-7 h-7 flex-shrink-0" crossOrigin="anonymous"/>
                   <p className="text-lg whitespace-nowrap">{label}</p>
                   <div className="flex-1 rounded-full h-[2px] bg-white opacity-20 min-w-1"></div>
                   <p className="text-lg text-right whitespace-nowrap">{value}</p>
@@ -785,15 +875,15 @@ export default function Home() {
             <div className="flex flex-row ml-5 gap-6 h-[200px]">
               <div className="flex flex-col items-center justify-center">
                 <div className="w-9 h-9 flex justify-center items-center bg-white rounded-full border-3 border-black/30">
-                  <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-7 h-7"></img>
+                  <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-7 h-7" crossOrigin="anonymous"></img>
                 </div>
                 <div className="h-6 w-[3px] bg-white/20" />
                 <div className="w-9 h-9 flex justify-center items-center bg-white rounded-full border-3 border-black/30">
-                  <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-7 h-7"></img>
+                  <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-7 h-7" crossOrigin="anonymous"></img>
                 </div>                
                 <div className="h-6 w-[3px] bg-white/20 mb-2" />
                 <div className="w-11 h-11 rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
-                  <img src={character.normal} alt="Normal Attack" className="-rotate-45 invert w-9 h-9"></img>
+                  <img src={character.normal} alt="Normal Attack" className="-rotate-45 invert w-9 h-9" crossOrigin="anonymous"></img>
                 </div>
                 <p className="flex flex-col leading-tight text-center mt-3 text-xs">
                   <span>Lv. {ocrData.basicAtkLvl && ocrData.basicAtkLvl.match(/\d+/)?.[0]}</span>
@@ -802,15 +892,15 @@ export default function Home() {
               </div>
               <div className="flex flex-col items-center justify-center">
                 <div className="w-9 h-9 flex justify-center items-center bg-white rounded-full border-3 border-black/30">
-                  <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-6 h-6"></img>
+                  <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-6 h-6" crossOrigin="anonymous"></img>
                 </div>
                 <div className="h-6 w-[3px] bg-white/20" />
                 <div className="w-9 h-9 flex justify-center items-center bg-white rounded-full border-3 border-black/30">
-                  <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-6 h-6"></img>
+                  <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-6 h-6" crossOrigin="anonymous"></img>
                 </div>                
                 <div className="h-6 w-[3px] bg-white/20 mb-2" />
                 <div className="w-11 h-11 rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
-                  <img src={character.skill} alt="Skill" className="-rotate-45 invert w-9 h-9"></img>
+                  <img src={character.skill} alt="Skill" className="-rotate-45 invert w-9 h-9" crossOrigin="anonymous"></img>
                 </div>
                 <p className="flex flex-col leading-tight text-center mt-3 text-xs">
                   <span>Lv. {ocrData.skillLvl && ocrData.skillLvl.match(/\d+/)?.[0]}</span>
@@ -820,18 +910,18 @@ export default function Home() {
               <div className="flex flex-col items-center justify-center">
                 <div className="w-11 h-11 border-3 border-black/30 bg-white flex items-center justify-center">
                   <div className="w-7 h-7 rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
-                    <img src={character.passive2} alt="Passive Skill 2" className="-rotate-45 invert w-6 h-6"></img>
+                    <img src={character.passive2} alt="Passive Skill 2" className="-rotate-45 invert w-6 h-6" crossOrigin="anonymous"></img>
                   </div>  
                 </div>
                 <div className="h-4 w-[3px] bg-white/20" />
                 <div className="w-11 h-11 border-3 border-black/30 bg-white flex items-center justify-center">
                   <div className="w-7 h-7 rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
-                    <img src={character.passive1} alt="Passive Skill 1" className="-rotate-45 invert w-6 h-6"></img>
+                    <img src={character.passive1} alt="Passive Skill 1" className="-rotate-45 invert w-6 h-6" crossOrigin="anonymous"></img>
                   </div>  
                 </div>
                 <div className="h-4 w-[3px] bg-white/20 mb-2" />
                 <div className="w-11 h-11 rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
-                  <img src={character.forte} alt="Forte Circuit" className="-rotate-45 invert w-9 h-9"></img>
+                  <img src={character.forte} alt="Forte Circuit" className="-rotate-45 invert w-9 h-9" crossOrigin="anonymous"></img>
                 </div>
                 <p className="flex flex-col leading-tight text-center mt-3 text-xs">
                   <span>Lv. {ocrData.forteCircuitLvl && ocrData.forteCircuitLvl.match(/\d+/)?.[0]}</span>
@@ -840,15 +930,15 @@ export default function Home() {
               </div>
               <div className="flex flex-col items-center justify-center w-[44px]">
                 <div className="w-9 h-9 flex justify-center items-center bg-white rounded-full border-3 border-black/30">
-                  <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-6 h-6"></img>
+                  <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-6 h-6" crossOrigin="anonymous"></img>
                 </div>
                 <div className="h-6 w-[3px] bg-white/20" />
                 <div className="w-9 h-9 flex justify-center items-center bg-white rounded-full border-3 border-black/30">
-                  <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-6 h-6"></img>
+                  <img src={character.talentStat2} alt="Talent Stat 2" className="invert w-6 h-6" crossOrigin="anonymous"></img>
                 </div>                
                 <div className="h-6 w-[3px] bg-white/20 mb-2" />
                 <div className="w-11 h-11 rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
-                  <img src={character.liberation} alt="Resonance Liberation" className="-rotate-45 invert w-9 h-9"></img>
+                  <img src={character.liberation} alt="Resonance Liberation" className="-rotate-45 invert w-9 h-9" crossOrigin="anonymous"></img>
                 </div>
                 <p className="flex flex-col leading-tight text-center mt-3 text-xs">
                   <span>Lv. {ocrData.ultimateLvl && ocrData.ultimateLvl.match(/\d+/)?.[0]}</span>
@@ -857,15 +947,15 @@ export default function Home() {
               </div>
               <div className="flex flex-col items-center justify-center">
                 <div className="w-9 h-9 flex justify-center items-center bg-white rounded-full border-3 border-black/30">
-                  <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-7 h-7"></img>
+                  <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-7 h-7" crossOrigin="anonymous"></img>
                 </div>
                 <div className="h-6 w-[3px] bg-white/20" />
                 <div className="w-9 h-9 flex justify-center items-center bg-white rounded-full border-3 border-black/30">
-                  <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-7 h-7"></img>
+                  <img src={character.talentStat1} alt="Talent Stat 1" className="invert w-7 h-7" crossOrigin="anonymous"></img>
                 </div>                
                 <div className="h-6 w-[3px] bg-white/20 mb-2" />
                 <div className="w-11 h-11 rotate-45 border-3 border-black/30 bg-white flex items-center justify-center">
-                  <img src={character.intro} alt="Intro Skill" className="-rotate-45 invert w-9 h-9"></img>
+                  <img src={character.intro} alt="Intro Skill" className="-rotate-45 invert w-9 h-9" crossOrigin="anonymous"></img>
                 </div>
                 <p className="flex flex-col leading-tight text-center mt-3 text-xs">
                   <span>Lv. {ocrData.introSkillLvl && ocrData.introSkillLvl.match(/\d+/)?.[0]}</span>
@@ -878,13 +968,13 @@ export default function Home() {
           <div className="flex flex-row ml-8 gap-1">
             <div className="flex flex-col gap-1 bg-black/30 p-2">
               <div className="flex flex-row gap-1">
-                <img src={selectedEchoes[0]?.icon} alt="Echo 1" className="w-15 h-15"></img>
+                <img src={selectedEchoes[0]?.icon} alt="Echo 1" className="w-15 h-15" crossOrigin="anonymous"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
-                  <img src={selectedSet.icon} alt="Echo 1 Set" className="w-5 h-5"></img>
+                  <img src={selectedSet.icon} alt="Echo 1 Set" className="w-5 h-5" crossOrigin="anonymous"></img>
                   <p className="text-sm">{ocrData.echo1MainStat}</p>
                   <div className="flex flex-row gap-0.5">
                     {getStatIcon(ocrData.echo1MainStat) && (
-                      <img src={getStatIcon(ocrData.echo1MainStat)!} alt="Echo 1 Main Stat Icon" className="w-5 h-5"></img> 
+                      <img src={getStatIcon(ocrData.echo1MainStat)!} alt="Echo 1 Main Stat Icon" className="w-5 h-5" crossOrigin="anonymous"></img> 
                     )}
                     <p className="text-sm">{ocrData.echo1MainStatNum}</p>
                   </div> 
@@ -897,7 +987,7 @@ export default function Home() {
                   <div key={index} className="flex flex-row justify-between">
                     <div className="flex flex-row gap-0.5">
                       {iconSrc && (
-                        <img src={iconSrc} alt="Substat Icon" className="w-5 h-5" />
+                        <img src={iconSrc} alt="Substat Icon" className="w-5 h-5" crossOrigin="anonymous"/>
                       )}
                       <p className="text-sm">{substat.label}</p>
                     </div>
@@ -909,13 +999,13 @@ export default function Home() {
   
             <div className="flex flex-col gap-1 bg-black/30 p-2">
               <div className="flex flex-row gap-1">
-                <img src={selectedEchoes[1]?.icon} alt="Echo 2" className="w-15 h-15"></img>
+                <img src={selectedEchoes[1]?.icon} alt="Echo 2" className="w-15 h-15" crossOrigin="anonymous"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
-                  <img src={selectedSet.icon} alt="Echo 2 Set" className="w-5 h-5"></img>
+                  <img src={selectedSet.icon} alt="Echo 2 Set" className="w-5 h-5" crossOrigin="anonymous"></img>
                   <p className="text-sm">{ocrData.echo2MainStat}</p>
                   <div className="flex flex-row gap-0.5">
                     {getStatIcon(ocrData.echo2MainStat) && (
-                      <img src={getStatIcon(ocrData.echo2MainStat)!} alt="Echo 2 Main Stat Icon" className="w-5 h-5"></img> 
+                      <img src={getStatIcon(ocrData.echo2MainStat)!} alt="Echo 2 Main Stat Icon" className="w-5 h-5" crossOrigin="anonymous"></img> 
                     )}
                     <p className="text-sm">{ocrData.echo2MainStatNum}</p>
                   </div>
@@ -928,7 +1018,7 @@ export default function Home() {
                   <div key={index} className="flex flex-row justify-between">
                     <div className="flex flex-row gap-0.5">
                       {iconSrc && (
-                        <img src={iconSrc} alt="Substat Icon" className="w-5 h-5" />
+                        <img src={iconSrc} alt="Substat Icon" className="w-5 h-5" crossOrigin="anonymous"/>
                       )}
                       <p className="text-sm">{substat.label}</p>
                     </div>
@@ -939,13 +1029,13 @@ export default function Home() {
             </div>
             <div className="flex flex-col gap-1 bg-black/30 p-2">
               <div className="flex flex-row gap-1">
-                <img src={selectedEchoes[2]?.icon} alt="Echo 3" className="w-15 h-15"></img>
+                <img src={selectedEchoes[2]?.icon} alt="Echo 3" className="w-15 h-15" crossOrigin="anonymous"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
-                  <img src={selectedSet.icon} alt="Echo 3 Set" className="w-5 h-5"></img>
+                  <img src={selectedSet.icon} alt="Echo 3 Set" className="w-5 h-5" crossOrigin="anonymous"></img>
                   <p className="text-sm">{ocrData.echo3MainStat}</p>
                   <div className="flex flex-row gap-0.5">
                     {getStatIcon(ocrData.echo3MainStat) && (
-                      <img src={getStatIcon(ocrData.echo3MainStat)!} alt="Echo 3 Main Stat Icon" className="w-5 h-5"></img> 
+                      <img src={getStatIcon(ocrData.echo3MainStat)!} alt="Echo 3 Main Stat Icon" className="w-5 h-5" crossOrigin="anonymous"></img> 
                     )}
                     <p className="text-sm">{ocrData.echo3MainStatNum}</p>
                   </div>
@@ -958,7 +1048,7 @@ export default function Home() {
                   <div key={index} className="flex flex-row justify-between">
                     <div className="flex flex-row gap-0.5">
                       {iconSrc && (
-                        <img src={iconSrc} alt="Substat Icon" className="w-5 h-5" />
+                        <img src={iconSrc} alt="Substat Icon" className="w-5 h-5" crossOrigin="anonymous" />
                       )}
                       <p className="text-sm">{substat.label}</p>
                     </div>
@@ -969,13 +1059,13 @@ export default function Home() {
             </div>
             <div className="flex flex-col gap-1 bg-black/30 p-2">
               <div className="flex flex-row gap-1">
-                <img src={selectedEchoes[3]?.icon} alt="Echo 4" className="w-15 h-15"></img>
+                <img src={selectedEchoes[3]?.icon} alt="Echo 4" className="w-15 h-15" crossOrigin="anonymous"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
-                  <img src={selectedSet.icon} alt="Echo 4 Set" className="w-5 h-5"></img>
+                  <img src={selectedSet.icon} alt="Echo 4 Set" className="w-5 h-5" crossOrigin="anonymous"></img>
                   <p className="text-sm">{ocrData.echo4MainStat}</p>
                   <div className="flex flex-row gap-0.5">
                     {getStatIcon(ocrData.echo4MainStat) && (
-                      <img src={getStatIcon(ocrData.echo4MainStat)!} alt="Echo 4 Main Stat Icon" className="w-5 h-5"></img> 
+                      <img src={getStatIcon(ocrData.echo4MainStat)!} alt="Echo 4 Main Stat Icon" className="w-5 h-5" crossOrigin="anonymous"></img> 
                     )}
                     <p className="text-sm">{ocrData.echo4MainStatNum}</p>
                   </div>
@@ -988,7 +1078,7 @@ export default function Home() {
                   <div key={index} className="flex flex-row justify-between">
                     <div className="flex flex-row gap-0.5">
                       {iconSrc && (
-                        <img src={iconSrc} alt="Substat Icon" className="w-5 h-5" />
+                        <img src={iconSrc} alt="Substat Icon" className="w-5 h-5" crossOrigin="anonymous"/>
                       )}
                       <p className="text-sm">{substat.label}</p>
                     </div>
@@ -999,13 +1089,13 @@ export default function Home() {
             </div>
             <div className="flex flex-col gap-1 bg-black/30 p-2">
               <div className="flex flex-row gap-1">
-                <img src={selectedEchoes[4]?.icon} alt="Echo 5" className="w-15 h-15"></img>
+                <img src={selectedEchoes[4]?.icon} alt="Echo 5" className="w-15 h-15" crossOrigin="anonymous"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
-                  <img src={selectedSet.icon} alt="Echo 5 Set" className="w-5 h-5"></img>
+                  <img src={selectedSet.icon} alt="Echo 5 Set" className="w-5 h-5" crossOrigin="anonymous"></img>
                   <p className="text-sm">{ocrData.echo5MainStat}</p>
                   <div className="flex flex-row gap-0.5">
                     {getStatIcon(ocrData.echo5MainStat) && (
-                      <img src={getStatIcon(ocrData.echo5MainStat)!} alt="Echo 5 Main Stat Icon" className="w-5 h-5"></img> 
+                      <img src={getStatIcon(ocrData.echo5MainStat)!} alt="Echo 5 Main Stat Icon" className="w-5 h-5" crossOrigin="anonymous"></img> 
                     )}
                     <p className="text-sm">{ocrData.echo5MainStatNum}</p>
                   </div>
@@ -1018,7 +1108,7 @@ export default function Home() {
                   <div key={index} className="flex flex-row justify-between">
                     <div className="flex flex-row gap-0.5">
                       {iconSrc && (
-                        <img src={iconSrc} alt="Substat Icon" className="w-5 h-5" />
+                        <img src={iconSrc} alt="Substat Icon" className="w-5 h-5" crossOrigin="anonymous"/>
                       )}
                       <p className="text-sm">{substat.label}</p>
                     </div>
@@ -1034,13 +1124,14 @@ export default function Home() {
             <div className="mt-31"/>
             {resonanceChains.map((src, index) => {
               return (
-                <Image
+                <img
                   key={index}  
                   src={String(src)}
                   alt={`Resonance Chain ${index + 1}`}
                   width={50}
                   height={50}
                   className={`w-[75%] h-auto ${index < RC ? 'opacity-100' : 'opacity-40'}`}
+                  crossOrigin="anonymous"
                 />
               )
             })}
@@ -1049,6 +1140,27 @@ export default function Home() {
       </div>
       </div>
       </div>)}
+      {showCard && ocrData && character && weapon && (
+        <div className="flex w-full" ref={cardDivRef}>
+          <button
+            // onClick={async () => {
+            //   if (!cardDownloadRef.current) return;
+            //   const html2canvas = (await import("html2canvas-pro")).default;
+            //   const canvas = await html2canvas(cardDownloadRef.current, { useCORS: true });
+            //   const dataUrl = canvas.toDataURL("image/png");
+
+            //   const link = document.createElement("a");
+            //   link.href = dataUrl;
+            //   link.download = "card.png";
+            //   link.click();
+            //   }}
+            onClick={handleDownload}
+            className="mx-auto px-4 py-2 bg-sk-light-blue text-white rounded"
+          >
+            Save as PNG
+          </button>
+        </div>
+      )}
     </div> // Card Container
   );
 }
