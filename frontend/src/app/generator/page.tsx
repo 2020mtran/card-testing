@@ -11,6 +11,98 @@ import { EchoInfo, echoMap } from "./echoMap";
 import * as htmlToImage from "html-to-image";
 import Link from "next/link";
 
+interface OCRData {
+  "character": string,
+  "level": string,
+  "playerID": string,
+  "uid": string,
+
+  "basicAtkLvl": string,
+  "skillLvl": string,
+  "forteCircuitLvl": string
+  "introSkillLvl": string,
+  "ultimateLvl": string,
+
+  "weaponName": string,
+  "weaponLvl": string,
+
+  "echo1MainStat": string,
+  "echo1MainStatNum": string,
+  "echo1DefaultStat": string,
+  "echo1DefaultStatNum": string,
+  "echo1FirstSubstat": string,
+  "echo1FirstSubstatNum": string,
+  "echo1SecondSubstat": string,
+  "echo1SecondSubstatNum": string,
+  "echo1ThirdSubstat": string,
+  "echo1ThirdSubstatNum": string,
+  "echo1FourthSubstat": string,
+  "echo1FourthSubstatNum": string,
+  "echo1FifthSubstat": string,
+  "echo1FifthSubstatNum": string,
+
+  "echo2MainStat": string,
+  "echo2MainStatNum": string,
+  "echo2DefaultStat": string,
+  "echo2DefaultStatNum": string,
+  "echo2FirstSubstat": string,
+  "echo2FirstSubstatNum": string,
+  "echo2SecondSubstat": string,
+  "echo2SecondSubstatNum": string,
+  "echo2ThirdSubstat": string,
+  "echo2ThirdSubstatNum": string,
+  "echo2FourthSubstat": string,
+  "echo2FourthSubstatNum": string,
+  "echo2FifthSubstat": string,
+  "echo2FifthSubstatNum": string,
+
+  "echo3MainStat": string,
+  "echo3MainStatNum": string,
+  "echo3DefaultStat": string,
+  "echo3DefaultStatNum": string,
+  "echo3FirstSubstat": string,
+  "echo3FirstSubstatNum": string,
+  "echo3SecondSubstat": string,
+  "echo3SecondSubstatNum": string,
+  "echo3ThirdSubstat": string,
+  "echo3ThirdSubstatNum": string,
+  "echo3FourthSubstat": string,
+  "echo3FourthSubstatNum": string,
+  "echo3FifthSubstat": string,
+  "echo3FifthSubstatNum": string,
+
+  "echo4MainStat": string,
+  "echo4MainStatNum": string,
+  "echo4DefaultStat": string,
+  "echo4DefaultStatNum": string,
+  "echo4FirstSubstat": string,
+  "echo4FirstSubstatNum": string,
+  "echo4SecondSubstat": string,
+  "echo4SecondSubstatNum": string,
+  "echo4ThirdSubstat": string,
+  "echo4ThirdSubstatNum": string,
+  "echo4FourthSubstat": string,
+  "echo4FourthSubstatNum": string,
+  "echo4FifthSubstat": string,
+  "echo4FifthSubstatNum": string,
+
+  "echo5MainStat": string,
+  "echo5MainStatNum": string,
+  "echo5DefaultStat": string,
+  "echo5DefaultStatNum": string,
+  "echo5FirstSubstat": string,
+  "echo5FirstSubstatNum": string,
+  "echo5SecondSubstat": string,
+  "echo5SecondSubstatNum": string,
+  "echo5ThirdSubstat": string,
+  "echo5ThirdSubstatNum": string,
+  "echo5FourthSubstat": string,
+  "echo5FourthSubstatNum": string,
+  "echo5FifthSubstat": string,
+  "echo5FifthSubstatNum": string,
+
+}
+
 const options = [
     {set: "Eternal Radiance", icon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Eternal_Radiance.webp"}, 
     {set: "Windward Pilgrimage", icon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Windward_Pilgrimage.webp"},
@@ -30,7 +122,7 @@ type EchoDropdownProps = {
 
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
-  const [ocrData, setOcrData] = useState<any>(null);
+  const [ocrData, setOcrData] = useState<OCRData | null>(null);
   const [loading, setLoading] = useState(false);
   const character = getCharacterInfo(ocrData?.character || "");
   const weapon = getWeaponInfo(ocrData?.weaponName || "");
@@ -173,13 +265,13 @@ export default function Home() {
     const numericValue = parseFloat(value.replace("%", ""));
 
     if (STAT_TYPES.hp.includes(statLabel)) {
-      isPercentage(value) ? totalStats.percent.hp += numericValue : totalStats.flat.hp += numericValue;
+      if (isPercentage(value)) { totalStats.percent.hp += numericValue } else { totalStats.flat.hp += numericValue; }
     } else if (STAT_TYPES.atk.includes(statLabel)) {
-      isPercentage(value) ? totalStats.percent.atk += numericValue : totalStats.flat.atk += numericValue;
+      if (isPercentage(value)) { totalStats.percent.atk += numericValue } else { totalStats.flat.atk += numericValue; }
     } else if (STAT_TYPES.def.includes(statLabel)) {
-      isPercentage(value) ? totalStats.percent.def += numericValue : totalStats.flat.def += numericValue;
+      if (isPercentage(value)) { totalStats.percent.def += numericValue } else { totalStats.flat.def += numericValue; }
     } else if (STAT_TYPES.energy.includes(statLabel)) {
-      isPercentage(value) ? totalStats.energy += numericValue : totalStats.energy += numericValue;
+      if (isPercentage(value)) { totalStats.energy += numericValue } else { totalStats.energy += numericValue; }
     } else if (STAT_TYPES.critRate.includes(statLabel)) {
       totalStats.critRate += numericValue
     } else if (STAT_TYPES.critDmg.includes(statLabel)) {
@@ -284,7 +376,7 @@ export default function Home() {
       // console.log(character.base_hp_90)
       // console.log(1 + totalStats.percent.hp / 100)
       // console.log(totalStats.flat.hp)
-      let totalHP = character.base_hp_90 * (1 + totalStats.percent.hp / 100) + totalStats.flat.hp;
+      const totalHP = character.base_hp_90 * (1 + totalStats.percent.hp / 100) + totalStats.flat.hp;
       // console.log(totalHP)
       totalStats.total_hp = Math.round(totalHP)
     }
@@ -304,7 +396,7 @@ export default function Home() {
       // console.log(1 + totalStats.percent.atk / 100)
       // console.log(totalStats.flat.atk)
       // console.log(weapon.baseStatNum)
-      let totalATK = (character.base_atk_90 + parseFloat(weapon?.baseStatNum)) * (1 + totalStats.percent.atk / 100) + totalStats.flat.atk
+      const totalATK = (character.base_atk_90 + parseFloat(weapon?.baseStatNum)) * (1 + totalStats.percent.atk / 100) + totalStats.flat.atk
       totalStats.total_atk = Math.round(totalATK)
     }
   }
@@ -320,7 +412,7 @@ export default function Home() {
 
   function calculate_total_def() {
     if (character) {
-      let totalDEF = (character.base_def_90) * (1 + totalStats.percent.def / 100) + totalStats.flat.def
+      const totalDEF = (character.base_def_90) * (1 + totalStats.percent.def / 100) + totalStats.flat.def
       totalStats.total_def = Math.round(totalDEF)
     }
   }
@@ -357,7 +449,7 @@ export default function Home() {
   ]
 
   const leftLen = leftStats.length;
-  const rightLen = rightStats.length;
+  // const rightLen = rightStats.length;
 
   const echoesForSelectedSet = selectedSet ? echoMap.filter(e => e.sets.includes(selectedSet.set)) : [];
 
@@ -439,7 +531,7 @@ export default function Home() {
     })
   }
 
-  const cardDownloadRef = useRef<HTMLDivElement>(null);
+  // const cardDownloadRef = useRef<HTMLDivElement>(null);
   const cardTestRef = useRef<HTMLDivElement>(null);
 
   // const handleDownload = async () => {
@@ -545,7 +637,7 @@ export default function Home() {
               <img src={filePreview} alt="Uploaded Preview" className="w-full h-full object-contain lg:object-cover" /> ) : ( <p className="text-sm md:text-3xl">Upload Here</p> )}
           </label>
           )}
-          <p className="text-lg -mt-4 -mb-4 [text-shadow:2px_1px_2px_rgba(0,0,0,0.7)]">Don't know what to upload? Check the home page!</p>
+          <p className="text-lg -mt-4 -mb-4 [text-shadow:2px_1px_2px_rgba(0,0,0,0.7)]">Don&apos;t know what to upload? Check the home page!</p>
           <button
             onClick={handleUpload}
             className=" w-auto bg-blue-600 text-white px-6 py-2 rounded text-center whitespace-nowrap"
@@ -564,10 +656,10 @@ export default function Home() {
                 <div className="flex flex-col items-center md:flex-row gap-2">
                   <div className="flex flex-row lg:gap-2 items-center">
                     <img src={character.typeIcon} alt="Character Type" className="w-8 h-8 lg:w-12 lg:h-12"/>
-                    <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-2xl lg:text-charName text-white leading-none">{ocrData.character}</p>
+                    <p className="font-lagu-semibold text-shadow-divider text-shadow-lg text-2xl lg:text-charName text-white leading-none">{ocrData?.character}</p>
                   </div>
                   <p className="hidden md:flex lg:hidden font-lagu-semibold text-shadow-divider text-shadow-lg text-2xl lg:text-charName text-white leading-none">|</p>
-                  <p className="lg:hidden font-lagu-semibold text-shadow-divider text-shadow-lg text-2xl lg:text-3xl text-white leading-none">Lvl. {ocrData.level}/90</p>           
+                  <p className="lg:hidden font-lagu-semibold text-shadow-divider text-shadow-lg text-2xl lg:text-3xl text-white leading-none">Lvl. {ocrData?.level}/90</p>           
                 </div>
               </div>
               <div className="relative overflow-hidden h-[100%] w-full">
@@ -576,7 +668,7 @@ export default function Home() {
                 <div className="absolute top-0 left-0 w-1/8 h-full bg-gradient-to-r from-blurple/100 to-transparent pointer-events-none" />
                 <div className="absolute top-0 right-0 w-1/6 h-full bg-gradient-to-l from-blurple/100 to-transparent pointer-events-none" />
               </div>
-              <p className="hidden lg:flex font-lagu-semibold lg:text-3xl text-white leading-none">Level {ocrData.level}/90</p>
+              <p className="hidden lg:flex font-lagu-semibold lg:text-3xl text-white leading-none">Level {ocrData?.level}/90</p>
             </div>
             <div className="flex flex-col gap-10">
               <div className="flex flex-col lg:flex-row lg:gap-2 items-center">
@@ -613,7 +705,7 @@ export default function Home() {
                       onChange={(e) => setWR(Number(e.target.value))}
                       className="w-full accent-sk-light-blue"
                     />
-                    <p className="md:text-xl font-lagu-semibold text-md text-white leading-none">Level {ocrData.weaponLvl}/90</p>
+                    <p className="md:text-xl font-lagu-semibold text-md text-white leading-none">Level {ocrData?.weaponLvl}/90</p>
                   </div>
                 </div>
               </div>
@@ -631,7 +723,7 @@ export default function Home() {
                     <img src={character.normal} alt="Normal Attack" className="-rotate-45 invert w-[90%]"></img>
                   </div>
                   <p className="flex flex-col leading-tight text-center mt-3 md:mt-5 text-xs md:text-lg">
-                    <span>Lv. {ocrData.basicAtkLvl && ocrData.basicAtkLvl.match(/\d+/)?.[0]}</span>
+                    <span>Lv. {ocrData?.basicAtkLvl && ocrData?.basicAtkLvl.match(/\d+/)?.[0]}</span>
                     <span>Normal</span>
                   </p>
                 </div>
@@ -648,7 +740,7 @@ export default function Home() {
                     <img src={character.skill} alt="Skill" className="-rotate-45 invert w-[90%]"></img>
                   </div>
                   <p className="flex flex-col leading-tight text-center mt-3 md:mt-5 text-xs md:text-lg">
-                    <span>Lv. {ocrData.skillLvl && ocrData.skillLvl.match(/\d+/)?.[0]}</span>
+                    <span>Lv. {ocrData?.skillLvl && ocrData?.skillLvl.match(/\d+/)?.[0]}</span>
                     <span>Skill</span>
                   </p>
                 </div>
@@ -669,7 +761,7 @@ export default function Home() {
                     <img src={character.forte} alt="Forte Circuit" className="-rotate-45 invert w-[90%]"></img>
                   </div>
                   <p className="flex flex-col leading-tight text-center mt-3 md:mt-5 text-xs md:text-lg">
-                    <span>Lv. {ocrData.forteCircuitLvl && ocrData.forteCircuitLvl.match(/\d+/)?.[0]}</span>
+                    <span>Lv. {ocrData?.forteCircuitLvl && ocrData?.forteCircuitLvl.match(/\d+/)?.[0]}</span>
                     <span>Forte</span>
                   </p>
                 </div>
@@ -686,7 +778,7 @@ export default function Home() {
                     <img src={character.liberation} alt="Resonance Liberation" className="-rotate-45 invert w-[90%]"></img>
                   </div>
                   <p className="flex flex-col leading-tight text-center mt-3 md:mt-5 text-xs md:text-lg">
-                    <span>Lv. {ocrData.ultimateLvl && ocrData.ultimateLvl.match(/\d+/)?.[0]}</span>
+                    <span>Lv. {ocrData?.ultimateLvl && ocrData?.ultimateLvl.match(/\d+/)?.[0]}</span>
                     <span>Liberation</span>
                   </p>
                 </div>
@@ -703,7 +795,7 @@ export default function Home() {
                     <img src={character.intro} alt="Intro Skill" className="-rotate-45 invert w-[90%]"></img>
                   </div>
                   <p className="flex flex-col leading-tight text-center mt-3 md:mt-5 text-xs md:text-lg">
-                    <span>Lv. {ocrData.introSkillLvl && ocrData.introSkillLvl.match(/\d+/)?.[0]}</span>
+                    <span>Lv. {ocrData?.introSkillLvl && ocrData?.introSkillLvl.match(/\d+/)?.[0]}</span>
                     <span>Intro</span>
                   </p>
                 </div>
