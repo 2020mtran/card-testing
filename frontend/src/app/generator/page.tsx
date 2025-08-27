@@ -5,10 +5,9 @@ import { useState, useEffect, useRef } from 'react';
 import { getCharacterInfo, CharacterInfo } from "./characterMap";
 import { getWeaponInfo } from "./weaponMap";
 import { getStatIcon } from "./statMap";
-import { Field, Label, Radio, RadioGroup, Menu, MenuButton, MenuItem, MenuItems, Checkbox, Listbox, ListboxOption, ListboxOptions, ListboxButton } from '@headlessui/react'
-import { ChevronDownIcon, ChevronUpDownIcon, CheckIcon } from '@heroicons/react/20/solid'
-import { getEchoInfo, EchoInfo, echoMap } from "./echoMap";
-import html2canvas from "html2canvas";
+import { Field, Label, Radio, RadioGroup, Listbox, ListboxOption, ListboxOptions, ListboxButton } from '@headlessui/react'
+import { ChevronUpDownIcon } from '@heroicons/react/20/solid'
+import { EchoInfo, echoMap } from "./echoMap";
 import * as htmlToImage from "html-to-image";
 import Link from "next/link";
 
