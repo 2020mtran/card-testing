@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
-WORKDIR /app
+WORKDIR /ocr_service
 
 # Copy backend code into container
 COPY . .
@@ -17,5 +17,5 @@ COPY . .
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Run FastAPI app on Hugging Face port 7860
-CMD ["uvicorn", "ocr_service:app", "--host", "0.0.0.0", "--port", "7860"]
+# Run FastAPI app on HF Spaces port
+CMD ["uvicorn", "ocr_service:app", "--host", "0.0.0.0", "--port", "${PORT}"]
