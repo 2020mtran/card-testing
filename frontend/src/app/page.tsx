@@ -19,9 +19,9 @@ export default function Homepage() {
                         <div className="h-[120vh] bg-gradient-to-b from-transparent from-90% to-blurple"></div>
                     </div>
                 </div>
-                <div className="flex flex-col w-[70%] lg:w-[55%] h-[60vh] lg:ml-[7%] -mt-[35%] lg:-mt-[15%] relative z-10 items-start gap-5">
-                    <p className="text-lg lg:text-7xl lg:leading-22 text-start relative z-10 [text-shadow:2px_1px_2px_rgba(0,0,0,0.7)]">Showcase your Wuthering Waves builds with style.</p>
-                    <Link href="/generator" className="z-10 w-auto bg-blue-600 text-white px-4 py-2 rounded-xl text-2xl mb-10 text-center whitespace-nowrap">Create a card</Link>
+                <div className="flex flex-col w-[70%] lg:w-[55%] h-[60vh] lg:ml-[7%] -mt-[35%] md:-mt-[15%] relative z-10 items-center lg:items-start gap-5">
+                    <p className="text-5xl md:text-6xl lg:text-7xl lg:leading-22 text-center lg:text-start relative z-10 [text-shadow:2px_1px_2px_rgba(0,0,0,0.7)]">Showcase your Wuthering Waves builds with style.</p>
+                    <Link href="/generator" className="z-10 w-auto bg-blue-600 text-white px-4 py-2 md:px-12 md:py-4 rounded-xl text-2xl mb-10 text-center whitespace-nowrap">Create a card</Link>
                 </div>
             </div>
         </div>
