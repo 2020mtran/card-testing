@@ -245,11 +245,13 @@ def fix_crit_format(label: str) -> str:
 def simplify_stat_label(label: str) -> str:
     replacements = {
         "Resonance Skill DMG": "Res. Skill",
+        "Resonance Liberation": "Res. Lib.",
         "Regen": "Energy",
         "Energy Regen": "Energy",
         "Heavy Attack DMG Bonus": "Heavy Atk",
         "Basic Attack DMG Bonus": "Basic Atk",
-        "Spectro DMG Bonus": "Spectro DMG"
+        "Spectro DMG Bonus": "Spectro DMG",
+        "Crit DMG": "Crit. DMG"
         # Add more replacements if needed
     }
     return replacements.get(label, label)

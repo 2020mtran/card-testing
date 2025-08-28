@@ -185,7 +185,12 @@ export default function Home() {
     setLoading(true);
 
     try {
-      const response = await fetch('https://2020mtran-wuwanetwork.hf.space/ocr', {
+      // const response = await fetch('https://2020mtran-wuwanetwork.hf.space/ocr', {
+      //   method: 'POST',
+      //   body: formData,
+      // });
+
+      const response = await fetch('http://127.0.0.1:8000/ocr', {
         method: 'POST',
         body: formData,
       });
@@ -427,6 +432,7 @@ export default function Home() {
 
   totalStats.critRate = Math.round(totalStats.critRate * 10) / 10
   totalStats.critDmg = Math.round(totalStats.critDmg * 10) / 10
+  totalStats.energy = parseFloat(totalStats.energy.toFixed(1))
 
   const leftStats = [
     { icon: 'https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Health.webp', label: 'HP', value: totalStats.total_hp },
@@ -640,7 +646,7 @@ export default function Home() {
           <p className="text-lg -mt-4 -mb-4 [text-shadow:2px_1px_2px_rgba(0,0,0,0.7)]">Don&apos;t know what to upload? Check the home page!</p>
           <button
             onClick={handleUpload}
-            className=" w-auto bg-blue-600 text-white px-6 py-2 rounded text-center whitespace-nowrap"
+            className=" w-auto bg-blue-600 text-white px-6 py-2 rounded text-center whitespace-nowrap duration-300 hover:scale-105 active:scale-95"
             disabled={loading}
           >
             {loading ? 'Processing...' : 'Upload'}
@@ -838,7 +844,7 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <button onClick={handleShowCard} className="w-auto bg-blue-600 text-white px-4 py-2 rounded-xl text-2xl mb-10 text-center whitespace-nowrap">Process</button>
+          <button onClick={handleShowCard} className="w-auto bg-blue-600 text-white px-4 py-2 rounded-xl text-2xl mb-10 text-center whitespace-nowrap duration-300 hover:scale-105 active:scale-95">Process</button>
         </div>
       )}
       {showCard && ocrData && character && weapon && (
@@ -1247,7 +1253,7 @@ export default function Home() {
             //   link.click();
             //   }}
             onClick={handleDownload}
-            className="mx-auto px-4 py-2 bg-sk-light-blue text-white rounded"
+            className="mx-auto w-auto bg-blue-600 text-white px-4 py-2 rounded-xl text-2xl mb-20 text-center whitespace-nowrap duration-300 hover:scale-105 active:scale-95"
           >
             Save as PNG
           </button>
