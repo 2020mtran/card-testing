@@ -185,15 +185,15 @@ export default function Home() {
     setLoading(true);
 
     try {
-      const response = await fetch('https://2020mtran-wuwanetwork.hf.space/ocr', {
-        method: 'POST',
-        body: formData,
-      });
-
-      // const response = await fetch('http://127.0.0.1:8000/ocr', {
+      // const response = await fetch('https://2020mtran-wuwanetwork.hf.space/ocr', {
       //   method: 'POST',
       //   body: formData,
       // });
+
+      const response = await fetch('http://127.0.0.1:8000/ocr', {
+        method: 'POST',
+        body: formData,
+      });
 
       if (!response.ok) {
         throw new Error('OCR request failed');
@@ -221,7 +221,7 @@ export default function Home() {
     basicAtk: ["basic atk"],
     heavyAtk: ["heavy atk"],
     resSkill: ["res skill"],
-    resLiberation: ["res liberation"],
+    resLiberation: ["res lib"],
     elemental: ["spectro dmg", "aero dmg"],
     healing: ["healing bonus"]
   }
@@ -366,12 +366,21 @@ export default function Home() {
 
   allSubStats.forEach(stat => {
     if (stat.label && stat.value) {
+      // console.log(stat.label)
+      // console.log(stat.value)
+      //   if (STAT_TYPES.critDmg.includes(stat.label) && !stat.value.includes("%")) {
+      //   console.log(stat.value)
+      //   const tempVal = parseFloat(stat.value)
+      //   stat.value = (tempVal / 10).toFixed(1).replace(/\.0$/, "") + "%";
+      //   console.log(stat.value)
+      // }
       applySubstat(stat.label, stat.value);
     }
   });
 
   allMainStats.forEach(stat => {
     if (stat.label && stat.value && character) {
+      // console.log(stat.value)
       applyMainStat(stat.label, stat.value, character);
     }
   });
@@ -431,6 +440,7 @@ export default function Home() {
   calculate_total_def();
 
   totalStats.critRate = Math.round(totalStats.critRate * 10) / 10
+  console.log(totalStats.critDmg)
   totalStats.critDmg = Math.round(totalStats.critDmg * 10) / 10
   totalStats.energy = parseFloat(totalStats.energy.toFixed(1))
 
