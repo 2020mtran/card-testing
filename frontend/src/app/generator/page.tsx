@@ -185,15 +185,15 @@ export default function Home() {
     setLoading(true);
 
     try {
-      // const response = await fetch('https://2020mtran-wuwanetwork.hf.space/ocr', {
-      //   method: 'POST',
-      //   body: formData,
-      // });
-
-      const response = await fetch('http://127.0.0.1:8000/ocr', {
+      const response = await fetch('https://2020mtran-wuwanetwork.hf.space/ocr', {
         method: 'POST',
         body: formData,
       });
+
+      // const response = await fetch('http://127.0.0.1:8000/ocr', {
+      //   method: 'POST',
+      //   body: formData,
+      // });
 
       if (!response.ok) {
         throw new Error('OCR request failed');
