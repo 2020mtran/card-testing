@@ -113,6 +113,11 @@ type Echo = {
   icon: string;
 };
 
+type EchoSlot = {
+  set: { set: string; icon: string } | null;  // chosen set
+  echo: Echo | null;                          // chosen echo
+};
+
 type EchoDropdownProps = {
   index: number;
   selectedEcho: Echo | null;
@@ -128,7 +133,10 @@ export default function Home() {
   const weapon = getWeaponInfo(ocrData?.weaponName || "");
   const [selectedSet, setSelectedSet] = useState(options[0]);
   // const [selectedEchoes, setSelectedEchoes] = useState<EchoInfo[]>([]);
-  const [selectedEchoes, setSelectedEchoes] = useState<(EchoInfo | null)[]>(Array(5).fill(null));
+  // const [selectedEchoes, setSelectedEchoes] = useState<(EchoInfo | null)[]>(Array(5).fill(null));
+  const [slots, setSlots] = useState<EchoSlot[]>(
+    Array(5).fill({ set: null, echo: null })
+  );
 
   const typeToBgClass: Record<string, string> = {
     Spectro: "bg-spectro/35",
@@ -467,16 +475,16 @@ export default function Home() {
   const leftLen = leftStats.length;
   // const rightLen = rightStats.length;
 
-  const echoesForSelectedSet = selectedSet ? echoMap.filter(e => e.sets.includes(selectedSet.set)) : [];
+  // const echoesForSelectedSet = selectedSet ? echoMap.filter(e => e.sets.includes(selectedSet.set)) : [];
 
-  const handleEchoChange = (slotIndex: number, echoName: string) => {
-    const echo = echoesForSelectedSet.find(e => e.name === echoName) || null;
-    setSelectedEchoes(prev => {
-      const updated = [...prev];
-      updated[slotIndex] = echo;
-      return updated;
-    });
-  };
+  // const handleEchoChange = (slotIndex: number, echoName: string) => {
+  //   const echo = echoesForSelectedSet.find(e => e.name === echoName) || null;
+  //   setSelectedEchoes(prev => {
+  //     const updated = [...prev];
+  //     updated[slotIndex] = echo;
+  //     return updated;
+  //   });
+  // };
 
   function EchoDropdown({ index, selectedEcho, echoes, handleEchoChange }: EchoDropdownProps) {
     return (
@@ -510,6 +518,28 @@ export default function Home() {
       </Listbox>
     );
   }
+
+  const handleSetChange = (index: number, newSet: { set: string; icon: string } | null) => {
+    setSlots(prev => {
+      const updated = [...prev];
+      updated[index] = { set: newSet, echo: null };
+      return updated;
+    });
+  };
+
+  const handleEchoChange = (index: number, newEchoName: string) => {
+    const echo = echoMap.find(e => e.name === newEchoName) || null;
+    setSlots(prev => {
+      const updated = [...prev];
+      updated[index] = { ...updated[index], echo };
+      return updated;
+    });
+  };
+
+  const getEchoesForSet = (set: { set: string; icon: string } | null): Echo[] => {
+    if (!set) return [];
+    return echoMap.filter(e => e.sets.includes(set.set));
+  };
 
   const [ RC, setRC ] = useState<number>(0);
   const resonanceChains = [
@@ -547,50 +577,7 @@ export default function Home() {
     })
   }
 
-  // const cardDownloadRef = useRef<HTMLDivElement>(null);
   const cardTestRef = useRef<HTMLDivElement>(null);
-
-  // const handleDownload = async () => {
-  //   if (!cardDownloadRef.current) return;
-  //   const html2canvas = (await import("html2canvas-pro")).default;
-  //   const canvas = await html2canvas(cardDownloadRef.current);
-  //   const dataUrl = canvas.toDataURL("image/png");
-
-  //   const link = document.createElement("a");
-  //   link.href = dataUrl;
-  //   link.download = "card.png";
-  //   link.click();
-  // };
-
-
-  // const handleDownload = async () => {
-  //   if (!cardDownloadRef.current) return;
-
-  //   // Save old classes + styles
-  //   const oldClasses = cardDownloadRef.current.className;
-  //   const oldBackground = cardDownloadRef.current.style.background;
-
-  //   try {
-  //     // Remove Tailwind gradient classes (they rely on oklab)
-  //     cardDownloadRef.current.classList.remove("bg-gradient-to-t", "from-blurple", "to-blurple");
-  //     // Apply a safe gradient using hex values
-  //     cardDownloadRef.current.style.background = "linear-gradient(to top, #494cd4, #030132)";
-
-  //     // Take screenshot
-  //     const canvas = await html2canvas(cardDownloadRef.current, { useCORS: true });
-  //     const dataUrl = canvas.toDataURL("image/png");
-
-  //     // Trigger download
-  //     const link = document.createElement("a");
-  //     link.download = "card.png";
-  //     link.href = dataUrl;
-  //     link.click();
-  //   } finally {
-  //     // Restore original styles
-  //     cardDownloadRef.current.className = oldClasses;
-  //     cardDownloadRef.current.style.background = oldBackground;
-  //   }
-  // }
 
   const handleDownload = async () => {
   if (!cardTestRef.current) return;
@@ -818,7 +805,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <RadioGroup value={selectedSet} onChange={setSelectedSet} aria-label="Echo Set Selection">
+          {/* <RadioGroup value={selectedSet} onChange={setSelectedSet} aria-label="Echo Set Selection">
             <div className="md:-mt-6 md:flex md:flex-col gap-3">
               <h2 className="text-lg md:text-3xl font-bold text-center underline underline-offset-3">
                 Select Echoes Set
@@ -837,10 +824,10 @@ export default function Home() {
                 ))}
               </div>
             </div>
-          </RadioGroup>
-          <div className="flex flex-col gap-2 w-full items-center">
-            <h2 className="text-lg md:text-3xl font-bold self-center">
-              Select Echoes for {selectedSet.set}
+          </RadioGroup> */}
+          {/* <div className="flex flex-col gap-2 w-full items-center">
+            <h2 className="text-lg md:text-3xl font-bold self-center underline underline-offset-3">
+              Select Echoes
             </h2>
             <div className="flex flex-col lg:flex-row gap-5 lg:w-[85%] items-center">
               {selectedEchoes.map((selectedEcho, index) => (
@@ -853,6 +840,52 @@ export default function Home() {
                 />
               ))}
             </div>
+          </div> */}
+          {/* Row 1: Set selection */}
+          <div className="grid grid-cols-5 gap-4 w-[85%]">
+            {slots.map((slot, index) => (
+              <Listbox
+                key={`set-${index}`}
+                value={slot.set}
+                onChange={(value) => handleSetChange(index, value)}
+                
+              >
+                <div className="relative w-60 lg:w-full">
+                  <ListboxButton className="relative w-full cursor-pointer rounded border bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-2 focus:ring-sk-light-blue sm:text-sm md:text-xl">
+                    <span className="block truncate text-black">
+                      {slot.set?.set || `Select Set for Echo ${index+1}`}
+                    </span>
+                    <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                      <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                    </span>
+                  </ListboxButton>
+                  <ListboxOptions anchor="bottom start" className="z-10 mt-1 md:mt-3 h-50 lg:h-50 w-[var(--button-width)] overflow-auto rounded-md bg-white py-1 text-base md:text-xl shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                    <ListboxOption key="none" value={null} className="text-black ml-2">
+                      None
+                    </ListboxOption>
+                    {options.map((option) => (
+                      <ListboxOption key={option.set} value={option} className="flex items-center gap-2 text-black">
+                        <img src={option.icon} alt={option.set} className="w-5 h-5" />
+                        {option.set}
+                      </ListboxOption>
+                    ))}
+                  </ListboxOptions>
+                </div>
+              </Listbox>
+            ))}
+          </div>
+
+          {/* Row 2: Echo selection */}
+          <div className="grid grid-cols-5 gap-4 lg:w-[85%] items-center">
+            {slots.map((slot, index) => (
+              <EchoDropdown
+                key={`echo-${index}`}
+                index={index}
+                selectedEcho={slot.echo}
+                echoes={getEchoesForSet(slot.set)}
+                handleEchoChange={handleEchoChange}
+              />
+            ))}
           </div>
           <button onClick={handleShowCard} className="w-auto bg-blue-600 text-white px-4 py-2 rounded-xl text-2xl mb-10 text-center whitespace-nowrap duration-300 hover:scale-105 active:scale-95">Process</button>
         </div>
@@ -1076,9 +1109,9 @@ export default function Home() {
           <div className="flex flex-row ml-8 gap-1">
             <div className="flex flex-col gap-1 bg-black/30 p-2">
               <div className="flex flex-row gap-1">
-                <img src={selectedEchoes[0]?.icon} alt="Echo 1" className="w-15 h-15" crossOrigin="anonymous"></img>
+                <img src={slots[0]?.echo?.icon} alt="Echo 1" className="w-15 h-15" crossOrigin="anonymous"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
-                  <img src={selectedSet.icon} alt="Echo 1 Set" className="w-5 h-5" crossOrigin="anonymous"></img>
+                  <img src={slots[0]?.set?.icon || ""} alt="Echo 1 Set" className="w-5 h-5" crossOrigin="anonymous"></img>
                   <p className="text-sm">{ocrData.echo1MainStat}</p>
                   <div className="flex flex-row gap-0.5">
                     {getStatIcon(ocrData.echo1MainStat) && (
@@ -1107,9 +1140,9 @@ export default function Home() {
   
             <div className="flex flex-col gap-1 bg-black/30 p-2">
               <div className="flex flex-row gap-1">
-                <img src={selectedEchoes[1]?.icon} alt="Echo 2" className="w-15 h-15" crossOrigin="anonymous"></img>
+                <img src={slots[1]?.echo?.icon} alt="Echo 2" className="w-15 h-15" crossOrigin="anonymous"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
-                  <img src={selectedSet.icon} alt="Echo 2 Set" className="w-5 h-5" crossOrigin="anonymous"></img>
+                  <img src={slots[1]?.set?.icon || ""} alt="Echo 2 Set" className="w-5 h-5" crossOrigin="anonymous"></img>
                   <p className="text-sm">{ocrData.echo2MainStat}</p>
                   <div className="flex flex-row gap-0.5">
                     {getStatIcon(ocrData.echo2MainStat) && (
@@ -1137,9 +1170,9 @@ export default function Home() {
             </div>
             <div className="flex flex-col gap-1 bg-black/30 p-2">
               <div className="flex flex-row gap-1">
-                <img src={selectedEchoes[2]?.icon} alt="Echo 3" className="w-15 h-15" crossOrigin="anonymous"></img>
+                <img src={slots[2]?.echo?.icon} alt="Echo 3" className="w-15 h-15" crossOrigin="anonymous"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
-                  <img src={selectedSet.icon} alt="Echo 3 Set" className="w-5 h-5" crossOrigin="anonymous"></img>
+                  <img src={slots[2]?.set?.icon || ""} alt="Echo 3 Set" className="w-5 h-5" crossOrigin="anonymous"></img>
                   <p className="text-sm">{ocrData.echo3MainStat}</p>
                   <div className="flex flex-row gap-0.5">
                     {getStatIcon(ocrData.echo3MainStat) && (
@@ -1167,9 +1200,9 @@ export default function Home() {
             </div>
             <div className="flex flex-col gap-1 bg-black/30 p-2">
               <div className="flex flex-row gap-1">
-                <img src={selectedEchoes[3]?.icon} alt="Echo 4" className="w-15 h-15" crossOrigin="anonymous"></img>
+                <img src={slots[3]?.echo?.icon} alt="Echo 4" className="w-15 h-15" crossOrigin="anonymous"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
-                  <img src={selectedSet.icon} alt="Echo 4 Set" className="w-5 h-5" crossOrigin="anonymous"></img>
+                  <img src={slots[3]?.set?.icon || ""} alt="Echo 4 Set" className="w-5 h-5" crossOrigin="anonymous"></img>
                   <p className="text-sm">{ocrData.echo4MainStat}</p>
                   <div className="flex flex-row gap-0.5">
                     {getStatIcon(ocrData.echo4MainStat) && (
@@ -1197,9 +1230,9 @@ export default function Home() {
             </div>
             <div className="flex flex-col gap-1 bg-black/30 p-2">
               <div className="flex flex-row gap-1">
-                <img src={selectedEchoes[4]?.icon} alt="Echo 5" className="w-15 h-15" crossOrigin="anonymous"></img>
+                <img src={slots[4]?.echo?.icon} alt="Echo 5" className="w-15 h-15" crossOrigin="anonymous"></img>
                 <div className="flex flex-col items-end w-[88.75px]">
-                  <img src={selectedSet.icon} alt="Echo 5 Set" className="w-5 h-5" crossOrigin="anonymous"></img>
+                  <img src={slots[4]?.set?.icon || ""} alt="Echo 5 Set" className="w-5 h-5" crossOrigin="anonymous"></img>
                   <p className="text-sm">{ocrData.echo5MainStat}</p>
                   <div className="flex flex-row gap-0.5">
                     {getStatIcon(ocrData.echo5MainStat) && (
@@ -1251,17 +1284,6 @@ export default function Home() {
       {showCard && ocrData && character && weapon && (
         <div className="flex w-full" ref={cardDivRef}>
           <button
-            // onClick={async () => {
-            //   if (!cardDownloadRef.current) return;
-            //   const html2canvas = (await import("html2canvas-pro")).default;
-            //   const canvas = await html2canvas(cardDownloadRef.current, { useCORS: true });
-            //   const dataUrl = canvas.toDataURL("image/png");
-
-            //   const link = document.createElement("a");
-            //   link.href = dataUrl;
-            //   link.download = "card.png";
-            //   link.click();
-            //   }}
             onClick={handleDownload}
             className="mx-auto w-auto bg-blue-600 text-white px-4 py-2 rounded-xl text-2xl mb-20 text-center whitespace-nowrap duration-300 hover:scale-105 active:scale-95"
           >
