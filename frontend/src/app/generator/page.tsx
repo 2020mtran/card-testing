@@ -5,9 +5,9 @@ import { useState, useEffect, useRef } from 'react';
 import { getCharacterInfo, CharacterInfo } from "./characterMap";
 import { getWeaponInfo } from "./weaponMap";
 import { getStatIcon } from "./statMap";
-import { Field, Label, Radio, RadioGroup, Listbox, ListboxOption, ListboxOptions, ListboxButton } from '@headlessui/react'
+import { Listbox, ListboxOption, ListboxOptions, ListboxButton } from '@headlessui/react'
 import { ChevronUpDownIcon } from '@heroicons/react/20/solid'
-import { EchoInfo, echoMap } from "./echoMap";
+import { echoMap } from "./echoMap";
 import * as htmlToImage from "html-to-image";
 import Link from "next/link";
 
@@ -131,7 +131,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const character = getCharacterInfo(ocrData?.character || "");
   const weapon = getWeaponInfo(ocrData?.weaponName || "");
-  const [selectedSet, setSelectedSet] = useState(options[0]);
+  // const [selectedSet, setSelectedSet] = useState(options[0]);
   // const [selectedEchoes, setSelectedEchoes] = useState<EchoInfo[]>([]);
   // const [selectedEchoes, setSelectedEchoes] = useState<(EchoInfo | null)[]>(Array(5).fill(null));
   const [slots, setSlots] = useState<EchoSlot[]>(
