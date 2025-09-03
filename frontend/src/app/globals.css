@@ -19,7 +19,7 @@
   --color-foreground: var(--foreground);
   /* --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono); */
-  --font-lagu: "Lagu-Sans", "sans-serif";
+  --font-lagu: "Lagu-sans", "sans-serif";
   --font-lagusemi: "Lagu-sans-semibold", "sans-serif";
   --text-charName: 2.625rem; 
 }
@@ -33,8 +33,8 @@
 
 @font-face {
   font-family: 'Lagu-sans-semibold';
-  src: url('/fonts/LaguSans/LaguSans-Semibold.otf') format('opentype');
-  font-weight: normal;
+  src: url('/fonts/LaguSans/LaguSans-SemiBold.otf') format('opentype');
+  font-weight: 600;
   font-style: normal;
 }
 
