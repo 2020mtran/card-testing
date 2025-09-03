@@ -218,15 +218,23 @@ async def extract_text(file: UploadFile = File(...)):
     data["echo5MainStatNum"] = "".join(digits)
 
     # data = fix_crit_energy_stats(data)
-    data["echo3FifthSubstatNum"] = fix_value(
-        data["echo3FifthSubstat"], 
-        data["echo3FifthSubstatNum"]
-    )
+    # data["echo3FifthSubstatNum"] = fix_value(
+    #     data["echo3FifthSubstat"], 
+    #     data["echo3FifthSubstatNum"]
+    # )
 
-    data["echo4FifthSubstatNum"] = fix_value(
-        data["echo4FifthSubstat"], 
-        data["echo4FifthSubstatNum"]
-    )
+    # data["echo4FifthSubstatNum"] = fix_value(
+    #     data["echo4FifthSubstat"], 
+    #     data["echo4FifthSubstatNum"]
+    # )
+    substats = ["First", "Second", "Third", "Fourth", "Fifth"]
+    for echo_index in range(1, 6):
+        for substat in substats:
+            key_value = f"echo{echo_index}{substat}Substat"
+            key_num = f"echo{echo_index}{substat}SubstatNum"
+
+            if key_value in data and key_num in data:
+                data[key_num] = fix_value(data[key_value], data[key_num])
 
     if len(lines) > 0:
         data["stats"] = lines[0:]  # Remaining lines = stats
@@ -267,52 +275,6 @@ def simplify_stat_label(label: str) -> str:
     }
     return replacements.get(label, label)
 
-# TARGET_STATS = ["Crit Rate", "Crit DMG", "Energy Recharge"]
-# def fix_crit_energy_stats(data: dict):
-#     for key, value in data.items():
-#         if key.endswith("Substat"):
-#             label = value
-#             num_key = key.replace("Substat", "SubstatNum")
-#             if num_key in data:
-#                 print(f"Checking {key}: {label} / {data[num_key]}")
-#                 num_value = data[num_key]
-#                 if any(stat in label for stat in TARGET_STATS):
-#                     if num_value and "%" not in num_value:
-#                         try:
-#                             val = float(num_value)
-#                             new_val = val/10
-#                             if new_val.is_integer():
-#                                 data[num_key] = f"{int(new_val)}%"
-#                             else:
-#                                 data[num_key] = f"{new_val:.1f}%"
-#                         except ValueError:
-#                             pass
-#     return data
-
-# def fix_crit_energy_stats(data: dict) -> dict:
-#     percent_stats = {"Crit Rate", "Crit DMG", "Energy Regen"}
-    
-#     for i in range(1, 6):  # loop echoes 1–5
-#         for j in ["MainStat", "DefaultStat", "FirstSubstat", "SecondSubstat", "ThirdSubstat", "FourthSubstat", "FifthSubstat"]:
-#             stat_key = f"echo{i}{j}"
-#             num_key = f"{stat_key}Num"
-            
-#             if stat_key in data and num_key in data:
-#                 stat_label = str(data[stat_key])
-#                 stat_value = str(data[num_key])
-
-#                 # Check if this is one of the percentage stats
-#                 if any(s in stat_label for s in percent_stats):
-#                     # Extract digits
-#                     digits = re.findall(r"\d+", stat_value)
-#                     if digits:
-#                         num = int("".join(digits))
-#                         # If it's too large, scale it down
-#                         if num > 100:  
-#                             num = num / 10
-#                         data[num_key] = f"{num}%"
-#     return data
-
 def fix_value(label: str, value: str) -> str:
     TARGET_STATS = ["Crit. Rate", "Crit. DMG", "Energy"]
 
@@ -321,7 +283,13 @@ def fix_value(label: str, value: str) -> str:
             val = float(value)
             if val >= 100:  # suspicious case like 150 instead of 15
                 val = val / 10
-            return f"{val:.1f}".rstrip("0").rstrip(".") + "%"
+            if abs(val - 10.9) < 0.01:  # handles floating point rounding
+                val = 10
+            if val.is_integer():
+                return f"{int(val)}%"
+            else:
+                return f"{val:.1f}%"
+            # return f"{val:.1f}".rstrip("0").rstrip(".") + "%"
         except ValueError:
             return value
     return value
