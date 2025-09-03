@@ -825,7 +825,7 @@ export default function Home() {
                 <div className="relative w-60 lg:w-full">
                   <ListboxButton className="relative w-full cursor-pointer rounded border bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-2 focus:ring-sk-light-blue sm:text-sm md:text-xl">
                     <span className="block truncate text-black">
-                      {slot.set?.set || `Select Set for Echo ${index+1}`}
+                      {slot.set?.set || `Select Set | Echo ${index+1}`}
                     </span>
                     <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                       <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
