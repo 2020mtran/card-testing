@@ -217,16 +217,6 @@ async def extract_text(file: UploadFile = File(...)):
     digits = re.findall(r'[0-9.%]+', data["echo5MainStatNum"])
     data["echo5MainStatNum"] = "".join(digits)
 
-    # data = fix_crit_energy_stats(data)
-    # data["echo3FifthSubstatNum"] = fix_value(
-    #     data["echo3FifthSubstat"], 
-    #     data["echo3FifthSubstatNum"]
-    # )
-
-    # data["echo4FifthSubstatNum"] = fix_value(
-    #     data["echo4FifthSubstat"], 
-    #     data["echo4FifthSubstatNum"]
-    # )
     substats = ["First", "Second", "Third", "Fourth", "Fifth"]
     for echo_index in range(1, 6):
         for substat in substats:
@@ -285,7 +275,7 @@ def fix_value(label: str, value: str) -> str:
                 val = val / 10
             if abs(val - 10.9) < 0.01:  # handles floating point rounding
                 val = 10
-            if val.is_integer():
+            if val % 1 == 0:
                 return f"{int(val)}%"
             else:
                 return f"{val:.1f}%"
