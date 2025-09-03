@@ -575,7 +575,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-header/25 via-85% to-transparent"></div>
         <Link href="/" className="flex flex-row items-center gap-0.5 relative">
           <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/WuwaNetworkLogo.png" alt="WuwaNetwork Logo" className="h-12 w-auto translate-y-0.5"/>
-          <p className="text-3xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">Wuwa.Network</p>
+          <p className="font-lagu-semibold text-3xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">Wuwa.Network</p>
         </Link>
         <div className="flex flex-row items-center relative">
           <span className="hidden lg:flex text-3xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">Generator</span>
@@ -588,7 +588,7 @@ export default function Home() {
           </div>
         </div>
         <div className="flex flex-col w-[70%] lg:w-[42%] h-[60vh] lg:ml-[7%] -mt-[35%] lg:-mt-[15%] relative z-10 items-center gap-5">
-          <p className="text-lg lg:text-4xl text-center relative z-10 [text-shadow:2px_1px_2px_rgba(0,0,0,0.7)]">Upload your image from WuwaBot</p>
+          <p className="font-lagu-semibold text-lg lg:text-4xl text-center relative z-10 [text-shadow:2px_1px_2px_rgba(0,0,0,0.7)]">Upload your image from WuwaBot</p>
           <input
             id="file-upload"
             type="file"
@@ -612,7 +612,7 @@ export default function Home() {
               <img src={filePreview} alt="Uploaded Preview" className="w-full h-full object-contain lg:object-cover" /> ) : ( <p className="text-sm md:text-3xl">Upload Here</p> )}
           </label>
           )}
-          <p className="text-lg -mt-4 -mb-4 [text-shadow:2px_1px_2px_rgba(0,0,0,0.7)]">Don&apos;t know what to upload? Check the home page!</p>
+          <p className="font-lagu-semibold text-center lg:text-start text-lg -mt-4 -mb-4 [text-shadow:2px_1px_2px_rgba(0,0,0,0.7)]">Don&apos;t know what to upload? Check the home page!</p>
           <button
             onClick={handleUpload}
             className=" w-auto bg-blue-600 text-white px-6 py-2 rounded text-center whitespace-nowrap duration-300 hover:scale-105 active:scale-95"

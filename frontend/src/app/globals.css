@@ -26,14 +26,14 @@
 
 @font-face {
   font-family: 'Lagu-sans';
-  src: url('/fonts/LaguSans/Lagu Sans Regular.otf') format('opentype');
+  src: url('/fonts/LaguSans/LaguSans-Regular.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Lagu-sans-semibold';
-  src: url('/fonts/LaguSans/Lagu Sans Semibold.otf') format('opentype');
+  src: url('/fonts/LaguSans/LaguSans-Semibold.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
