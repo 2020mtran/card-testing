@@ -10,8 +10,8 @@ export const statIconMap: Record<string, string> = {
   "Res. Skill": "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Resonance_Skill_Bonus.png",
   "Res. Lib.": "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Resonance_Liberation_Bonus.png",
   "Spectro DMG": "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Spectro.png",
-  "Aero DMG": "",
-  "Healing Bonus": "",
+  "Aero DMG": "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Aero.png",
+  "Healing Bonus": "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Healing_Bonus.png",
   // Add more as needed
 };
 

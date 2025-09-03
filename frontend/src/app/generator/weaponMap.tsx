@@ -16,6 +16,14 @@ export const weaponMap: Record<string, WeaponInfo> = {
     subStatNum: "72.2%",
     subStatIcon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Health.webp"
   },
+  "Ages of Harvest": {
+    name: "Ages of Harvest",
+    imageUrl: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Weapon_Ages_of_Harvest.webp",
+    baseStatNum: "587",
+    baseStatIcon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp",
+    subStatNum: "24.3%",
+    subStatIcon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_DMG.webp"
+  },
   "Blazing Justice": {
     name: "Blazing Justice",
     imageUrl: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Blazing-Justice.webp",

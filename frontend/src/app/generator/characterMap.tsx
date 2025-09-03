@@ -50,6 +50,31 @@ export const characterMap: Record<string, CharacterInfo> = {
     base_atk_90: 312,
     base_def_90: 611,
   },
+  "Jinhsi": {
+    name: "Jinhsi",
+    type: "Spectro",
+    typeIcon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Spectro.png",
+    imageUrl: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Jinhsi_Full.webp",
+    waveband: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Item_Jinhsi%2527s_Waveband.webp",
+    rc1: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Jinhsi-RC-1.png",
+    rc2: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Jinhsi-RC-2.png",
+    rc3: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Jinhsi-RC-3.png",
+    rc4: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Jinhsi-RC-4.png",
+    rc5: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Jinhsi-RC-5.png",
+    rc6: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Jinhsi-RC-6.png",
+    talentStat1: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Crit_Rate.webp",
+    talentStat2: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Attribute_Attack.webp",
+    normal: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Jinhsi_Normal.png",
+    skill: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Jinhsi_Skill.png",
+    forte: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Jinhsi_Forte.png",
+    liberation: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Jinhsi_Liberation.png",
+    intro: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Jinhsi_Intro.png",
+    passive1: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Jinhsi_Passive1.png",
+    passive2: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Jinhsi_Passive2.png",
+    base_hp_90: 10825,
+    base_atk_90: 462,
+    base_def_90: 1259,
+  },
   "Zani": {
     name: "Zani",
     type: "Spectro",
@@ -75,7 +100,6 @@ export const characterMap: Record<string, CharacterInfo> = {
     base_atk_90: 438,
     base_def_90: 1137,
   },
-  // add more
 };
 
 export function getCharacterInfo(name: string): CharacterInfo | null {

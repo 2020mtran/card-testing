@@ -106,6 +106,7 @@ interface OCRData {
 const options = [
     {set: "Eternal Radiance", icon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Eternal_Radiance.webp"}, 
     {set: "Windward Pilgrimage", icon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Windward_Pilgrimage.webp"},
+    {set: "Celestial Light", icon: "https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Icon_Celestial_Light.webp"}
 ]
 
 type Echo = {
@@ -374,32 +375,19 @@ export default function Home() {
 
   allSubStats.forEach(stat => {
     if (stat.label && stat.value) {
-      // console.log(stat.label)
-      // console.log(stat.value)
-      //   if (STAT_TYPES.critDmg.includes(stat.label) && !stat.value.includes("%")) {
-      //   console.log(stat.value)
-      //   const tempVal = parseFloat(stat.value)
-      //   stat.value = (tempVal / 10).toFixed(1).replace(/\.0$/, "") + "%";
-      //   console.log(stat.value)
-      // }
       applySubstat(stat.label, stat.value);
     }
   });
 
   allMainStats.forEach(stat => {
     if (stat.label && stat.value && character) {
-      // console.log(stat.value)
       applyMainStat(stat.label, stat.value, character);
     }
   });
 
   function calculate_total_hp() {
     if (character) {
-      // console.log(character.base_hp_90)
-      // console.log(1 + totalStats.percent.hp / 100)
-      // console.log(totalStats.flat.hp)
       const totalHP = character.base_hp_90 * (1 + totalStats.percent.hp / 100) + totalStats.flat.hp;
-      // console.log(totalHP)
       totalStats.total_hp = Math.round(totalHP)
     }
   }
@@ -414,10 +402,6 @@ export default function Home() {
 
   function calculate_total_atk() {
     if (character && weapon) {
-      // console.log(character.base_atk_90)
-      // console.log(1 + totalStats.percent.atk / 100)
-      // console.log(totalStats.flat.atk)
-      // console.log(weapon.baseStatNum)
       const totalATK = (character.base_atk_90 + parseFloat(weapon?.baseStatNum)) * (1 + totalStats.percent.atk / 100) + totalStats.flat.atk
       totalStats.total_atk = Math.round(totalATK)
     }
@@ -473,18 +457,6 @@ export default function Home() {
   ]
 
   const leftLen = leftStats.length;
-  // const rightLen = rightStats.length;
-
-  // const echoesForSelectedSet = selectedSet ? echoMap.filter(e => e.sets.includes(selectedSet.set)) : [];
-
-  // const handleEchoChange = (slotIndex: number, echoName: string) => {
-  //   const echo = echoesForSelectedSet.find(e => e.name === echoName) || null;
-  //   setSelectedEchoes(prev => {
-  //     const updated = [...prev];
-  //     updated[slotIndex] = echo;
-  //     return updated;
-  //   });
-  // };
 
   function EchoDropdown({ index, selectedEcho, echoes, handleEchoChange }: EchoDropdownProps) {
     return (
@@ -842,7 +814,7 @@ export default function Home() {
             </div>
           </div> */}
           {/* Row 1: Set selection */}
-          <div className="grid grid-cols-5 gap-4 w-[85%]">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 max-w-[85%] lg:w-[85%] mx-auto">
             {slots.map((slot, index) => (
               <Listbox
                 key={`set-${index}`}
@@ -876,7 +848,7 @@ export default function Home() {
           </div>
 
           {/* Row 2: Echo selection */}
-          <div className="grid grid-cols-5 gap-4 lg:w-[85%] items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 max-w-[85%] lg:w-[85%] items-center">
             {slots.map((slot, index) => (
               <EchoDropdown
                 key={`echo-${index}`}
