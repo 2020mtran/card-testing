@@ -153,10 +153,10 @@ export default function Homepage() {
                 <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-header/25 via-85% to-transparent"></div>
                 <Link href="/" className="flex flex-row items-center gap-0.5 relative">
                     <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/WuwaNetworkLogo.png" alt="WuwaNetwork Logo" className="h-12 w-auto translate-y-0.5"/>
-                    <p className="text-3xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">Wuwa.Network</p>
+                    <p className="text-3xl 3xl:text-5xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">Wuwa.Network</p>
                 </Link>
                 <Link href="/generator" className="flex flex-row items-center relative">
-                    <span className="hidden lg:flex text-3xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">Generator</span>
+                    <span className="hidden lg:flex text-3xl 3xl:text-5xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">Generator</span>
                 </Link>
             </header>
             <div className="flex flex-col justify-center items-center lg:items-start min-h-screen bg-blurple">
@@ -165,29 +165,29 @@ export default function Homepage() {
                         <div className="h-[120vh] bg-gradient-to-b from-transparent from-90% to-blurple"></div>
                     </div>
                 </div>
-                <div className="flex flex-col w-[70%] lg:w-[55%] h-[60vh] lg:ml-[7%] -mt-[35%] md:-mt-[15%] relative z-10 items-center lg:items-start gap-5">
-                    <p className="text-5xl md:text-6xl lg:text-7xl lg:leading-22 text-center lg:text-start relative z-10 [text-shadow:2px_1px_2px_rgba(0,0,0,0.7)]">Showcase your Wuthering Waves builds with style.</p>
-                    <Link href="/generator" className="z-10 w-auto bg-blue-600 text-white px-4 py-2 md:px-12 md:py-4 rounded-xl text-2xl mb-10 text-center whitespace-nowrap">Create a card</Link>
+                <div className="flex flex-col w-[70%] lg:w-[55%] 3xl:w-[60%] h-[60vh] lg:ml-[7%] -mt-[35%] md:-mt-[15%] relative z-10 items-center lg:items-start gap-5">
+                    <p className="text-5xl md:text-6xl lg:text-7xl 3xl:text-8xl lg:leading-22 3xl:leading-27 text-center lg:text-start relative z-10 [text-shadow:2px_1px_2px_rgba(0,0,0,0.7)]">Showcase your Wuthering Waves builds with style.</p>
+                    <Link href="/generator" className="z-10 w-auto bg-blue-600 text-white px-4 py-2 3xl:py-6 md:px-12 md:py-4 rounded-xl text-2xl 3xl:text-5xl mb-10 text-center whitespace-nowrap">Create a card</Link>
                 </div>
             </div>
             <div className="flex flex-col items-center mt-10 lg:mt-15">
                 <p className="mb-10 lg:mb-5 xl:mb-0 text-center text-xl lg:text-4xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">Create and share your character&apos;s showcase card!</p>
                 <Carousel images={slides} autoPlayInterval={5000} />
             </div>
-            <div className="flex flex-col w-[88%] self-center bg-navy-blue p-20 gap-10">
+            <div className="flex flex-col w-[88%] self-center bg-navy-blue p-5 xl:p-20 gap-5 lg:gap-10">
                 <p className="text-start text-xl lg:text-5xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">What is Wuwa.Network?</p>
-                <p className="text-left text-2xl text-wrap">Wuwa.Network is a tool that allows to make cards for your Wuthering Waves characters to showcase your builds to others.</p>
+                <p className="text-left lg:text-2xl text-wrap">Wuwa.Network is a tool that allows to make cards for your Wuthering Waves characters to showcase your builds to others.</p>
                 <p className="text-start text-xl lg:text-5xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">How to Use?</p>
-                <p className="text-left text-2xl text-wrap">Step 1</p>
-                <p className="-mt-5 text-left text-2xl text-wrap">Use WuwaBot on Discord to create a card. This card lacks statistics like total crit rate, crit damage, etc. We are simply using this generated card to be put in a more digestible way. Make sure to download this image from Discord.</p>
-                <a href="https://wutheringwaves.kurogames.com/en/main/news/detail/1959" target="_blank" rel="noopener noreferrer" className="-mt-5 text-left text-2xl text-wrap text-sk-light-blue underline">Official Instruction from Kuro Games</a>
-                <p className="-mt-5 text-left text-2xl text-wrap">It will look like the below image. Feel free to save the below image if you just want to try out the website!</p>
+                <p className="text-left lg:text-2xl text-wrap">Step 1</p>
+                <p className="lg:-mt-5 text-left lg:text-2xl text-wrap">Use WuwaBot on Discord to create a card. This card lacks statistics like total crit rate, crit damage, etc. We are simply using this generated card to be put in a more digestible way. Make sure to download this image from Discord.</p>
+                <a href="https://wutheringwaves.kurogames.com/en/main/news/detail/1959" target="_blank" rel="noopener noreferrer" className="lg:-mt-5 text-left lg:text-2xl text-wrap text-sk-light-blue underline">Official Instruction from Kuro Games</a>
+                <p className="lg:-mt-5 text-left lg:text-2xl text-wrap">It will look like the below image. Feel free to save the below image if you just want to try out the website!</p>
                 <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/KuroExample.jpeg" alt="Example from Kuro Games" className="w-full h-full object-contain lg:object-cover" />
-                <p className="text-left text-2xl text-wrap">Step 2</p>
-                <p className="-mt-5 text-left text-2xl text-wrap">Upload your card from WuwaBot into this website and click &ldquo;Upload&rdquo;.</p>
+                <p className="text-left lg:text-2xl text-wrap">Step 2</p>
+                <p className="lg:-mt-5 text-left lg:text-2xl text-wrap">Upload your card from WuwaBot into this website and click &ldquo;Upload&rdquo;.</p>
                 <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/GeneratorPage.png" alt="Generator Page Example" className="w-full h-full object-contain lg:object-cover" />
-                <p className="text-left text-2xl text-wrap">Step 3</p>
-                <p className="-mt-5 text-left text-2xl text-wrap">Before proceeding, preview the scanned material. Set your resonance chains, weapon rank, and echoes.</p>
+                <p className="text-left lg:text-2xl text-wrap">Step 3</p>
+                <p className="lg:-mt-5 text-left lg:text-2xl text-wrap">Before proceeding, preview the scanned material. Set your resonance chains, weapon rank, and echoes.</p>
                 <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/CardPreviewExample.png" alt="Generator Page Example" className="w-full h-full object-contain lg:object-cover" />
             </div>
         </div>
