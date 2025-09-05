@@ -170,9 +170,25 @@ export default function Homepage() {
                     <Link href="/generator" className="z-10 w-auto bg-blue-600 text-white px-4 py-2 md:px-12 md:py-4 rounded-xl text-2xl mb-10 text-center whitespace-nowrap">Create a card</Link>
                 </div>
             </div>
-            <div className="flex flex-col items-center mt-35 lg:mt-15">
-                <p className="text-4xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">Create and share your character's showcase card!</p>
+            <div className="flex flex-col items-center mt-10 lg:mt-15">
+                <p className="mb-10 lg:mb-5 xl:mb-0 text-center text-xl lg:text-4xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">Create and share your character's showcase card!</p>
                 <Carousel images={slides} autoPlayInterval={5000} />
+            </div>
+            <div className="flex flex-col w-[88%] self-center bg-navy-blue p-20 gap-10">
+                <p className="text-start text-xl lg:text-5xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">What is Wuwa.Network?</p>
+                <p className="text-left text-2xl text-wrap">Wuwa.Network is a tool that allows to make cards for your Wuthering Waves characters to showcase your builds to others.</p>
+                <p className="text-start text-xl lg:text-5xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">How to Use?</p>
+                <p className="text-left text-2xl text-wrap">Step 1</p>
+                <p className="-mt-5 text-left text-2xl text-wrap">Use WuwaBot on Discord to create a card. This card lacks statistics like total crit rate, crit damage, etc. We are simply using this generated card to be put in a more digestible way. Make sure to download this image from Discord.</p>
+                <a href="https://wutheringwaves.kurogames.com/en/main/news/detail/1959" target="_blank" rel="noopener noreferrer" className="-mt-5 text-left text-2xl text-wrap text-sk-light-blue underline">Official Instruction from Kuro Games</a>
+                <p className="-mt-5 text-left text-2xl text-wrap">It will look like the below image. Feel free to save the below image if you just want to try out the website!</p>
+                <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/KuroExample.jpeg" alt="Example from Kuro Games" className="w-full h-full object-contain lg:object-cover" />
+                <p className="text-left text-2xl text-wrap">Step 2</p>
+                <p className="-mt-5 text-left text-2xl text-wrap">Upload your card from WuwaBot into this website and click “Upload”.</p>
+                <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/GeneratorPage.png" alt="Generator Page Example" className="w-full h-full object-contain lg:object-cover" />
+                <p className="text-left text-2xl text-wrap">Step 3</p>
+                <p className="-mt-5 text-left text-2xl text-wrap">Before proceeding, preview the scanned material. Set your resonance chains, weapon rank, and echoes.</p>
+                <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/CardPreviewExample.png" alt="Generator Page Example" className="w-full h-full object-contain lg:object-cover" />
             </div>
         </div>
 )}
