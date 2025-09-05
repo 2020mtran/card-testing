@@ -184,7 +184,7 @@ export default function Homepage() {
                 <p className="-mt-5 text-left text-2xl text-wrap">It will look like the below image. Feel free to save the below image if you just want to try out the website!</p>
                 <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/KuroExample.jpeg" alt="Example from Kuro Games" className="w-full h-full object-contain lg:object-cover" />
                 <p className="text-left text-2xl text-wrap">Step 2</p>
-                <p className="-mt-5 text-left text-2xl text-wrap">Upload your card from WuwaBot into this website and click &ldquo;Upload&rdquo.</p>
+                <p className="-mt-5 text-left text-2xl text-wrap">Upload your card from WuwaBot into this website and click &ldquo;Upload&rdquo;.</p>
                 <img src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/GeneratorPage.png" alt="Generator Page Example" className="w-full h-full object-contain lg:object-cover" />
                 <p className="text-left text-2xl text-wrap">Step 3</p>
                 <p className="-mt-5 text-left text-2xl text-wrap">Before proceeding, preview the scanned material. Set your resonance chains, weapon rank, and echoes.</p>
