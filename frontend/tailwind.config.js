@@ -2,6 +2,7 @@
 export default {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}", // ✅ Adjust if needed based on your directory
+    "./app/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
     extend: {
@@ -13,5 +14,7 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar')({ nocompatible: true }),
+  ],
 };
