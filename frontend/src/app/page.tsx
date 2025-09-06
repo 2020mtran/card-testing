@@ -158,6 +158,12 @@ export default function Homepage() {
                 <Link href="/generator" className="flex flex-row items-center relative">
                     <span className="hidden lg:flex text-3xl 3xl:text-5xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">Generator</span>
                 </Link>
+                <Link href="/faq" className="flex flex-row items-center relative">
+                    <span className="hidden lg:flex text-3xl 3xl:text-5xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">FAQ</span>
+                </Link>
+                <Link href="/generator" className="flex flex-row items-center relative">
+                    <span className="hidden lg:flex text-3xl 3xl:text-5xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">Project Resources</span>
+                </Link>
             </header>
             <div className="flex flex-col justify-center items-center lg:items-start min-h-screen bg-blurple">
                 <div className="absolute inset-0">

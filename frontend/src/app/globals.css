@@ -14,6 +14,7 @@
  --color-header: #111834;
  --color-navy-blue: #18224D;
  --breakpoint-3xl: 112.5rem;
+ --color-dark-navy: #141B39;
 }
 
 @theme inline {
