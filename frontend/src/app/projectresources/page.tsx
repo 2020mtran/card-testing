@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import React, { useState } from 'react';
+import Image from "next/image";
 
 function AccordionItem({ title, children }: { title: string, children: React.ReactNode }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -53,63 +54,69 @@ export default function FaqPage() {
                 <Link href="/faq" className="flex flex-row items-center relative">
                     <span className="text-3xl 3xl:text-5xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">FAQ</span>
                 </Link>
-                <Link href="/generator" className="flex flex-row items-center relative">
+                <Link href="/projectresources" className="flex flex-row items-center relative">
                     <span className="text-3xl 3xl:text-5xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">Project Resources</span>
                 </Link>
             </div>
         </header>
         <div className="flex flex-col justify-center items-center lg:items-start min-h-screen bg-blurple">
             <div className="absolute inset-0">
-                <div className="h-[120vh] bg-[url(https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/ShorekeeperBackground3.png)] bg-cover bg-center">
+                <div className="h-[120vh] bg-[url(https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/ShorekeeperBackground4.png)] bg-cover bg-center">
                     <div className="h-[120vh] bg-gradient-to-b from-transparent from-90% to-dark-navy"></div>
                 </div>
             </div>
             <div className="flex flex-col w-[70%] lg:w-[55%] 3xl:w-[60%] h-[60vh] lg:ml-[7%] -mt-[35%] md:-mt-[15%] relative z-10 items-center lg:items-start gap-5">
-                <p className="text-5xl md:text-6xl lg:text-7xl 3xl:text-8xl lg:leading-22 3xl:leading-27 text-center lg:text-start relative z-10 [text-shadow:2px_1px_2px_rgba(0,0,0,0.7)]">Frequently Asked Questions</p>
+                <p className="text-5xl md:text-6xl lg:text-7xl 3xl:text-8xl lg:leading-22 3xl:leading-27 text-center lg:text-start relative z-10 [text-shadow:2px_1px_2px_rgba(0,0,0,0.7)]">Project Resources / Behind The Scenes</p>
             </div>
         </div>
-        <div className="flex flex-col w-[88%] self-center p-5 xl:p-20 gap-5 lg:gap-10">
-            <AccordionItem title="What is the purpose of this site?">
-                This website allows users to create downloadable cards to display character data from the game Wuthering Waves. Users can
-                show off these cards on any social media platform using the image generated.
-            </AccordionItem>
-            <AccordionItem title="Why do we need to input an image to generate a card?">
-                Kuro Games does not provide an API for me to pull data from unlike other games such as Genshin Impact. The best they give us
-                is a card that shows some data, but not the total stats of a character. Ex: total crit rate, crit damage, etc.
-            </AccordionItem>
-            <AccordionItem title="Is Wuwa.Network affiliated with Wuthering Waves?">
-                No. This is simply just a fan-made project.
-            </AccordionItem>
-            <AccordionItem title="Why does the uploading not work?">
-                By the time you are reading this, the website is likely no longer functional. My backend server provider, Hugging Faces,
-                will automatically shut down operations if there is a lack of activity. 
-            </AccordionItem>
-            <AccordionItem title="Is the website complete?">
-                The main functionality and purpose of the website has been completed. Due to unfortunate circumstances in my life, I had
-                to drop the project after over 3 months in the making. A few features missing include: localstorage saving, accounts, 
-                and a graph to show who the most popular characters are. Only a portion of the characters / weapons / echoes 
-                fro mthe game are in my site&apos;s database as well.
-            </AccordionItem>
-            <AccordionItem title="What alternative websites to this could I use?">
-                Below are two alternative websites that inspired this project. Feel free to compare their designs to my site. You may find
-                some similarities.
+        <div className="flex flex-col w-[88%] self-center p-5 xl:p-20 gap-5 lg:gap-10 lg:mt-5 xl:mt-0">
+            <AccordionItem title="Wuwa.Network's Project Tracker">
+                Here is a spreadsheet containing every day's work that went into making this website over the past 3 months.
                 <p>
-                    <a href="https://wuwaflex.com/" target="_blank" className="text-blue-400 underline">
-                    WuwaFlex
-                    </a>
-                </p>
-                <p>
-                    <a href="https://www.wuwabuilds.moe/" target="_blank" className="text-blue-400 underline">
-                    WuwaBuilds
+                    <a href="https://docs.google.com/spreadsheets/d/1CVIARUBRQBQxzWjXX57w3AFasDGw1PworzyQ8EyQp5Y/edit?usp=sharing" target="_blank" className="text-blue-400 underline">
+                    Wuwa.Network Progress Tracker
                     </a>
                 </p>
             </AccordionItem>
-            <AccordionItem title="Why did you stop the project?">
-                Even though this was a dream project for me, I found little value in completing it fully.
-                Time, money, and other life circumstances forced my hand despite being so close to the finish line.
-                If Kuro Games ever releases a public API for fans to utilize, I may likely come back to fully overhaul and
-                complete the project. (Although, it does feel pretty bad that I spent a large portion of time specifically 
-                on the Optical Character Reader portion of the site.)
+            <AccordionItem title="Prototypes that did not make the final cut">
+                <div className='flex flex-col xl:flex-row gap-5 justify-center items-center'>
+                    <div className='flex flex-col gap-5 text-center'>
+                        Locally-saved Card Storage Page
+                        <Image
+                            src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/SavedBuildsPage.png"
+                            alt="Saved Builds Page"
+                            width={600}     // pick a real number
+                            height={400}    // pick a real number
+                            className="rounded-lg shadow-md object-contain"
+                        />
+                    </div>
+                    <div className='flex flex-col gap-5 text-center'>
+                        Resonator Popularity Page
+                        <Image
+                            src="https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/PopularityPage.png"
+                            alt="Saved Builds Page"
+                            width={600}     // pick a real number
+                            height={400}    // pick a real number
+                            className="rounded-lg shadow-md object-contain"
+                        />
+                    </div>
+                </div>
+                
+            </AccordionItem>
+            <AccordionItem title="Wuwa.Network Trello">
+                This Trello page contains all the changes and future changes that were planned to be in the final product.
+                <p>
+                    <a href="https://trello.com/b/i6sCiYMd/wuwanetwork" target="_blank" className="text-blue-400 underline">
+                    Wuwa.Network Trello
+                    </a>
+                </p>
+            </AccordionItem>
+            <AccordionItem title="Tester Credits">
+                A few people from my online community on Discord helped out with testing the primary features of the website.
+                Huge thank you to them for taking the time to test my site! 
+            </AccordionItem>
+            <AccordionItem title="Hosting Sites">
+                Website Hosting: Vercel | Backend Server Hosting: Hugging Face
             </AccordionItem>
         </div>
     </div>

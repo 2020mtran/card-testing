@@ -53,7 +53,7 @@ export default function FaqPage() {
                 <Link href="/faq" className="flex flex-row items-center relative">
                     <span className="text-3xl 3xl:text-5xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">FAQ</span>
                 </Link>
-                <Link href="/generator" className="flex flex-row items-center relative">
+                <Link href="/projectresources" className="flex flex-row items-center relative">
                     <span className="text-3xl 3xl:text-5xl bg-gradient-to-t from-white to-sk-light-blue text-transparent bg-clip-text">Project Resources</span>
                 </Link>
             </div>
