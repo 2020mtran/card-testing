@@ -1,11 +1,21 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./src/**/*.{js,ts,jsx,tsx}", // ✅ Adjust if needed based on your directory
+    "./src/**/*.{js,ts,jsx,tsx}",
     "./app/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
     extend: {
+      colors: {
+        'sk-light-blue': '#9EEAF2',
+        'blurple': '#222F66',
+        'header': '#111834',
+        'spectro': '#c6bda6',
+        'aero': '#48b06f',
+        'divider': '#1f1f26',
+        'color-navy-blue': '#18224D',
+        'color-dark-navy': '#141B39',
+      },
       fontFamily: {
         lagu: ['LaguSans', 'sans-serif'],
       },
