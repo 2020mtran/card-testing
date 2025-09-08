@@ -71,7 +71,7 @@ export default function FaqPage() {
         </div>
         <div className="flex flex-col w-[88%] self-center p-5 xl:p-20 gap-5 lg:gap-10 lg:mt-5 xl:mt-0">
             <AccordionItem title="Wuwa.Network's Project Tracker">
-                Here is a spreadsheet containing every day's work that went into making this website over the past 3 months.
+                Here is a spreadsheet containing every day&apos;s work that went into making this website over the past 3 months.
                 <p>
                     <a href="https://docs.google.com/spreadsheets/d/1CVIARUBRQBQxzWjXX57w3AFasDGw1PworzyQ8EyQp5Y/edit?usp=sharing" target="_blank" className="text-blue-400 underline">
                     Wuwa.Network Progress Tracker
