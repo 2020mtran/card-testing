@@ -88,11 +88,11 @@ export default function FaqPage() {
                 The main functionality and purpose of the website has been completed. Due to unfortunate circumstances in my life, I had
                 to drop the project after over 3 months in the making. A few features missing include: localstorage saving, accounts, 
                 and a graph to show who the most popular characters are. Only a portion of the characters / weapons / echoes 
-                fro mthe game are in my site&apos;s database as well.
+                from the game are in my site&apos;s database as well.
             </AccordionItem>
             <AccordionItem title="What alternative websites to this could I use?">
                 Below are two alternative websites that inspired this project. Feel free to compare their designs to my site. You may find
-                some similarities.
+                some similarities between my website and theirs.
                 <p>
                     <a href="https://wuwaflex.com/" target="_blank" className="text-blue-400 underline">
                     WuwaFlex
