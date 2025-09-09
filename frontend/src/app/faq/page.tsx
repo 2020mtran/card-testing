@@ -68,7 +68,7 @@ export default function FaqPage() {
                 <p className="text-5xl md:text-6xl lg:text-7xl 3xl:text-8xl lg:leading-22 3xl:leading-27 text-center lg:text-start relative z-10 [text-shadow:2px_1px_2px_rgba(0,0,0,0.7)]">Frequently Asked Questions</p>
             </div>
         </div>
-        <div className="flex flex-col w-[88%] self-center p-5 xl:p-20 gap-5 lg:gap-10">
+        <div className="flex flex-col w-[88%] self-center p-5 xl:p-20 gap-5 lg:gap-10 lg:mt-5 xl:mt-0 2xl:mt-7">
             <AccordionItem title="What is the purpose of this site?">
                 This website allows users to create downloadable cards to display character data from the game Wuthering Waves. Users can
                 show off these cards on any social media platform using the image generated.
