@@ -27,6 +27,9 @@ export default {
       },
     },
   },
+  safelist: [
+    "bg-spectro-35", // ensures Tailwind generates this class
+  ],
   plugins: [
     require('tailwind-scrollbar')({ nocompatible: true }),
   ],

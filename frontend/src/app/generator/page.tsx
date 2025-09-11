@@ -838,7 +838,7 @@ export default function Home() {
       <div className="mx-auto w-[90%] overflow-x-auto">
       <div className="xl:flex justify-center" ref={cardDivRef}>
       <div className="relative w-[1214px] h-[541px] overflow-hidden shadow-lg self-center mb-10" ref={cardTestRef}>
-        <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center"></div>
+        <div className="absolute inset-0 bg-[url('https://ele2dh89lzgqriuh.public.blob.vercel-storage.com/Card-Background.jpg')] bg-cover bg-center"></div>
         <div className={`absolute inset-0 ${typeToBgClass[character.type] || "bg-gray-500/35"}`} />
         <div className="absolute inset-0">
           <img
