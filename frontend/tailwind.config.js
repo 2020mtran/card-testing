@@ -10,7 +10,7 @@ export default {
         'skLightBlue': '#9EEAF2',
         'blurple': '#222F66',
         'header': '#111834',
-        'spectro': {
+        spectro: {
           DEFAULT: '#c6bda6',
           35: 'rgba(198, 189, 166, 0.35)',
         },
