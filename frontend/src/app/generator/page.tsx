@@ -785,42 +785,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-          {/* <RadioGroup value={selectedSet} onChange={setSelectedSet} aria-label="Echo Set Selection">
-            <div className="md:-mt-6 md:flex md:flex-col gap-3">
-              <h2 className="text-lg md:text-3xl font-bold text-center underline underline-offset-3">
-                Select Echoes Set
-              </h2>
-              <div className="md:flex md:flex-col lg:flex-row gap-4">
-                {options.map((option) => (
-                  <Field key={option.set} className="flex items-center gap-2 lg:text-2xl">
-                    <Radio            value={option}
-                      className="group flex size-5 items-center justify-center rounded-full border bg-white data-checked:bg-blue-400"
-                    >
-                      <span className="invisible size-2 rounded-full bg-white group-data-checked:visible" />
-                    </Radio>
-                    <Label>{option.set}</Label>
-                    <img src={option.icon} alt={option.set} className="w-5 h-5" />
-                  </Field>
-                ))}
-              </div>
-            </div>
-          </RadioGroup> */}
-          {/* <div className="flex flex-col gap-2 w-full items-center">
-            <h2 className="text-lg md:text-3xl font-bold self-center underline underline-offset-3">
-              Select Echoes
-            </h2>
-            <div className="flex flex-col lg:flex-row gap-5 lg:w-[85%] items-center">
-              {selectedEchoes.map((selectedEcho, index) => (
-                <EchoDropdown
-                  key={index}
-                  index={index}
-                  selectedEcho={selectedEcho}
-                  echoes={echoesForSelectedSet}
-                  handleEchoChange={handleEchoChange}
-                />
-              ))}
-            </div>
-          </div> */}
           {/* Row 1: Set selection */}
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 max-w-[85%] lg:w-[85%] mx-auto">
             {slots.map((slot, index) => (
@@ -873,22 +837,9 @@ export default function Home() {
       {showCard && ocrData && character && weapon && (
       <div className="mx-auto w-[90%] overflow-x-auto">
       <div className="xl:flex justify-center" ref={cardDivRef}>
-      {/* div below used to be roundedxl */}
       <div className="relative w-[1214px] h-[541px] overflow-hidden shadow-lg self-center mb-10" ref={cardTestRef}>
         <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center"></div>
         <div className={`absolute inset-0 ${typeToBgClass[character.type] || "bg-gray-500/35"}`} />
-        {/* <div className="absolute inset-0 flex justify-start overflow-hidden">
-          <img
-            src={character.imageUrl}
-            alt={ocrData.character}
-            className="h-full"         // full height
-            style={{
-              maxWidth: "none",        // prevents Tailwind from forcing width
-              transform: "scale(1.25)",// your zoom
-            }}
-            crossOrigin="anonymous"
-          />
-        </div> */}
         <div className="absolute inset-0">
           <img
             src={character.imageUrl}
@@ -897,12 +848,6 @@ export default function Home() {
             crossOrigin="anonymous"
           />
         </div>
-        {/* <Image 
-          src={character.imageUrl}
-          alt={ocrData.character}
-          layout="fill"
-          className="absolute -ml-3 mt-15 scale-125 object-contain object-left"
-        /> */}
         <div className="flex flex-col absolute h-full bg-divider/80 origin-center left-[25.5%] w-[74.5%] gap-3">
           <div className="flex flex-row gap-2">
             <div className="flex flex-col">
